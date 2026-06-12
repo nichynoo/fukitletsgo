@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -242,7 +243,7 @@ a.gmap:hover{border-color:var(--glacier)}
     <div class="controls">
       <div class="chips" id="typeChips">
         <button class="chip" data-type="all" aria-pressed="true">All</button>
-        <button class="chip" data-type="mine" aria-pressed="false">★ Your list</button>
+        <button class="chip" data-type="mine" aria-pressed="false">★ Our list</button>
         <button class="chip" data-type="marquee" aria-pressed="false">Must-see</button>
         <button class="chip" data-type="hidden" aria-pressed="false">Hidden gems</button>
         <button class="chip" data-type="event" aria-pressed="false">What's on</button>
@@ -266,7 +267,7 @@ a.gmap:hover{border-color:var(--glacier)}
 
     <div class="addform" id="addForm">
       <div class="addrow">
-        <input class="nm" id="af-name" placeholder="Place name (e.g. a spot a friend tipped you off about)">
+        <input class="nm" id="af-name" placeholder="Place name (e.g. a spot a friend tipped us off about)">
         <select id="af-region"></select>
         <select id="af-type">
           <option value="hidden">Hidden gem</option>
@@ -285,7 +286,7 @@ a.gmap:hover{border-color:var(--glacier)}
           <option value="jewellery">Jewellery / maker</option>
         </select>
       </div>
-      <div class="addrow"><textarea id="af-blurb" placeholder="A line or two — why you want to go (optional)"></textarea></div>
+      <div class="addrow"><textarea id="af-blurb" placeholder="A line or two — why we want to go (optional)"></textarea></div>
       <div class="addrow" style="margin-bottom:0">
         <button class="btn ember" id="af-save">Save place</button>
         <button class="btn" id="af-cancel">Cancel</button>
@@ -373,26 +374,26 @@ var PLACES = [
     { id: 'stanley', r: 0, t: 'marquee', n: 'Stanley & The Nut', b: "A sheer volcanic plug rising 143 m straight out of a fishing village. Ride the chairlift or climb it for a windblown 360° over Bass Strait.", tip: "The chairlift closes in high wind — check on the day." },
     { id: 'anvers', r: 0, t: 'cafe', n: 'House of Anvers', b: "A Belgian-style chocolate factory and café on the Bass Highway — hot chocolate that earns its name in July.", van: "Easy parking right off the highway, ten minutes from Devonport." },
     { id: 'tarkine', r: 0, t: 'marquee', n: 'Tarkine Drive (takayna)', b: "A loop through one of the largest tracts of cool-temperate rainforest left on earth — myrtle, sassafras, thousand-year-old trees.", van: "Mostly sealed, some narrow/unsealed sections; best as a day trip without the van from a Smithton base.", tip: "Trowutta Arch and Julius River are short walks just off the drive." },
-    { id: 'trowutta', r: 0, t: 'hidden', n: 'Trowutta Arch', b: "A collapsed cave that left a soaring rock arch over a still green sinkhole — five minutes through dripping forest and you're somewhere prehistoric." },
+    { id: 'trowutta', r: 0, t: 'hidden', n: 'Trowutta Arch', b: "A collapsed cave that left a soaring rock arch over a still green sinkhole — five minutes through dripping forest and we’re somewhere prehistoric." },
     { id: 'gunns', r: 0, t: 'hidden', n: 'Gunns Plains Caves', b: "No fanfare above ground, just farmland — then a guided drop into glow-worm dark and sideways 'shawl' formations. A quiet marvel.", tip: "Guided tours only — check the reduced winter tour times." },
     { id: 'leven', r: 0, t: 'hidden', mine: 1, n: 'Leven Canyon', b: "A 275 m-deep ravine with a short, easy rim walk to a lookout platform cantilevered over the gorge.", tip: "The edge-lookout walk is the quick one — about 20 minutes return." },
     { id: 'penguin', r: 0, t: 'cafe', n: 'Penguin', b: "A seaside town that leans all the way into its name — a giant penguin statue, penguin-shaped bins, and a good Sunday market." },
-    { id: 'trespass', r: 0, t: 'event', n: 'Permission to Trespass', when: "Early–mid July", b: "The north-west unlocks private gates, heritage land and hidden homes normally off-limits — long lunches, clifftop dining and art in places you couldn't otherwise reach.", tip: "Ticketed and sells out — book ahead, confirm 2026 dates." , url:'https://northwesttasmania.com.au/permissiontotrespass/'},
+    { id: 'trespass', r: 0, t: 'event', n: 'Permission to Trespass', when: "Early–mid July", b: "The north-west unlocks private gates, heritage land and hidden homes normally off-limits — long lunches, clifftop dining and art in places we couldn’t otherwise reach.", tip: "Ticketed and sells out — book ahead, confirm 2026 dates." , url:'https://northwesttasmania.com.au/permissiontotrespass/'},
     // Cradle & Central Highlands
-    { id: 'cradle', r: 1, t: 'marquee', mine: 1, n: 'Cradle Mountain & Dove Lake', b: "The headline act — the jagged peak above black, glacial Dove Lake, wombats on the buttongrass, and in July a real chance of snow.", van: "Leave the van at the visitor centre; the shuttle runs in to Dove Lake.", tip: "Check park road alerts for ice before you drive up." },
+    { id: 'cradle', r: 1, t: 'marquee', mine: 1, n: 'Cradle Mountain & Dove Lake', b: "The headline act — the jagged peak above black, glacial Dove Lake, wombats on the buttongrass, and in July a real chance of snow.", van: "Leave the van at the visitor centre; the shuttle runs in to Dove Lake.", tip: "Check park road alerts for ice before we drive up." },
     { id: 'ronnycreek', r: 1, t: 'hidden', mine: 1, n: 'Ronny Creek & the Overland Track start', b: "The official start of the Overland Track and the best wombat boardwalk in the park — a flat, short loop, brilliant at dawn or dusk." },
     { id: 'cradlesummit', r: 1, t: 'hidden', mine: 1, n: 'Cradle Mountain summit climb', b: "The hard one — a steep, exposed scramble to the 1,545 m summit. A long alpine day even in summer; in winter it's snow-and-ice territory.", tip: "Only with the right gear, settled conditions and an early start — weather-dependent." },
     { id: 'cradlenight', r: 1, t: 'marquee', mine: 1, n: 'Cradle Mountain night tour', b: "After dark the bush comes alive — Tasmanian devils, quolls and possums. Devils@Cradle runs keeper-led nocturnal feeding tours.", tip: "Book ahead; tours run on set nights." },
     { id: 'mtroland', r: 1, t: 'hidden', mine: 1, n: 'Mount Roland', b: "A bold ridge rising above Sheffield — a steep, rewarding climb to big views over the Cradle country. A proper half-to-full-day hike." },
-    { id: 'trowunna', r: 1, t: 'marquee', mine: 1, n: 'Trowunna Wildlife Sanctuary', b: "A long-running sanctuary at Mole Creek — hands-on devil, wombat and quoll encounters with keepers who clearly adore them. (You may have called it 'Chiuana'.)" },
+    { id: 'trowunna', r: 1, t: 'marquee', mine: 1, n: 'Trowunna Wildlife Sanctuary', b: "A long-running sanctuary at Mole Creek — hands-on devil, wombat and quoll encounters with keepers who clearly adore them. (We may have called it 'Chiuana'.)" },
     { id: 'stclair', r: 1, t: 'marquee', n: 'Lake St Clair', b: "Australia's deepest lake and the quiet southern end of the Overland Track — still water, snow gums, a wallaby at a metre in the frost." },
     { id: 'walls', r: 1, t: 'hidden', n: 'Walls of Jerusalem', b: "No road in — a steep walk-up to a hidden alpine basin of pencil pines and tarns named like a cathedral. Remote, and in winter, snowbound.", van: "Walk-in only — a full-kit, fit-walkers objective.", tip: "Genuine alpine winter — only with experience and gear." },
     { id: 'greatlake', r: 1, t: 'hidden', n: 'Great Lake & the Highlands', b: "High, wind-scoured lake country of trout, old fishing shacks and huge skies — proper off-season solitude.", van: "Long sealed touring roads; watch for black ice morning and evening." },
     { id: 'bronte', r: 1, t: 'hidden', mine: 1, n: 'Bronte Lagoon', b: "A trout-fishing lagoon in the high lake country near Bronte Park — wide skies, fly-fishers, and proper off-season quiet." },
     { id: 'derwentbridge', r: 1, t: 'hidden', mine: 1, n: 'Derwent Bridge & The Wall', b: "The little crossroads township by Lake St Clair — home of The Wall in the Wilderness, an astonishing carved-timber panorama of highland history (no photos inside)." },
     { id: 'hungrywombat', r: 1, t: 'cafe', mine: 1, n: 'Hungry Wombat Café', b: "The roadhouse café at Derwent Bridge — the pie-and-coffee stop on the run between the west coast and the highlands." },
-    { id: 'tungatinah', r: 1, t: 'hidden', mine: 1, n: 'Tungatinah Lagoon', b: "A hydro lagoon up in the Central Highlands near Tarraleah, part of the high lake-and-canal country.", tip: "Worth confirming this is the spot you meant by 'Lake Tungatina'." },
-    { id: 'platypus', r: 1, t: 'hidden', mine: 1, n: 'Platypus spotting', b: "Platypus are most reliably seen at dawn or dusk in quiet highland and northern waterways — Warrawee Forest Reserve near Latrobe is the classic spot.", tip: "I couldn't pin a Tasmanian 'Lake Gairdner' — tell me the spot you had in mind and I'll set it properly." },
+    { id: 'tungatinah', r: 1, t: 'hidden', mine: 1, n: 'Tungatinah Lagoon', b: "A hydro lagoon up in the Central Highlands near Tarraleah, part of the high lake-and-canal country.", tip: "Worth confirming this is the spot we meant by 'Lake Tungatina'." },
+    { id: 'platypus', r: 1, t: 'hidden', mine: 1, n: 'Platypus spotting', b: "Platypus are most reliably seen at dawn or dusk in quiet highland and northern waterways — Warrawee Forest Reserve near Latrobe is the classic spot.", tip: "Couldn’t pin a Tasmanian 'Lake Gairdner' — update this once we confirm the spot we had in mind." },
     // Launceston & Tamar
     { id: 'cataract', r: 2, t: 'marquee', mine: 1, n: 'Cataract Gorge', b: "A wild river gorge a 15-minute walk from the city centre — Victorian gardens, a chairlift across the basin, peacocks, and a cold-season hush." },
     { id: 'tamarisland', r: 2, t: 'hidden', n: 'Tamar Island Wetlands', b: "A boardwalk out across reedbeds to a chain of islands ten minutes from town — herons, swans, and the Tamar sliding past." },
@@ -401,18 +402,18 @@ var PLACES = [
     // North-East
     { id: 'bayfires', r: 3, t: 'marquee', mine: 1, n: 'Bay of Fires', b: "Orange lichen-painted granite, white sand and pool-blue water strung along the coast north of St Helens — empty and silent off-season." },
     { id: 'swimcart', r: 3, t: 'hidden', mine: 1, n: 'Swimcart Beach', b: "A classic Bay of Fires beach and free camp behind the dunes — granite boulders, clear water, easy van access.", van: "Popular free camp; arrive early off-season and check current conditions." },
-    { id: 'sloop', r: 3, t: 'hidden', mine: 1, n: 'Sloop Reef / Sloop Rock', b: "A lookout and rocky reef in the Bay of Fires near Binalong Bay — lichen-orange boulders over clear water.", tip: "Reading your 'slip reef' as Sloop Reef/Rock — confirm if you meant another spot." },
+    { id: 'sloop', r: 3, t: 'hidden', mine: 1, n: 'Sloop Reef / Sloop Rock', b: "A lookout and rocky reef in the Bay of Fires near Binalong Bay — lichen-orange boulders over clear water.", tip: "Reading our 'slip reef' as Sloop Reef/Rock — confirm if we meant another spot." },
     { id: 'peron', r: 3, t: 'hidden', mine: 1, n: 'Peron Dunes', b: "Big, pale sand dunes at Stieglitz near St Helens — a striking, slightly surreal stop on the north-east coast." },
     { id: 'pubpaddock', r: 3, t: 'pub', mine: 1, n: 'The Pub in the Paddock, Pyengana', b: "An 1880s country pub famous for its beer-drinking pig — a charming detour inland from St Helens." },
     { id: 'derby', r: 3, t: 'marquee', n: 'Derby & the Floating Sauna', b: "A former tin town reborn as a world-class mountain-bike network in the rainforest. Even without a bike, the Floating Sauna on Lake Derby is worth it.", tip: "Book the lake sauna ahead — a perfect cold-day soak." },
     { id: 'bridport', r: 3, t: 'event', n: 'Tassie Scallop Fiesta, Bridport', when: "Early August", b: "A small north-east fishing town throws a scallop festival at the peak of the season — chowder, shucking and maritime tradition.", tip: "Confirm the 2026 date." , url:'https://www.tassiescallopfiesta.com.au/'},
     { id: 'bluelake', r: 3, t: 'hidden', n: 'Little Blue Lake, Gladstone', b: "A startling milky-aqua lake coloured by old tin-mine minerals (look, don't swim). A surreal far-north-east stop." },
     // East Coast
-    { id: 'denison', r: 4, t: 'hidden', mine: 1, n: 'Denison Beach', b: "A long, quiet sweep of east-coast sand near Scamander — the kind of empty winter beach you stop at and have to yourself." },
+    { id: 'denison', r: 4, t: 'hidden', mine: 1, n: 'Denison Beach', b: "A long, quiet sweep of east-coast sand near Scamander — the kind of empty winter beach we stop at and have to ourselves." },
     { id: 'chainlagoons', r: 4, t: 'hidden', mine: 1, n: 'Chain of Lagoons', b: "A string of coastal lagoons below Elephant Pass — a pretty, low-key stretch between Bicheno and St Helens." },
-    { id: 'freycinet', r: 4, t: 'marquee', mine: 1, n: 'Freycinet & Wineglass Bay', b: "The Hazards' pink-granite peaks over the perfect curve of Wineglass Bay. The lookout walk is short and steep; in winter you may have it to yourself." },
+    { id: 'freycinet', r: 4, t: 'marquee', mine: 1, n: 'Freycinet & Wineglass Bay', b: "The Hazards' pink-granite peaks over the perfect curve of Wineglass Bay. The lookout walk is short and steep; in winter we may have it to ourselves." },
     { id: 'hazardscircuit', r: 4, t: 'hidden', mine: 1, n: 'Hazards Beach Circuit', b: "The fuller Freycinet loop — over the saddle to Wineglass Bay, along the sand and back via Hazards Beach. A big half-day on the legs.", tip: "Roughly 4–5 hours; check timing against short winter daylight." },
-    { id: 'kelvedon', r: 4, t: 'hidden', mine: 1, n: 'Kelvedon Beach boatshed', b: "The much-photographed old boatshed on Kelvedon Beach near Swansea, with Freycinet across the water. Best in soft early or late light.", tip: "Reading your 'Kalvedon' as Kelvedon." },
+    { id: 'kelvedon', r: 4, t: 'hidden', mine: 1, n: 'Kelvedon Beach boatshed', b: "The much-photographed old boatshed on Kelvedon Beach near Swansea, with Freycinet across the water. Best in soft early or late light.", tip: "Reading our 'Kalvedon' as Kelvedon." },
     { id: 'maria', r: 4, t: 'marquee', mine: 1, n: 'Maria Island', b: "A car-free island off Triabunna — convict ruins at Darlington, the swirled Painted Cliffs, fearless wombats, and brilliant flat cycling.", tip: "Day-trip by passenger ferry; bring the bikes — no vehicles on the island." },
     { id: 'bicheno', r: 4, t: 'marquee', n: 'Bicheno', b: "A blowhole that fires on the right swell, little penguins coming ashore at dusk, and Bicheno Beams lighting the town through the dark months.", tip: "Penguin tours and Beams run set nights — check dates." },
     { id: 'spiky', r: 4, t: 'hidden', n: 'Spiky Bridge', b: "A convict-built bridge bristling with vertical stones — nobody's quite sure why. A quick, strange roadside stop south of Swansea." },
@@ -433,20 +434,20 @@ var PLACES = [
     { id: 'mtfield', r: 5, t: 'marquee', mine: 1, n: 'Mount Field — Russell Falls', b: "Russell Falls — tiered rainforest falls on an easy, pram-flat stroll from the car park — plus towering swamp gums and snow up at Lake Dobson." },
     { id: 'cascadebrewery', r: 5, t: 'drink', mine: 1, n: 'Cascade Brewery', b: "Australia's oldest continually operating brewery, in a grand Gothic building below kunanyi — tours and tastings in South Hobart." },
     { id: 'femalefactory', r: 5, t: 'marquee', mine: 1, n: 'Cascades Female Factory', b: "A World-Heritage convict site that tells the women's side of the story. Spare, moving, and powerfully done — guided tours bring it to life." },
-    { id: 'sparkle', r: 5, t: 'hidden', mine: 1, n: 'Sea sparkle (bioluminescence)', b: "Bioluminescent plankton that lights the water electric-blue on dark, still nights, often around southern Hobart beaches.", tip: "Reading your 'sparkly water' as this — needs a dark, moonless night and luck. Check local sightings pages, or tell me if you meant a named place." },
+    { id: 'sparkle', r: 5, t: 'hidden', mine: 1, n: 'Sea sparkle (bioluminescence)', b: "Bioluminescent plankton that lights the water electric-blue on dark, still nights, often around southern Hobart beaches.", tip: "Reading our 'sparkly water' as this — needs a dark, moonless night and luck. Check local sightings pages, or update this if we meant a named place." },
     // Bruny & the Huon
     { id: 'bruny', r: 6, t: 'marquee', mine: 1, n: 'Bruny Island', b: "Cross by ferry to oysters, cheese, whisky and the wind-blasted Neck lookout — two islands joined by a sandspit, a lighthouse at the far south.", van: "The vehicle ferry takes caravans (priced by length); some island roads are unsealed." },
-    { id: 'huonfest', r: 6, t: 'event', n: 'Huon Valley Mid-Winter Festival', when: "Mid July", b: "A pagan-flavoured apple-country knees-up at Willie Smith's Apple Shed near Huonville — cider, wassailing, fire and a fair bit of costume.", tip: "The original Mid-Winter Festival has changed over time — check Willie Smith’s current Apple Shed events before you plan around it." , url:'https://www.williesmiths.com.au/Apple-shed'},
+    { id: 'huonfest', r: 6, t: 'event', n: 'Huon Valley Mid-Winter Festival', when: "Mid July", b: "A pagan-flavoured apple-country knees-up at Willie Smith's Apple Shed near Huonville — cider, wassailing, fire and a fair bit of costume.", tip: "The original Mid-Winter Festival has changed over time — check Willie Smith’s current Apple Shed events before we plan around it." , url:'https://www.williesmiths.com.au/Apple-shed'},
     { id: 'tahune', r: 6, t: 'marquee', n: 'Tahune Airwalk', b: "A steel walkway out over the Huon and Picton rivers, high in the canopy — cantilevered ends that bounce gently above the confluence." },
     { id: 'hastings', r: 6, t: 'hidden', n: 'Hastings Caves & Thermal Springs', b: "A grand dolomite cave, then a warm thermal pool in the forest — the one place in Tasmania where winter swimming actually makes sense." },
-    { id: 'cockle', r: 6, t: 'hidden', mine: 1, n: 'Cockle Creek', b: "The southernmost point you can drive to in Australia — the road just runs out at the edge of the wilderness. Bleak, beautiful, the end of the map.", van: "Final stretch is unsealed and remote; check conditions and fuel first." },
+    { id: 'cockle', r: 6, t: 'hidden', mine: 1, n: 'Cockle Creek', b: "The southernmost point we can drive to in Australia — the road just runs out at the edge of the wilderness. Bleak, beautiful, the end of the map.", van: "Final stretch is unsealed and remote; check conditions and fuel first." },
     // Tasman & Port Arthur
     { id: 'portarthur', r: 7, t: 'marquee', n: 'Port Arthur Historic Site', b: "Australia's most intact convict settlement, hauntingly beautiful around the harbour — at its eeriest on a grey winter's day. Ghost tours after dark." },
-    { id: 'nrmaportarthur', r: 7, t: 'stay', mine: 1, fee: 'PAID', n: 'NRMA Port Arthur Holiday Park', b: "Your Tasman Peninsula base — powered sites handy to the historic site and the coastal walks.", van: "Book ahead even in winter; good base for Cape Raoul and Eaglehawk Neck day trips." },
+    { id: 'nrmaportarthur', r: 7, t: 'stay', mine: 1, fee: 'PAID', n: 'NRMA Port Arthur Holiday Park', b: "Our Tasman Peninsula base — powered sites handy to the historic site and the coastal walks.", van: "Book ahead even in winter; good base for Cape Raoul and Eaglehawk Neck day trips." },
     { id: 'eaglehawk', r: 7, t: 'marquee', mine: 1, n: 'Eaglehawk Neck', b: "The narrow isthmus onto the Tasman Peninsula and a cluster of coastal drama within minutes — the Tessellated Pavement, Tasman Arch, the Devil's Kitchen and a blowhole." },
     { id: 'tessellated', r: 7, t: 'hidden', n: 'Tessellated Pavement', b: "A flat rock shelf cracked by nature into a near-perfect tiled grid — best at low tide, dawn or dusk." },
     { id: 'tasmanarch', r: 7, t: 'marquee', n: 'Tasman Arch & blowholes', b: "Tasman Arch, the Devil's Kitchen and a blowhole within a few minutes of each other — raw dolerite coast, most dramatic in a winter swell." },
-    { id: 'caperaoul', r: 7, t: 'hidden', mine: 1, n: 'Cape Raoul hike', b: "A spectacular Tasman Peninsula day walk out to towering dolerite sea-cliffs, with a seal colony on the rocks below.", tip: "Reading 'Cape rowl' as Cape Raoul — a solid half-day; check the forecast for the exposed clifftops." },
+    { id: 'caperaoul', r: 7, t: 'hidden', mine: 1, n: 'Cape Raoul hike', b: "A spectacular Tasman Peninsula day walk out to towering dolerite sea-cliffs, with a seal colony on the rocks below.", tip: "Reading our 'Cape rowl' as Cape Raoul — a solid half-day; check the forecast for the exposed clifftops." },
     // West Coast
     { id: 'strahan', r: 8, t: 'marquee', mine: 1, n: 'Strahan & the Gordon River', b: "A tiny harbour town on the wild west — cruise the tannin-dark Gordon River into ancient rainforest and the old penal island of Sarah Island." },
     { id: 'queenstown', r: 8, t: 'marquee', mine: 1, n: 'Queenstown', b: "A copper-mining town ringed by bare, lunar hills stripped by a century of smelting — stark and unforgettable. Ride the West Coast Wilderness Railway out of town." },
@@ -463,7 +464,7 @@ var PLACES = [
     {"id": "camp_burnie_ocean", "r": 0, "t": "stay", "n": "Burnie Ocean View", "b": "Caravan park / tourist park option on the north-west coast near Burnie.", "van": "Good serviced stop for showers, laundry and supplies.", "fee": "PAID"},
     {"id": "camp_wynyard", "r": 0, "t": "stay", "n": "Wynyard Caravan Park", "b": "North-west caravan park base near the Inglis River and Table Cape area.", "van": "Caravan-friendly; good resupply stop.", "fee": "PAID"},
     {"id": "camp_boat_harbour", "r": 0, "t": "stay", "n": "Boat Harbour Beach Camping", "b": "Coastal camping/holiday area near one of the prettiest beaches on the north-west coast.", "van": "Check local rules and site access before towing in.", "fee": "FREE"},
-    {"id": "camp_stanley", "r": 0, "t": "stay", "n": "Stanley Cabin & Tourist Park", "b": "Caravan park right near Stanley and The Nut.", "van": "Caravan-friendly; book ahead if you want a powered site.", "fee": "PAID"},
+    {"id": "camp_stanley", "r": 0, "t": "stay", "n": "Stanley Cabin & Tourist Park", "b": "Caravan park right near Stanley and The Nut.", "van": "Caravan-friendly; book ahead if we want a powered site.", "fee": "PAID"},
     {"id": "camp_smithton", "r": 0, "t": "stay", "n": "Smithton / Tall Timbers RV base", "b": "Practical north-west base for Tarkine and Stanley touring, with caravan/RV options in town.", "van": "Good base to drop the van before narrower Tarkine roads.", "fee": "PAID"},
     {"id": "camp_arthur_river", "r": 0, "t": "stay", "n": "Arthur River / Manuka Campground", "b": "West coast/Tarkine-side camping near Arthur River, useful for the Edge of the World area.", "van": "Remote; check road/weather conditions and supplies.", "fee": "FREE"},
     {"id": "camp_nelson_bay", "r": 0, "t": "stay", "n": "Nelson Bay Camping, Arthur River", "b": "Remote coastal camping option in the Arthur River area.", "van": "Best for self-contained travellers; check current access.", "fee": "FREE"},
@@ -492,7 +493,7 @@ var PLACES = [
     {"id": "camp_bayfires_swimcart", "r": 3, "t": "stay", "n": "Swimcart Beach Campground", "b": "Bay of Fires beach camping behind the dunes, matching an existing app stop.", "van": "Basic facilities; arrive early and check current rules.", "fee": "FREE"},
     {"id": "camp_cosy_north", "r": 3, "t": "stay", "n": "Cosy Corner North Campground", "b": "Classic Bay of Fires designated beach campground.", "van": "Basic facilities; no bookings generally required, but check current rules.", "fee": "FREE"},
     {"id": "camp_cosy_south", "r": 3, "t": "stay", "n": "Cosy Corner South Campground", "b": "Popular designated Bay of Fires beach campground.", "van": "Caravan-friendly for many rigs; basic facilities.", "fee": "FREE"},
-    {"id": "camp_sloop_lagoon", "r": 3, "t": "stay", "n": "Sloop Lagoon Campground", "b": "Bay of Fires designated camping area near Binalong Bay.", "van": "Basic beach-camp setup; check current suitability for your rig.", "fee": "FREE"},
+    {"id": "camp_sloop_lagoon", "r": 3, "t": "stay", "n": "Sloop Lagoon Campground", "b": "Bay of Fires designated camping area near Binalong Bay.", "van": "Basic beach-camp setup; check current suitability for our rig.", "fee": "FREE"},
     {"id": "camp_policemans_point", "r": 3, "t": "stay", "n": "Policemans Point Campground", "b": "Camping near Ansons Bay at the northern end of Bay of Fires country.", "van": "Remote basic camp; check roads and supplies.", "fee": "FREE"},
     {"id": "camp_dora_point", "r": 3, "t": "stay", "n": "Dora Point Campground", "b": "Humbug Point / St Helens area campground with upgraded facilities noted by PWS.", "van": "Caravan-friendly coastal base near St Helens.", "fee": "FREE"},
     {"id": "camp_st_helens", "r": 3, "t": "stay", "n": "St Helens Holiday Park", "b": "Serviced caravan park base for Bay of Fires, St Helens and east-coast resupply.", "van": "Good showers/laundry/restock stop.", "fee": "PAID"},
@@ -501,7 +502,7 @@ var PLACES = [
     {"id": "camp_scamander", "r": 4, "t": "stay", "n": "Scamander Tourist Park", "b": "Serviced caravan park option on the east coast.", "van": "Good facilities and resupply on the coastal run.", "fee": "PAID"},
     {"id": "camp_bicheno", "r": 4, "t": "stay", "n": "Bicheno Caravan Park", "b": "Caravan park base for Bicheno, penguins and the blowhole.", "van": "Good serviced stop between Bay of Fires and Freycinet.", "fee": "PAID"},
     {"id": "camp_bicheno_cabins", "r": 4, "t": "stay", "n": "Bicheno East Coast Holiday Park", "b": "Holiday/caravan park option in Bicheno.", "van": "Book ahead for powered sites.", "fee": "PAID"},
-    {"id": "camp_friendly_beaches", "r": 4, "t": "stay", "n": "Friendly Beaches Campground", "b": "Iconic free/basic campground in Freycinet National Park area near long surf beaches.", "van": "Access is unsealed; check suitability for your caravan and current PWS rules.", "fee": "FREE"},
+    {"id": "camp_friendly_beaches", "r": 4, "t": "stay", "n": "Friendly Beaches Campground", "b": "Iconic free/basic campground in Freycinet National Park area near long surf beaches.", "van": "Access is unsealed; check suitability for our caravan and current PWS rules.", "fee": "FREE"},
     {"id": "camp_freycinet", "r": 4, "t": "stay", "n": "Freycinet National Park Campground", "b": "Very convenient paid campground for Wineglass Bay and Freycinet walks.", "van": "Popular; ballot/booking rules can apply in busy periods.", "fee": "PAID"},
     {"id": "camp_coles_bay", "r": 4, "t": "stay", "n": "BIG4 Iluka on Freycinet / Coles Bay", "b": "Serviced caravan park base at Coles Bay for Freycinet.", "van": "Good facilities and easiest Freycinet base with the van.", "fee": "PAID"},
     {"id": "camp_swansea", "r": 4, "t": "stay", "n": "Swansea Holiday Park", "b": "East-coast caravan park base overlooking Great Oyster Bay.", "van": "Good serviced stop between Freycinet and Hobart/Triabunna.", "fee": "PAID"},
@@ -523,7 +524,7 @@ var PLACES = [
     {"id": "camp_gordon_foreshore", "r": 6, "t": "stay", "n": "Gordon Foreshore Reserve Campground", "b": "Beautiful waterside camping south of Hobart in the Channel/Huon area.", "van": "Popular with caravans; check current fees/rules.", "fee": "FREE"},
     {"id": "camp_bruni_captain_cook", "r": 6, "t": "stay", "n": "Captain Cook Holiday Park, Bruny Island", "b": "Bruny Island caravan/holiday park option.", "van": "Vehicle ferry takes caravans but island roads vary; book ahead.", "fee": "PAID"},
     {"id": "camp_bruni_neck", "r": 6, "t": "stay", "n": "The Neck / Bruny Island camping areas", "b": "Bruny Island camping options near the Neck and island touring routes.", "van": "Check current PWS/council rules and road conditions.", "fee": "FREE"},
-    {"id": "camp_cloudy_corner", "r": 6, "t": "stay", "n": "Cloudy Corner Campground, Bruny Island", "b": "Remote Bruny Island beach camping option.", "van": "Access can be sandy/rough; check suitability for your rig.", "fee": "FREE"},
+    {"id": "camp_cloudy_corner", "r": 6, "t": "stay", "n": "Cloudy Corner Campground, Bruny Island", "b": "Remote Bruny Island beach camping option.", "van": "Access can be sandy/rough; check suitability for our rig.", "fee": "FREE"},
     {"id": "camp_huonville", "r": 6, "t": "stay", "n": "Huonville / River's Edge camping base", "b": "Huon Valley camping/caravan base for cider country, Tahune and the far south.", "van": "Useful serviced/low-cost base depending on current operator rules.", "fee": "LOW COST"},
     {"id": "camp_franklin", "r": 6, "t": "stay", "n": "Franklin Foreshore Camping", "b": "Huon River foreshore-style camping option in Franklin.", "van": "Check current council rules, fees and stay limits.", "fee": "FREE"},
     {"id": "camp_southport", "r": 6, "t": "stay", "n": "Southport Hotel & Caravan Park", "b": "Southern caravan park base before Cockle Creek and Hastings Caves.", "van": "Good last serviced stop before remote far south roads.", "fee": "PAID"},
@@ -539,7 +540,7 @@ var PLACES = [
     {"id": "camp_queenstown", "r": 8, "t": "stay", "n": "Queenstown Cabin & Tourist Park", "b": "Serviced caravan park base for Queenstown and the West Coast Wilderness Railway.", "van": "Good facilities before/after remote west-coast driving.", "fee": "PAID"},
     {"id": "camp_rosebery", "r": 8, "t": "stay", "n": "Rosebery / Lake Rosebery camping", "b": "West-coast camping/caravan stop near Rosebery and Montezuma Falls.", "van": "Useful base for Montezuma Falls; check current facilities.", "fee": "LOW COST"},
     {"id": "camp_zeehan", "r": 8, "t": "stay", "n": "Zeehan Caravan Park", "b": "Small west-coast caravan park base between Strahan, Queenstown and the north-west.", "van": "Good practical serviced stop.", "fee": "PAID"},
-    {"id": "camp_trial_harbour", "r": 8, "t": "stay", "n": "Trial Harbour Camping", "b": "Remote west-coast camping by the ocean.", "van": "Road is narrow/winding; check if suitable for your caravan before towing.", "fee": "FREE"},
+    {"id": "camp_trial_harbour", "r": 8, "t": "stay", "n": "Trial Harbour Camping", "b": "Remote west-coast camping by the ocean.", "van": "Road is narrow/winding; check if suitable for our caravan before towing.", "fee": "FREE"},
     {"id": "camp_granville", "r": 8, "t": "stay", "n": "Granville Harbour Camping", "b": "Remote west-coast camping area north of Strahan.", "van": "Remote gravel/coastal access; check conditions carefully.", "fee": "FREE"},
     {"id": "camp_lake_burbury", "r": 8, "t": "stay", "n": "Lake Burbury Camping", "b": "Scenic low-cost/free-style camping near Queenstown and the Lyell Highway.", "van": "Windy/exposed; check conditions.", "fee": "FREE"},
 
@@ -613,7 +614,7 @@ var PLACES = [
     {"id": "aqua_splash_devonport", "r": 0, "t": "aqua", "n": "Splash Devonport Aquatic & Leisure Centre", "b": "Indoor aquatic and leisure centre with Aqua Aerobics classes. Good north-west option near Devonport and the ferry.", "when": "Indoor heated pool · aqua aerobics", "tip": "Fitness Passport confirmed by the centre FAQ: sign in with the QR code at reception.", "van": "Easy city access; practical first/last stop around the ferry.", "fp": "YES"},
     {"id": "aqua_swirl_smithton", "r": 0, "t": "aqua", "n": "SWIRL — Smithton Wellbeing Indoor Recreation & Leisure", "b": "Modern indoor wellbeing centre with a 25m indoor pool, program pool, aquatic exercise, group fitness and aqua aerobics.", "when": "Indoor heated pool · aqua aerobics", "tip": "Fitness Passport confirmed by the centre FAQ.", "van": "Good wet-weather stop while touring Stanley, Smithton and the Tarkine.", "fp": "YES"},
     {"id": "aqua_launceston", "r": 2, "t": "aqua", "n": "Launceston Leisure & Aquatic Centre", "b": "Large indoor/outdoor aquatic centre with AquaFit and Aqua Therapy classes. Very useful northern Tasmania base.", "when": "Heated pools · AquaFit / Aqua Therapy", "tip": "Fitness Passport swim access is confirmed; some program-pool/class access may require an upgrade fee at entry.", "van": "Easy city access; good with Cataract Gorge, Tamar and northern touring.", "fp": "YES"},
-    {"id": "aqua_dkhac_hobart", "r": 5, "t": "aqua", "n": "Doone Kennedy Hobart Aquatic Centre", "b": "Major indoor aquatic centre in Hobart with heated pools; deep-water Aqua Aerobics classes use the dive pool.", "when": "Indoor heated pool · deep-water aqua aerobics", "tip": "Fitness Passport was reported as removed from this centre by Hobart City Council; check again in MyFP in case the arrangement changes.", "van": "Do not tow into tight city areas if avoidable; leave the van at your Hobart base.", "fp": "NO"},
+    {"id": "aqua_dkhac_hobart", "r": 5, "t": "aqua", "n": "Doone Kennedy Hobart Aquatic Centre", "b": "Major indoor aquatic centre in Hobart with heated pools; deep-water Aqua Aerobics classes use the dive pool.", "when": "Indoor heated pool · deep-water aqua aerobics", "tip": "Fitness Passport was reported as removed from this centre by Hobart City Council; check again in MyFP in case the arrangement changes.", "van": "Do not tow into tight city areas if avoidable; leave the van at our Hobart base.", "fp": "NO"},
     {"id": "aqua_clarence", "r": 5, "t": "aqua", "n": "Clarence Aquatic Centre", "b": "Indoor heated aquatic centre with three heated pools and Deep Water Aqua Fit / Aqua Aerobics classes.", "when": "Indoor heated pool · Aqua Fit", "tip": "Fitness Passport not publicly confirmed on the venue pages I found; check the Fitness Passport app before relying on it.", "van": "Good eastern-shore option near Montagu Bay.", "fp": "CHECK"},
     {"id": "aqua_kingston_pool", "r": 5, "t": "aqua", "n": "Kingston Pool & Wellness Centre", "b": "Small indoor pool kept around 31–32°C all year, with Aqua Aerobics classes several mornings/evenings.", "when": "Indoor warm pool · aqua aerobics", "tip": "Fitness Passport not publicly confirmed on the venue pages I found; check MyFP first.", "van": "Good southern Hobart / Channel option before Bruny or Huon touring.", "fp": "CHECK"},
     {"id": "aqua_burnie", "r": 0, "t": "aqua", "n": "Burnie Aquatic Centre", "b": "Aquatic centre with a 25m indoor pool and regular Aqua Aerobics run by Sea-Lyons Aquatics.", "when": "Indoor pool · aqua aerobics", "tip": "Bookings are usually required; Fitness Passport not publicly confirmed on sources I found.", "van": "Handy north-west coast stop between Penguin, Wynyard and Stanley.", "fp": "CHECK"},
@@ -640,19 +641,19 @@ var PLACES = [
 var ROUTE = [
     ["1", "<b>Devonport & the North-West</b> — settle in, Stanley, the Tarkine. (3–4 nights)"],
     ["2", "<b>Cradle Mountain</b> if the weather opens up — then drop to the <b>West Coast</b>, Strahan & Queenstown. (4–5 nights)"],
-    ["3", "South via <b>Lake St Clair</b> and Derwent Bridge to <b>Hobart</b> — your base for the festivals. (week+)"],
+    ["3", "South via <b>Lake St Clair</b> and Derwent Bridge to <b>Hobart</b> — our base for the festivals. (week+)"],
     ["4", "Day-trip out from Hobart: <b>Bruny & the Huon</b>, <b>Tasman & Port Arthur</b>, MONA, kunanyi."],
     ["5", "Up the <b>East Coast</b> — Maria Island, Freycinet, Bicheno, Bay of Fires. (5–6 nights)"],
     ["6", "Across the <b>North-East</b> (Derby) to <b>Launceston & the Tamar</b>, then back to Devonport for the ferry. (4–5 nights)"]
 ];
 var KNOW = [
     ["Bookshops & jewellery", "<li><b>Bookshops</b> are added as their own map layer, separate from general shopping or food stops.</li><li><b>Jewellery & Makers</b> includes bespoke jewellers, contemporary Tasmanian makers and market-style handmade jewellery stops.</li><li><b>Worth the Detour</b> marks the shops I would actively plan around, not just browse if nearby.</li>"],
-    ["Aqua aerobics & Fitness Passport", "<li><b>FP YES</b> means I found a public venue source confirming Fitness Passport acceptance.</li><li><b>FP CHECK</b> means the venue has indoor aqua/aquatic fitness, but I could not verify Fitness Passport publicly — check your MyFP app before travelling.</li><li><b>FP NO</b> means I found a public report that Fitness Passport was removed/not accepted. This can change, so verify in the app if it matters.</li><li>Fitness Passport facility access can vary by employer program and package, so the app/login is still the final source of truth.</li>"],
-    ["Trout fishing notes", "<li><b>July:</b> most brown trout waters are closed until the first Saturday in August, so use Trout Fishing pins marked July/all-year and check IFS before fishing.</li><li><b>Autumn:</b> many major brown trout waters fish well through autumn, but most close around late April/early May depending on the season.</li><li><b>Licence:</b> a Tasmanian inland angling licence is required for most freshwater trout fishing. Check the current IFS Code or InFish app for the exact water before you go.</li><li><b>Safety:</b> highland trout waters can be icy, windy and remote in winter; wear a PFD around cold water and do not tow into marginal roads.</li>"],
-    ["Booking ahead", "<li><b>Ferry:</b> winter sailings are usually overnight — board Geelong evening, wake in Devonport. Book the caravan length in early; the Flex fare is worth it.</li><li><b>Sites:</b> many parks and free camps run reduced winter capacity — call ahead rather than rolling up at dusk.</li><li><b>Festivals:</b> the July–August events here are ticketed and popular — lock them in once you've fixed your dates.</li>"],
-    ["Winter driving with the rig", "<li><b>Highlands ice & snow:</b> Cradle, the Central Plateau, kunanyi and Mount Field can hold snow and black ice. Drive slow, leave gaps, check road status before you climb.</li><li><b>Leave the van low:</b> don't tow up the kunanyi summit road or other steep narrow climbs — drop the caravan and go up light.</li><li><b>Daylight is short</b> (~9 hrs). Be parked and set up well before dark; wildlife on the roads peaks at dusk.</li><li><b>Unsealed stretches:</b> Tarkine Drive, Bruny, Cockle Creek and Gordon Dam have gravel or remote runs — fuel up and check conditions.</li>"],
+    ["Aqua aerobics & Fitness Passport", "<li><b>FP YES</b> means a public venue source confirms Fitness Passport acceptance.</li><li><b>FP CHECK</b> means the venue has indoor aqua/aquatic fitness, but Fitness Passport could not be verified publicly — check our MyFP app before travelling.</li><li><b>FP NO</b> means a public report says Fitness Passport was removed/not accepted. This can change, so verify in the app if it matters.</li><li>Fitness Passport facility access can vary by our employer program and package, so the app/login is still the final source of truth.</li>"],
+    ["Trout fishing notes", "<li><b>July:</b> most brown trout waters are closed until the first Saturday in August, so use Trout Fishing pins marked July/all-year and check IFS before fishing.</li><li><b>Autumn:</b> many major brown trout waters fish well through autumn, but most close around late April/early May depending on the season.</li><li><b>Licence:</b> a Tasmanian inland angling licence is required for most freshwater trout fishing. Check the current IFS Code or InFish app for the exact water before we go.</li><li><b>Safety:</b> highland trout waters can be icy, windy and remote in winter; wear a PFD around cold water and do not tow into marginal roads.</li>"],
+    ["Booking ahead", "<li><b>Ferry:</b> winter sailings are usually overnight — board Geelong evening, wake in Devonport. Book the caravan length in early; the Flex fare is worth it.</li><li><b>Sites:</b> many parks and free camps run reduced winter capacity — call ahead rather than rolling up at dusk.</li><li><b>Festivals:</b> the July–August events here are ticketed and popular — lock them in once we’ve fixed our dates.</li>"],
+    ["Winter driving with the rig", "<li><b>Highlands ice & snow:</b> Cradle, the Central Plateau, kunanyi and Mount Field can hold snow and black ice. Drive slow, leave gaps, check road status before we climb.</li><li><b>Leave the van low:</b> don't tow up the kunanyi summit road or other steep narrow climbs — drop the caravan and go up light.</li><li><b>Daylight is short</b> (~9 hrs). Be parked and set up well before dark; wildlife on the roads peaks at dusk.</li><li><b>Unsealed stretches:</b> Tarkine Drive, Bruny, Cockle Creek and Gordon Dam have gravel or remote runs — fuel up and check conditions.</li>"],
     ["What winter does well", "<li><b>It's the off-season</b> — Wineglass Bay, Bay of Fires and Port Arthur can be near-empty and at their most atmospheric.</li><li><b>Snow</b> dusts the peaks; <b>aurora</b> and dark skies are a genuine drawcard in the south.</li><li><b>In season:</b> oysters, scallops, truffles and whisky — and a fire and a pinot most evenings.</li><li><b>Storm-watching</b> on the east and west coasts is its own reward.</li>"],
-    ["Your key dates", "<li><b>1 Jul</b> — leave Sydney, towing for Geelong.</li><li><b>5 Jul</b> — overnight Spirit of Tasmania, Geelong → Devonport.</li><li><b>6 Jul</b> — wheels down in Tasmania.</li><li><b>9 Aug</b> — afternoon sailing back; <b>10 Aug</b> arrive Geelong.</li><li>That's <b>35 days</b> on the island — enough slack to wait out the weather.</li>"]
+    ["Our key dates", "<li><b>1 Jul</b> — leave Sydney, towing for Geelong.</li><li><b>5 Jul</b> — overnight Spirit of Tasmania, Geelong → Devonport.</li><li><b>6 Jul</b> — wheels down in Tasmania.</li><li><b>9 Aug</b> — afternoon sailing back; <b>10 Aug</b> arrive Geelong.</li><li>That's <b>35 days</b> on the island — enough slack to wait out the weather.</li>"]
 ];
 var KEY = 'tas_v1_state';
 var state = { assign: {}, userPlaces: [] };
@@ -795,7 +796,7 @@ function placeCard(p) {
     if (p.user)
         mark = '<span class="mark">· added</span>';
     else if (p.mine)
-        mark = '<span class="mark">★ your list</span>';
+        mark = '<span class="mark">★ our list</span>';
     return "<article class=\"card ".concat(inPlan ? 'in-plan' : '', " ").concat(a.visited ? 'visited' : '', "\" data-id=\"").concat(p.id, "\">\n    <div class=\"ctop\"><span class=\"tag ").concat(p.t, "\">").concat(TYPE_LABEL[p.t] || p.t, "</span>").concat(feeBadge(p), fpBadge(p), detourBadge(p), "<span class=\"reg\">").concat(esc(REGIONS[p.r] || ''), "</span>").concat(mark, "</div>\n    <h3>").concat(esc(p.n), "</h3>\n    ").concat(p.b ? '<p>' + esc(p.b) + '</p>' : '', "\n    ").concat(lines.join(''), "\n    <div class=\"cactions\">\n      <select class=\"day\" data-act=\"day\">").concat(dayOptions(sel), "</select>\n      <button class=\"iconbtn vis ").concat(a.visited ? 'on' : '', "\" data-act=\"vis\" title=\"Mark visited\" aria-label=\"Mark visited\">\u2713</button>\n      <button class=\"iconbtn fav ").concat(a.fav ? 'on' : '', "\" data-act=\"fav\" title=\"Save favourite\" aria-label=\"Save favourite\">\u2605</button>\n      ").concat(siteLink(p), gmapLink(p), "\n      ").concat(p.user ? '<button class="iconbtn" data-act="del" title="Delete" aria-label="Delete place">✕</button>' : '', "\n    </div>\n  </article>");
 }
 function renderDiscover() {
@@ -822,7 +823,7 @@ function renderDiscover() {
     if (filterType === 'hidden')
         suffix = ' off the beaten track';
     else if (filterType === 'mine')
-        suffix = ' from your list';
+        suffix = ' from our list';
     $('#discCount').textContent = list.length + ' place' + (list.length !== 1 ? 's' : '') + suffix;
     $('#grid').innerHTML = list.map(placeCard).join('') || '<p class="muted">No matches. Try clearing a filter, or add the place yourself.</p>';
 }
@@ -879,7 +880,7 @@ function renderItin() {
     var short = Object.keys(state.assign).filter(function (k) { var a = state.assign[k]; return a.in && !a.date && !a.visited; });
     var shortHtml = short.map(function (id) { var p = pById(id); if (!p)
         return ''; return '<span class="slpill">' + esc(p.n) + '<button class="x" data-rm="' + id + '" aria-label="Remove">✕</button></span>'; }).join('')
-        || '<p class="muted" style="margin:0">Nothing on the shortlist yet — star places in Discover and they\u2019ll wait here until you give them a day.</p>';
+        || '<p class="muted" style="margin:0">Nothing on the shortlist yet — star places in Discover and they\u2019ll wait here until we give them a day.</p>';
     var rows = DAYS.map(function (iso) {
         var f = fmtDay(iso);
         var items = Object.keys(state.assign).filter(function (k) { return state.assign[k].date === iso; });
@@ -892,18 +893,18 @@ function renderItin() {
             return '<div class="di ' + (a.visited ? 'done' : '') + '" data-id="' + id + '">' +
                 '<button class="check ' + (a.visited ? 'on' : '') + '" data-dact="vis" aria-label="Mark visited">' + (a.visited ? '✓' : '') + '</button>' +
                 '<div class="meat"><div class="nm">' + esc(p.n) + '<span class="t">' + (TYPE_LABEL[p.t] || '') + '</span></div>' +
-                '<div class="ntxt"><textarea data-dact="note" placeholder="Notes — booking time, where you parked the van…">' + esc(a.note || '') + '</textarea></div></div>' +
+                '<div class="ntxt"><textarea data-dact="note" placeholder="Notes — booking time, where we parked the van…">' + esc(a.note || '') + '</textarea></div></div>' +
                 '<button class="rm" data-dact="unset" aria-label="Remove from this day">✕</button></div>';
         }).join('') : '<div class="empty">Open — drop something in from Discover</div>';
         return '<div class="day ' + (today ? 'today' : '') + '"><div class="date"><div class="dow">' + f.dow + (today ? ' · today' : '') + '</div><div class="dnum">' + f.dnum + ' ' + f.mon + '</div><div class="trip">Day ' + tripNo(iso) + '</div></div><div class="items">' + itemsHtml + '</div></div>';
     }).join('');
     v.innerHTML =
-        '<div class="panel"><h2>What\u2019s on while you\u2019re there</h2><p class="sub">Winter festivals across your dates. Dates shift year to year — confirm the 2026 ones before you bank on them.</p><div class="whatson">' + evHtml + '</div></div>' +
-            '<div class="panel"><details class="route-d"><summary>A sensible five-week winter loop ▾</summary>' +
+        '<div class="panel"><h2>What\u2019s on while we\u2019re there</h2><p class="sub">Winter festivals across our dates. Dates shift year to year — confirm the 2026 ones before we bank on them.</p><div class="whatson">' + evHtml + '</div></div>' +
+            '<div class="panel"><details class="route-d"><summary>A suggested five-week winter loop ▾</summary>' +
             ROUTE.map(function (l) { return '<div class="leg"><span class="n">' + l[0] + '</span><span class="b">' + l[1] + '</span></div>'; }).join('') +
             '<p class="muted" style="margin:10px 0 0">Counter-clockwise from Devonport, with Hobart as a mid-trip base. There\u2019s slack built in to wait out the weather.</p></details></div>' +
             '<div class="panel"><h2>Shortlist</h2><p class="sub">Saved, waiting for a day.</p><div class="shortlist">' + shortHtml + '</div></div>' +
-            '<div class="panel"><h2>Day by day</h2><p class="sub">6 July → 9 August. Tick places off as you go; today is lit in ember.</p>' + rows + '</div>';
+            '<div class="panel"><h2>Day by day</h2><p class="sub">6 July → 9 August. Tick places off as we go; today is lit in ember.</p>' + rows + '</div>';
 }
 function onItinClick(e) {
     var rm = e.target.closest('[data-rm]');
@@ -941,7 +942,7 @@ function onItinInput(e) {
     setAssign(di.dataset.id, { note: t.value });
 }
 function renderKnow() { $('#view-know').innerHTML = '<div class="kg">' + KNOW.map(function (k) { return '<div class="kcard"><h3>' + k[0] + '</h3><ul>' + k[1] + '</ul></div>'; }).join('') + '</div>'; }
-var MAP_CHIPS = [['all', 'All'], ['mine', '★ Your list'], ['marquee', 'Must-see'], ['hidden', 'Hidden'], ['event', 'Events'], ['food', 'All Food'], ['pub', 'Pubs'], ['cafe', 'Cafés'], ['seafood', 'Seafood'], ['drink', 'Wine/Cider'], ['dining', 'Dining'], ['stay', 'Stays'], ['fish', 'Trout Fishing'], ['aqua', 'Aqua Aerobics'], ['bookshop', 'Bookshops'], ['jewellery', 'Jewellery']];
+var MAP_CHIPS = [['all', 'All'], ['mine', '★ Our list'], ['marquee', 'Must-see'], ['hidden', 'Hidden'], ['event', 'Events'], ['food', 'All Food'], ['pub', 'Pubs'], ['cafe', 'Cafés'], ['seafood', 'Seafood'], ['drink', 'Wine/Cider'], ['dining', 'Dining'], ['stay', 'Stays'], ['fish', 'Trout Fishing'], ['aqua', 'Aqua Aerobics'], ['bookshop', 'Bookshops'], ['jewellery', 'Jewellery']];
 var mapFilter = 'all', mapSel = null;
 var LMAP = null, MGROUP = null, MARKERS = {};
 var TAS_BOUNDS = [[-43.80, 144.45], [-40.50, 148.55]];
@@ -1001,7 +1002,7 @@ function popupHtml(p) {
     var a = state.assign[p.id] || {};
     var hue = TYPE_COLOR[p.t] || '#8FA6B2';
     var html = '<span class="pp-tag" style="color:' + hue + '">' + (TYPE_LABEL[p.t] || p.t) + '</span>';
-    if (p.mine) html += '<span class="pp-mine">\u2605 your list</span>';
+    if (p.mine) html += '<span class="pp-mine">\u2605 our list</span>';
     if (a.visited) html += '<span class="pp-mine" style="color:#7FC9A0">\u2713 visited</span>';
     html += '<h3>' + esc(p.n) + ' ' + feeBadge(p) + ' ' + fpBadge(p) + ' ' + detourBadge(p) + '</h3>';
     if (p.b) html += '<p>' + esc(p.b) + '</p>';
@@ -1071,7 +1072,7 @@ function mapDetailHtml() {
     if (p.when) lines += '<div class="note-line when"><span class="k">When</span><span>' + esc(p.when) + '</span></div>';
     if (p.van) lines += '<div class="note-line van"><span class="k">Van</span><span>' + esc(p.van) + '</span></div>';
     if (p.tip) lines += '<div class="note-line tip"><span class="k">Tip</span><span>' + esc(p.tip) + '</span></div>';
-    return '<div class="ctop"><span class="tag ' + p.t + '">' + (TYPE_LABEL[p.t] || p.t) + '</span>' + feeBadge(p) + fpBadge(p) + detourBadge(p) + '<span class="reg">' + esc(REGIONS[p.r] || '') + '</span>' + (p.mine ? '<span class="mark">\u2605 your list</span>' : '') + '</div>' +
+    return '<div class="ctop"><span class="tag ' + p.t + '">' + (TYPE_LABEL[p.t] || p.t) + '</span>' + feeBadge(p) + fpBadge(p) + detourBadge(p) + '<span class="reg">' + esc(REGIONS[p.r] || '') + '</span>' + (p.mine ? '<span class="mark">\u2605 our list</span>' : '') + '</div>' +
         '<h3 style="font-family:var(--serif);font-weight:600;font-size:20px;margin:4px 0 7px;letter-spacing:-.01em">' + esc(p.n) + '</h3>' +
         (p.b ? '<p style="margin:0 0 9px;color:var(--dim);font-size:13.5px">' + esc(p.b) + '</p>' : '') + lines +
         '<div class="cactions"><select class="day" data-act="day">' + dayOptions(sel) + '</select>' +
