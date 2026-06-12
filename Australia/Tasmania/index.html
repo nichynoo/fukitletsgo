@@ -19,6 +19,26 @@
   --sans:'Inter',system-ui,-apple-system,sans-serif;
   --mono:'Space Mono',ui-monospace,monospace;
 }
+html[data-theme="light"]{
+  --bg:#F5F1E9; --bg2:#EDE7DB; --surface:#FFFFFF; --surface-hi:#F3EEE4;
+  --line:#D7CFBF; --line-soft:#E4DDCD;
+  --frost:#243440; --dim:#566875; --faint:#8E9AA4;
+  --ember:#C96A2A; --ember-deep:#AD5719;
+  --glacier:#1F7A94; --aurora:#27926B; --dusk:#6E54B8; --honey:#9A7714; --slate:#5D7484;
+}
+html[data-theme="light"] body{background:var(--bg)}
+html[data-theme="light"] .tab[aria-selected="true"]{color:#F5F1E9}
+html[data-theme="light"] .chip[aria-pressed="true"]{background:rgba(36,52,64,.08)}
+html[data-theme="light"] .mast .aur{background:radial-gradient(60% 80% at 25% 0%, rgba(39,146,107,.14), transparent 60%),radial-gradient(50% 80% at 78% 10%, rgba(110,84,184,.10), transparent 60%),radial-gradient(40% 70% at 55% -10%, rgba(31,122,148,.10), transparent 60%)}
+html[data-theme="light"] .range path:nth-of-type(1){fill:#DDD5C4}
+html[data-theme="light"] .range path:nth-of-type(2){fill:#E8E1D1}
+html[data-theme="light"] .range g{fill:#243440}
+html[data-theme="light"] .leaflet-control-attribution{background:rgba(245,241,233,.75)!important}
+html[data-theme="light"] .leaflet-popup-content .pp-tag{filter:brightness(.62) saturate(1.35)}
+html[data-theme="light"] .leaflet-popup-content-wrapper{box-shadow:0 8px 24px rgba(40,40,30,.18)}
+.themebtn{position:absolute; top:12px; right:14px; z-index:4; appearance:none; border:1px solid var(--line-soft); background:var(--surface); color:var(--frost); border-radius:999px; padding:7px 13px; font-family:var(--mono); font-size:11px; letter-spacing:.06em; cursor:pointer}
+.themebtn:hover{border-color:var(--glacier)}
+
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg); color:var(--frost); font-family:var(--sans); font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased}
@@ -213,10 +233,12 @@ a.gmap:hover{border-color:var(--glacier)}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>(function(){var t='dark';try{t=localStorage.getItem('tas_theme2')||'dark'}catch(e){}document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body>
 
 <div class="mast">
+  <button class="themebtn" id="themeBtn" type="button" aria-label="Switch colour theme">☾ dark</button>
   <div class="aur"></div>
   <svg class="range" viewBox="0 0 1080 64" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0 64 L0 40 L120 16 L210 38 L330 8 L430 34 L540 18 L660 40 L770 14 L880 36 L990 20 L1080 42 L1080 64 Z" fill="#1A2730"/>
@@ -1209,7 +1231,14 @@ function wireAdd() {
         renderDiscover();
     };
 }
+function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem('tas_theme2', t); } catch (e) {}
+    var b = $('#themeBtn'); if (b) b.textContent = (t === 'light') ? '\u263e dark' : '\u2600 light';
+}
 (function init() {
+    var tb = $('#themeBtn');
+    if (tb) { applyTheme(document.documentElement.getAttribute('data-theme') || 'dark'); tb.onclick = function () { applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light'); }; }
     fillRegionSelects();
     wireAdd();
     $('#typeChips').addEventListener('click', function (e) {
