@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -204,6 +205,10 @@ a.gmap:hover{border-color:var(--glacier)}
 .leaflet-popup-content .fp{vertical-align:middle;margin-left:6px}
 .leaflet-popup-content h3 .fp{font-size:9px;font-family:var(--mono);font-weight:400}
 
+
+.ev .event-link{display:inline-block;margin-top:9px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--glacier);text-decoration:none;border:1px solid var(--line-soft);padding:7px 9px;border-radius:9px}
+.ev .event-link:hover{border-color:var(--glacier)}
+
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -373,7 +378,7 @@ var PLACES = [
     { id: 'gunns', r: 0, t: 'hidden', n: 'Gunns Plains Caves', b: "No fanfare above ground, just farmland — then a guided drop into glow-worm dark and sideways 'shawl' formations. A quiet marvel.", tip: "Guided tours only — check the reduced winter tour times." },
     { id: 'leven', r: 0, t: 'hidden', mine: 1, n: 'Leven Canyon', b: "A 275 m-deep ravine with a short, easy rim walk to a lookout platform cantilevered over the gorge.", tip: "The edge-lookout walk is the quick one — about 20 minutes return." },
     { id: 'penguin', r: 0, t: 'cafe', n: 'Penguin', b: "A seaside town that leans all the way into its name — a giant penguin statue, penguin-shaped bins, and a good Sunday market." },
-    { id: 'trespass', r: 0, t: 'event', n: 'Permission to Trespass', when: "Early–mid July", b: "The north-west unlocks private gates, heritage land and hidden homes normally off-limits — long lunches, clifftop dining and art in places you couldn't otherwise reach.", tip: "Ticketed and sells out — book ahead, confirm 2026 dates." },
+    { id: 'trespass', r: 0, t: 'event', n: 'Permission to Trespass', when: "Early–mid July", b: "The north-west unlocks private gates, heritage land and hidden homes normally off-limits — long lunches, clifftop dining and art in places you couldn't otherwise reach.", tip: "Ticketed and sells out — book ahead, confirm 2026 dates." , url:'https://northwesttasmania.com.au/permissiontotrespass/'},
     // Cradle & Central Highlands
     { id: 'cradle', r: 1, t: 'marquee', mine: 1, n: 'Cradle Mountain & Dove Lake', b: "The headline act — the jagged peak above black, glacial Dove Lake, wombats on the buttongrass, and in July a real chance of snow.", van: "Leave the van at the visitor centre; the shuttle runs in to Dove Lake.", tip: "Check park road alerts for ice before you drive up." },
     { id: 'ronnycreek', r: 1, t: 'hidden', mine: 1, n: 'Ronny Creek & the Overland Track start', b: "The official start of the Overland Track and the best wombat boardwalk in the park — a flat, short loop, brilliant at dawn or dusk." },
@@ -401,7 +406,7 @@ var PLACES = [
     { id: 'peron', r: 3, t: 'hidden', mine: 1, n: 'Peron Dunes', b: "Big, pale sand dunes at Stieglitz near St Helens — a striking, slightly surreal stop on the north-east coast." },
     { id: 'pubpaddock', r: 3, t: 'pub', mine: 1, n: 'The Pub in the Paddock, Pyengana', b: "An 1880s country pub famous for its beer-drinking pig — a charming detour inland from St Helens." },
     { id: 'derby', r: 3, t: 'marquee', n: 'Derby & the Floating Sauna', b: "A former tin town reborn as a world-class mountain-bike network in the rainforest. Even without a bike, the Floating Sauna on Lake Derby is worth it.", tip: "Book the lake sauna ahead — a perfect cold-day soak." },
-    { id: 'bridport', r: 3, t: 'event', n: 'Tassie Scallop Fiesta, Bridport', when: "Early August", b: "A small north-east fishing town throws a scallop festival at the peak of the season — chowder, shucking and maritime tradition.", tip: "Confirm the 2026 date." },
+    { id: 'bridport', r: 3, t: 'event', n: 'Tassie Scallop Fiesta, Bridport', when: "Early August", b: "A small north-east fishing town throws a scallop festival at the peak of the season — chowder, shucking and maritime tradition.", tip: "Confirm the 2026 date." , url:'https://www.tassiescallopfiesta.com.au/'},
     { id: 'bluelake', r: 3, t: 'hidden', n: 'Little Blue Lake, Gladstone', b: "A startling milky-aqua lake coloured by old tin-mine minerals (look, don't swim). A surreal far-north-east stop." },
     // East Coast
     { id: 'denison', r: 4, t: 'hidden', mine: 1, n: 'Denison Beach', b: "A long, quiet sweep of east-coast sand near Scamander — the kind of empty winter beach you stop at and have to yourself." },
@@ -421,9 +426,9 @@ var PLACES = [
     { id: 'mona', r: 5, t: 'marquee', mine: 1, n: 'MONA', b: "David Walsh's subterranean 'subversive adult Disneyland' — confronting, funny, unforgettable. Take the ferry up the Derwent to arrive properly.", tip: "Closed some weekdays in winter — check opening days." },
     { id: 'kunanyi', r: 5, t: 'marquee', n: 'kunanyi / Mt Wellington', b: "1,271 m straight above the city, often under snow in July — drive (or be driven) to the summit for views to the Southern Ocean.", van: "Don't take the van up — steep, narrow and ices over. Leave it in town.", tip: "The road closes for snow/ice; check the gate status." },
     { id: 'salamanca', r: 5, t: 'food', mine: 1, n: 'Salamanca Market', when: "Saturdays", b: "Hundreds of stalls along the sandstone warehouses every Saturday morning — produce, makers and hot food, rain, shine or sleet.", tip: "Plan a Saturday in Hobart around this." },
-    { id: 'voices', r: 5, t: 'event', n: 'Festival of Voices', when: "Early–mid July", b: "Australia's big celebration of the voice — choirs filling Hobart's halls, churches, pubs and street corners, capped by a fire-lit night.", tip: "Confirm 2026 dates." },
-    { id: 'beaker', r: 5, t: 'event', n: 'Beaker Street Festival', when: "Mid August", b: "A genuinely quirky science-and-art festival — glowing flora-and-fauna tours, dark-sky nights and the hunt for the Aurora Australis with actual scientists.", tip: "Confirm 2026 dates." },
-    { id: 'whisky', r: 5, t: 'event', n: 'Tasmanian Whisky Week', when: "Early August", b: "A week of tastings and stories across the island's distilleries, north and south. Just don't drive on the good stuff." },
+    { id: 'voices', r: 5, t: 'event', n: 'Festival of Voices', when: "Early–mid July", b: "Australia's big celebration of the voice — choirs filling Hobart's halls, churches, pubs and street corners, capped by a fire-lit night.", tip: "Confirm 2026 dates." , url:'https://festivalofvoices.com/'},
+    { id: 'beaker', r: 5, t: 'event', n: 'Beaker Street Festival', when: "Mid August", b: "A genuinely quirky science-and-art festival — glowing flora-and-fauna tours, dark-sky nights and the hunt for the Aurora Australis with actual scientists.", tip: "Confirm 2026 dates." , url:'https://www.beakerstreet.com.au/festival/'},
+    { id: 'whisky', r: 5, t: 'event', n: 'Tasmanian Whisky Week', when: "Early August", b: "A week of tastings and stories across the island's distilleries, north and south. Just don't drive on the good stuff." , url:'https://www.taswhiskyweek.com/'},
     { id: 'bonorong', r: 5, t: 'marquee', n: 'Bonorong Wildlife Sanctuary', b: "A rescue sanctuary north of Hobart — close-up devils, wombats and quolls, with night feeding tours and hand-feeding roos in the frost." },
     { id: 'richmond', r: 5, t: 'hidden', mine: 1, n: 'Richmond & the Pooseum', b: "Australia's oldest road bridge, a convict gaol, a Georgian village — and, yes, the Pooseum, a whole museum of animal droppings. Half an hour from Hobart." },
     { id: 'mtfield', r: 5, t: 'marquee', mine: 1, n: 'Mount Field — Russell Falls', b: "Russell Falls — tiered rainforest falls on an easy, pram-flat stroll from the car park — plus towering swamp gums and snow up at Lake Dobson." },
@@ -432,7 +437,7 @@ var PLACES = [
     { id: 'sparkle', r: 5, t: 'hidden', mine: 1, n: 'Sea sparkle (bioluminescence)', b: "Bioluminescent plankton that lights the water electric-blue on dark, still nights, often around southern Hobart beaches.", tip: "Reading your 'sparkly water' as this — needs a dark, moonless night and luck. Check local sightings pages, or tell me if you meant a named place." },
     // Bruny & the Huon
     { id: 'bruny', r: 6, t: 'marquee', mine: 1, n: 'Bruny Island', b: "Cross by ferry to oysters, cheese, whisky and the wind-blasted Neck lookout — two islands joined by a sandspit, a lighthouse at the far south.", van: "The vehicle ferry takes caravans (priced by length); some island roads are unsealed." },
-    { id: 'huonfest', r: 6, t: 'event', n: 'Huon Valley Mid-Winter Festival', when: "Mid July", b: "A pagan-flavoured apple-country knees-up at Willie Smith's Apple Shed near Huonville — cider, wassailing, fire and a fair bit of costume.", tip: "Ticketed — confirm 2026 dates." },
+    { id: 'huonfest', r: 6, t: 'event', n: 'Huon Valley Mid-Winter Festival', when: "Mid July", b: "A pagan-flavoured apple-country knees-up at Willie Smith's Apple Shed near Huonville — cider, wassailing, fire and a fair bit of costume.", tip: "The original Mid-Winter Festival has changed over time — check Willie Smith’s current Apple Shed events before you plan around it." , url:'https://www.williesmiths.com.au/Apple-shed'},
     { id: 'tahune', r: 6, t: 'marquee', n: 'Tahune Airwalk', b: "A steel walkway out over the Huon and Picton rivers, high in the canopy — cantilevered ends that bounce gently above the confluence." },
     { id: 'hastings', r: 6, t: 'hidden', n: 'Hastings Caves & Thermal Springs', b: "A grand dolomite cave, then a warm thermal pool in the forest — the one place in Tasmania where winter swimming actually makes sense." },
     { id: 'cockle', r: 6, t: 'hidden', mine: 1, n: 'Cockle Creek', b: "The southernmost point you can drive to in Australia — the road just runs out at the edge of the wilderness. Bleak, beautiful, the end of the map.", van: "Final stretch is unsealed and remote; check conditions and fuel first." },
@@ -724,6 +729,16 @@ function fpBadge(p) {
     return '<span class="fp ' + fpClass(p.fp) + '">' + fpText(p.fp) + '</span>';
 }
 
+
+
+function siteLink(p) {
+    return p.url ? '<a class="gmap" href="' + esc(p.url) + '" target="_blank" rel="noopener">Website ↗</a>' : '';
+}
+
+function eventLink(p) {
+    return p.url ? '<a class="event-link" href="' + esc(p.url) + '" target="_blank" rel="noopener">Event website ↗</a>' : '';
+}
+
 function gmap(p){ if (typeof LL !== 'undefined' && LL[p.id]) return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(LL[p.id][0].toFixed(6)+','+LL[p.id][1].toFixed(6)); return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((p.n||'')+', Tasmania'); }
 function gmapLink(p){ return '<a class="gmap" href="'+gmap(p)+'" target="_blank" rel="noopener">Maps \u2197</a>'; }
 function buildReadout() {
@@ -782,7 +797,7 @@ function placeCard(p) {
         mark = '<span class="mark">· added</span>';
     else if (p.mine)
         mark = '<span class="mark">★ your list</span>';
-    return "<article class=\"card ".concat(inPlan ? 'in-plan' : '', " ").concat(a.visited ? 'visited' : '', "\" data-id=\"").concat(p.id, "\">\n    <div class=\"ctop\"><span class=\"tag ").concat(p.t, "\">").concat(TYPE_LABEL[p.t] || p.t, "</span>").concat(feeBadge(p), fpBadge(p), detourBadge(p), "<span class=\"reg\">").concat(esc(REGIONS[p.r] || ''), "</span>").concat(mark, "</div>\n    <h3>").concat(esc(p.n), "</h3>\n    ").concat(p.b ? '<p>' + esc(p.b) + '</p>' : '', "\n    ").concat(lines.join(''), "\n    <div class=\"cactions\">\n      <select class=\"day\" data-act=\"day\">").concat(dayOptions(sel), "</select>\n      <button class=\"iconbtn vis ").concat(a.visited ? 'on' : '', "\" data-act=\"vis\" title=\"Mark visited\" aria-label=\"Mark visited\">\u2713</button>\n      <button class=\"iconbtn fav ").concat(a.fav ? 'on' : '', "\" data-act=\"fav\" title=\"Save favourite\" aria-label=\"Save favourite\">\u2605</button>\n      ").concat(gmapLink(p), "\n      ").concat(p.user ? '<button class="iconbtn" data-act="del" title="Delete" aria-label="Delete place">✕</button>' : '', "\n    </div>\n  </article>");
+    return "<article class=\"card ".concat(inPlan ? 'in-plan' : '', " ").concat(a.visited ? 'visited' : '', "\" data-id=\"").concat(p.id, "\">\n    <div class=\"ctop\"><span class=\"tag ").concat(p.t, "\">").concat(TYPE_LABEL[p.t] || p.t, "</span>").concat(feeBadge(p), fpBadge(p), detourBadge(p), "<span class=\"reg\">").concat(esc(REGIONS[p.r] || ''), "</span>").concat(mark, "</div>\n    <h3>").concat(esc(p.n), "</h3>\n    ").concat(p.b ? '<p>' + esc(p.b) + '</p>' : '', "\n    ").concat(lines.join(''), "\n    <div class=\"cactions\">\n      <select class=\"day\" data-act=\"day\">").concat(dayOptions(sel), "</select>\n      <button class=\"iconbtn vis ").concat(a.visited ? 'on' : '', "\" data-act=\"vis\" title=\"Mark visited\" aria-label=\"Mark visited\">\u2713</button>\n      <button class=\"iconbtn fav ").concat(a.fav ? 'on' : '', "\" data-act=\"fav\" title=\"Save favourite\" aria-label=\"Save favourite\">\u2605</button>\n      ").concat(siteLink(p), gmapLink(p), "\n      ").concat(p.user ? '<button class="iconbtn" data-act="del" title="Delete" aria-label="Delete place">✕</button>' : '', "\n    </div>\n  </article>");
 }
 function renderDiscover() {
     var list = allPlaces().filter(function (p) {
@@ -861,7 +876,7 @@ function onGridChange(e) {
 function renderItin() {
     var v = $('#view-itin');
     var events = allPlaces().filter(function (p) { return p.t === 'event'; });
-    var evHtml = events.map(function (p) { return '<div class="ev"><div class="d">' + esc(p.when || 'Winter') + '</div><div class="nm">' + esc(p.n) + '</div><p>' + esc(p.b || '') + '</p></div>'; }).join('');
+    var evHtml = events.map(function (p) { return '<div class="ev"><div class="d">' + esc(p.when || 'Winter') + '</div><div class="nm">' + esc(p.n) + '</div><p>' + esc(p.b || '') + '</p>' + eventLink(p) + '</div>'; }).join('');
     var short = Object.keys(state.assign).filter(function (k) { var a = state.assign[k]; return a.in && !a.date && !a.visited; });
     var shortHtml = short.map(function (id) { var p = pById(id); if (!p)
         return ''; return '<span class="slpill">' + esc(p.n) + '<button class="x" data-rm="' + id + '" aria-label="Remove">✕</button></span>'; }).join('')
@@ -1030,7 +1045,7 @@ function mapResultCard(p) {
     if (p.van) notes += '<div class="note-line van"><span class="k">Van</span><span>' + esc(p.van) + '</span></div>';
     if (p.tip) notes += '<div class="note-line tip"><span class="k">Tip</span><span>' + esc(p.tip) + '</span></div>';
     return '<article class="mcard" data-id="' + p.id + '"><div class="ctop">' + meta + '</div><h3>' + esc(p.n) + '</h3>' + body + notes +
-        '<div class="m-actions"><button class="m-focus" data-map-focus="' + p.id + '">Show on map</button>' + gmapLink(p) + '</div></article>';
+        '<div class="m-actions"><button class="m-focus" data-map-focus="' + p.id + '">Show on map</button>' + siteLink(p) + gmapLink(p) + '</div></article>';
 }
 function renderMapResults() {
     var count = document.getElementById('mapResultsCount');
