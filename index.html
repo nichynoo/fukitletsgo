@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FUKITLETSGO — two of us, one caravan, whatever's down the road</title>
+<meta name="description" content="FUKITLETSGO: trip planners, maps and mischief from a couple and their caravan. Currently: Tasmania, in winter, on purpose.">
+<meta property="og:title" content="FUKITLETSGO">
+<meta property="og:description" content="Two of us. One caravan. Whatever's down the road. Currently: Tasmania, in winter, on purpose.">
+<meta property="og:image" content="https://nichynoo.github.io/fukitletsgo/logo.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sea:#16686F; --sea-deep:#0E4A52; --sea-light:#2BA0A8;
+  --sand:#F3EBDD; --paper:#FBF7EF;
+  --ink:#15333A; --dim:#54707A;
+  --flame:#BC2C35; --ember:#A9472B; --peach:#E08562;
+  --sans:'Inter',system-ui,sans-serif; --mono:'Space Mono',monospace; --display:'Anton',Impact,sans-serif;
+}
+*{box-sizing:border-box; margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans); color:var(--ink); background:var(--paper)}
+
+/* ---------- hero ---------- */
+.hero{position:relative; background:linear-gradient(180deg,var(--sea-deep) 0%, var(--sea) 55%, var(--sea-light) 100%); color:#fff; text-align:center; padding:64px 20px 0; overflow:hidden}
+.hero::before{content:""; position:absolute; inset:0;
+  background:radial-gradient(70% 50% at 50% 0%, rgba(255,255,255,.10), transparent 60%); pointer-events:none}
+.logo{width:min(46vw,210px); border-radius:50%; box-shadow:0 14px 40px rgba(0,0,0,.35); border:5px solid rgba(255,255,255,.92)}
+h1{font-family:var(--display); font-size:clamp(56px,12vw,124px); line-height:.92; letter-spacing:.01em; text-transform:uppercase; margin-top:26px; text-shadow:0 4px 0 rgba(0,0,0,.18)}
+h1 .go{color:var(--peach)}
+.tag{font-family:var(--mono); font-size:clamp(13px,2.6vw,17px); letter-spacing:.14em; text-transform:uppercase; color:#D8EBEA; margin:18px auto 8px; max-width:620px}
+.cta{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:30px 0 0; position:relative; z-index:2}
+.btn{display:inline-block; font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; padding:15px 26px; border-radius:999px; transition:transform .12s ease, box-shadow .12s ease}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--flame); color:#fff; box-shadow:0 8px 22px rgba(188,44,53,.4)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-ghost{background:rgba(255,255,255,.14); color:#fff; border:2px solid rgba(255,255,255,.7)}
+.btn-ghost:hover{background:rgba(255,255,255,.24)}
+.waves{display:block; width:100%; height:84px; margin-top:46px}
+
+/* ---------- countdown ---------- */
+.count{background:var(--sand); padding:26px 20px; text-align:center}
+.count .label{font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ember)}
+.count .big{font-family:var(--display); font-size:clamp(34px,7vw,56px); color:var(--ink); text-transform:uppercase; margin-top:6px}
+
+/* ---------- trips ---------- */
+.section{max-width:980px; margin:0 auto; padding:64px 20px}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--ember)}
+h2{font-family:var(--display); font-size:clamp(34px,6vw,52px); text-transform:uppercase; margin:8px 0 28px}
+.cards{display:grid; grid-template-columns:1fr; gap:18px}
+@media(min-width:700px){.cards{grid-template-columns:1fr 1fr}}
+.card{position:relative; border-radius:18px; padding:26px; text-decoration:none; color:inherit; display:block; border:2px solid transparent; transition:transform .14s ease, box-shadow .14s ease}
+.card.live{background:linear-gradient(135deg,var(--sea-deep),var(--sea)); color:#fff; box-shadow:0 14px 36px rgba(14,74,82,.35)}
+.card.live:hover{transform:translateY(-4px)}
+.card.soon{background:#fff; border-color:#E4DACA; color:var(--dim)}
+.pill{display:inline-block; font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; padding:5px 11px; border-radius:999px; margin-bottom:14px}
+.live .pill{background:var(--flame); color:#fff}
+.soon .pill{background:#EFE7D8; color:var(--ember)}
+.card h3{font-family:var(--display); font-size:30px; text-transform:uppercase; letter-spacing:.01em}
+.card p{margin-top:10px; font-size:15px; line-height:1.55}
+.live p{color:#CFE6E5}
+.card .meta{font-family:var(--mono); font-size:12px; margin-top:16px; letter-spacing:.06em}
+.live .meta{color:var(--peach)}
+.card .go-arrow{position:absolute; right:22px; bottom:18px; font-size:24px}
+
+/* ---------- about ---------- */
+.about{background:var(--sea-deep); color:#E7F2F1; text-align:center}
+.about .inner{max-width:680px; margin:0 auto; padding:64px 20px}
+.about p{font-size:17px; line-height:1.7; margin-top:14px}
+.about .kicker{color:var(--peach)}
+
+/* ---------- footer ---------- */
+footer{background:var(--ink); color:#9DB6BC; text-align:center; padding:34px 20px; font-family:var(--mono); font-size:12px; letter-spacing:.08em}
+footer a{color:var(--peach); text-decoration:none}
+footer a:hover{text-decoration:underline}
+.insta{display:inline-block; margin-bottom:10px; font-size:14px; font-weight:700; text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img class="logo" src="logo.png" alt="FUKITLETSGO compass logo over a Tasmanian beach">
+  <h1>Fukit<br><span class="go">Let&rsquo;s&nbsp;Go!</span></h1>
+  <p class="tag">Two of us &middot; one caravan &middot; whatever&rsquo;s down the road</p>
+  <div class="cta">
+    <a class="btn btn-primary" href="Australia/Tasmania/">Open the Tassie planner</a>
+    <a class="btn btn-ghost" href="https://www.instagram.com/fukitletsgo/" target="_blank" rel="noopener">Follow on Instagram</a>
+  </div>
+  <svg class="waves" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,40 C240,90 480,0 720,40 C960,80 1200,10 1440,50 L1440,90 L0,90 Z" fill="#F3EBDD"/>
+  </svg>
+</header>
+
+<div class="count">
+  <div class="label">Current status</div>
+  <div class="big" id="countdown">Tasmania, in winter, on purpose</div>
+</div>
+
+<main class="section" id="trips">
+  <div class="kicker">The trips</div>
+  <h2>Where we&rsquo;re pointed</h2>
+  <div class="cards">
+    <a class="card live" href="Australia/Tasmania/">
+      <span class="pill">Live now</span>
+      <h3>Tasmania &mdash; Winter 2026</h3>
+      <p>Five weeks around the island in the Lotus Trooper. 245 options mapped &mdash; free camps, trout waters, hidden gems, pubs, and an unreasonable number of aqua aerobics pools.</p>
+      <div class="meta">6 JUL &rarr; 9 AUG &middot; INTERACTIVE PLANNER</div>
+      <span class="go-arrow">&rarr;</span>
+    </a>
+    <div class="card soon">
+      <span class="pill">Up next</span>
+      <h3>To be decided</h3>
+      <p>The caravan doesn&rsquo;t know it yet. Vote on the next one over on Instagram &mdash; loudest comment wins.</p>
+      <div class="meta">TBA &middot; SUGGESTIONS OPEN</div>
+    </div>
+  </div>
+</main>
+
+<section class="about">
+  <div class="inner">
+    <div class="kicker">The whole idea</div>
+    <h2>Plans are optional.<br>Knowing the options isn&rsquo;t.</h2>
+    <p>We map everything worth knowing about before we go &mdash; every free camp, every pie worth a detour, every lagoon with a trout in it &mdash; then we wing it. The planner is the map; the road decides the rest.</p>
+  </div>
+</section>
+
+<footer>
+  <a class="insta" href="https://www.instagram.com/fukitletsgo/" target="_blank" rel="noopener">@fukitletsgo</a><br>
+  Built by us, for us &mdash; shared because you asked.<br>
+  <span style="opacity:.6">&copy; 2026 FUKITLETSGO</span>
+</footer>
+
+<script>
+(function(){
+  var dep=new Date('2026-07-01T00:00:00+10:00');
+  var back=new Date('2026-08-10T00:00:00+10:00');
+  var onIsland=new Date('2026-07-06T00:00:00+10:00');
+  var now=new Date();
+  var el=document.getElementById('countdown');
+  var d=Math.ceil((dep-now)/86400000);
+  if(now<dep){ el.textContent=d+(d===1?' day':' days')+' until we roll'; }
+  else if(now<onIsland){ el.textContent='On the road \u2192 Geelong'; }
+  else if(now<back){ var n=Math.floor((now-onIsland)/86400000)+1; el.textContent='Day '+n+' of 35 on the island'; }
+  else { el.textContent='Home. Planning the next one.'; }
+})();
+</script>
+</body>
+</html>
