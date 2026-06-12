@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mount Colah → Spirit of Tasmania | Trip Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bitumen:#18293a;        /* deep strait ink */
+    --mist:#eaf0f3;           /* sea-mist background */
+    --card:#ffffff;
+    --sign-green:#0f7fa6;     /* sea blue (primary) */
+    --sign-green-deep:#0a2e42;/* deep water */
+    --gold:#d3a45c;           /* sand */
+    --river:#34688f;          /* denim blue (links) */
+    --strait:#14283c;         /* Bass Strait navy */
+    --line:#ccd8de;
+    --muted:#5f7280;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Barlow',system-ui,sans-serif;
+    background:var(--mist);
+    color:var(--bitumen);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 80px}
+
+  /* ---------- header ---------- */
+  header{
+    background:var(--sign-green);
+    background:linear-gradient(160deg,var(--sign-green) 0%,var(--sign-green-deep) 100%);
+    color:#fff;
+    padding:34px 16px 30px;
+    border-bottom:6px solid var(--gold);
+  }
+  .hd-inner{max-width:760px;margin:0 auto}
+  .eyebrow{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;font-size:14px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:8px;
+  }
+  h1{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;font-size:clamp(34px,7vw,52px);
+    line-height:1.02;text-transform:uppercase;letter-spacing:.01em;
+  }
+  h1 .arrow{color:var(--gold)}
+  .hd-stats{
+    display:flex;gap:0;margin-top:20px;
+    border:2px solid rgba(255,255,255,.35);border-radius:8px;overflow:hidden;
+    font-family:'Barlow Condensed',sans-serif;
+  }
+  .hd-stat{
+    flex:1;padding:10px 6px;text-align:center;
+    border-right:2px solid rgba(255,255,255,.35);
+  }
+  .hd-stat:last-child{border-right:none}
+  .hd-stat b{display:block;font-size:24px;font-weight:700;line-height:1.1}
+  .hd-stat span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+
+  /* ---------- route ribbon ---------- */
+  .ribbon{
+    margin:26px 0 8px;position:relative;padding-left:34px;
+  }
+  .ribbon::before{
+    content:"";position:absolute;left:13px;top:10px;bottom:10px;width:6px;
+    background:var(--bitumen);border-radius:3px;
+  }
+  .ribbon::after{ /* centre line dashes */
+    content:"";position:absolute;left:15.5px;top:14px;bottom:14px;width:1px;
+    background-image:linear-gradient(var(--gold) 55%,transparent 0);
+    background-size:1px 16px;
+  }
+  .stop{position:relative;padding:0 0 22px}
+  .stop:last-child{padding-bottom:0}
+  .stop::before{
+    content:"";position:absolute;left:-29px;top:6px;width:16px;height:16px;
+    background:var(--sign-green);border:3px solid var(--mist);border-radius:50%;
+    box-shadow:0 0 0 2px var(--sign-green);
+  }
+  .stop.ferry::before{background:var(--strait);box-shadow:0 0 0 2px var(--strait)}
+  .stop a{color:inherit;text-decoration:none;display:block}
+  .stop-name{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;
+    text-transform:uppercase;letter-spacing:.03em;
+  }
+  .stop-sub{font-size:13.5px;color:var(--muted)}
+  .leg-tag{
+    display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:600;
+    font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+    background:var(--bitumen);color:#fff;border-radius:4px;padding:1px 8px;margin-bottom:3px;
+  }
+
+  /* ---------- section titles ---------- */
+  h2{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;
+    font-size:26px;text-transform:uppercase;letter-spacing:.04em;
+    margin:38px 0 14px;display:flex;align-items:center;gap:12px;
+  }
+  h2::after{content:"";flex:1;height:3px;background:var(--gold);border-radius:2px}
+
+  /* ---------- day cards ---------- */
+  .day{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    margin-bottom:18px;overflow:hidden;
+    box-shadow:0 1px 3px rgba(38,40,31,.07);
+  }
+  .day-head{
+    display:flex;align-items:stretch;gap:0;border-bottom:1px solid var(--line);
+  }
+  .day-date{
+    background:var(--sign-green);color:#fff;min-width:78px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:'Barlow Condensed',sans-serif;padding:12px 8px;
+  }
+  .day-date .dow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .day-date .dnum{font-size:30px;font-weight:700;line-height:1}
+  .day-date .mon{font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+  .day.ferry-day .day-date{background:var(--strait)}
+  .day-title{padding:12px 16px;flex:1}
+  .day-title h3{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:23px;
+    text-transform:uppercase;line-height:1.05;
+  }
+  .day-title .leg{font-size:13.5px;color:var(--muted);margin-top:2px}
+  .day-body{padding:16px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:13px}
+  .chip{
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:13px;
+    letter-spacing:.06em;text-transform:uppercase;
+    border-radius:99px;padding:3px 11px;border:1.5px solid var(--line);color:var(--muted);
+  }
+  .chip.free{background:var(--sign-green);border-color:var(--sign-green);color:#fff}
+  .chip.gold{background:#f8f1e0;border-color:var(--gold);color:#8c6a2a}
+  .chip.blue{background:#e8f0f5;border-color:var(--river);color:var(--river)}
+  .camp-name{font-weight:700;font-size:17px}
+  .camp-name a{color:var(--river);text-decoration:none;border-bottom:1.5px solid #b9cedd}
+  .day-body p{font-size:15px;margin-bottom:10px}
+  .day-body p:last-child{margin-bottom:0}
+  .charm{
+    background:#f9f4e9;border-left:4px solid var(--gold);
+    border-radius:0 8px 8px 0;padding:10px 13px;font-size:14.5px;margin:12px 0;
+  }
+  .charm b{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;
+    letter-spacing:.08em;font-size:13px;color:#8c6a2a;display:block;margin-bottom:2px}
+
+  details{border-top:1px dashed var(--line);margin-top:13px;padding-top:11px}
+  summary{
+    cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:600;
+    font-size:14.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--river);
+    list-style:none;display:flex;align-items:center;gap:7px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+";font-size:18px;line-height:1;color:var(--gold);font-weight:700}
+  details[open] summary::before{content:"–"}
+  details .inner{padding-top:9px;font-size:14.5px}
+  details .inner p{margin-bottom:8px}
+
+  /* ---------- ferry timeline ---------- */
+  .timeline{margin:6px 0 12px}
+  .t-row{display:flex;gap:13px;padding:8px 0;border-bottom:1px dashed var(--line);align-items:baseline}
+  .t-row:last-child{border-bottom:none}
+  .t-time{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;
+    min-width:74px;color:var(--strait);
+  }
+  .t-what{font-size:14.5px}
+  .note-strip{
+    background:#faf1de;border:1.5px solid var(--gold);border-radius:8px;
+    padding:11px 13px;font-size:14px;margin-top:12px;
+  }
+  .note-strip b{color:#8c6a2a}
+
+  /* ---------- checklist ---------- */
+  .check-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;
+    box-shadow:0 1px 3px rgba(38,40,31,.07)}
+  .check-card p.lede{font-size:14.5px;color:var(--muted);margin-bottom:12px}
+  .ck{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);cursor:pointer}
+  .ck:last-of-type{border-bottom:none}
+  .ck input{margin-top:3px;width:19px;height:19px;accent-color:var(--sign-green);flex-shrink:0;cursor:pointer}
+  .ck span{font-size:15px}
+  .ck input:checked + span{color:var(--muted);text-decoration:line-through}
+  .ck-progress{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--sign-green);margin-top:12px;
+  }
+
+  /* ---------- interactive map ---------- */
+  .map-card{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    overflow:hidden;box-shadow:0 1px 3px rgba(38,40,31,.07);margin-bottom:18px;
+  }
+  .map-filters{
+    display:flex;flex-wrap:wrap;gap:7px;padding:13px 14px 11px;border-bottom:1px solid var(--line);
+  }
+  .mf{
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:13.5px;
+    letter-spacing:.06em;text-transform:uppercase;border-radius:99px;
+    padding:4px 12px;border:1.5px solid var(--line);background:#fff;color:var(--muted);
+    cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+  }
+  .mf .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .mf.on{border-color:currentColor}
+  .mf[data-cat="stop"].on{color:var(--sign-green);background:#e3f1f6}
+  .mf[data-cat="backup"].on{color:#7d6ba0;background:#efecf6}
+  .mf[data-cat="eat"].on{color:#c2563b;background:#fceee9}
+  .mf[data-cat="shop"].on{color:#3a8f7d;background:#e7f3ef}
+  .mf[data-cat="see"].on{color:#8c6a2a;background:#f8f1e0}
+  #mapbox{display:block;width:100%;height:auto;background:#dfeaef;touch-action:manipulation}
+  #mapbox text{font-family:'Barlow Condensed',sans-serif;pointer-events:none}
+  .pin{cursor:pointer}
+  .pin circle.hit{fill:transparent}
+  .pin.dim{opacity:.18;pointer-events:none}
+  .pin.active circle.dot{stroke-width:3.5}
+  .map-detail{padding:14px 16px;border-top:1px solid var(--line);min-height:88px}
+  .map-detail .md-cat{
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12.5px;
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:2px;
+  }
+  .map-detail .md-name{font-weight:700;font-size:17px}
+  .map-detail .md-note{font-size:14.5px;margin-top:3px}
+  .map-detail .md-link{
+    display:inline-block;margin-top:8px;font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:#fff;background:var(--river);border-radius:6px;padding:5px 12px;text-decoration:none;
+  }
+  .map-detail .md-hint{font-size:14px;color:var(--muted);padding-top:14px}
+
+  footer{
+    margin-top:42px;font-size:13px;color:var(--muted);text-align:center;
+    border-top:1px solid var(--line);padding-top:16px;
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .day,.check-card{transition:transform .15s ease}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd-inner">
+    <div class="eyebrow">Winter run south · towing the van · no kids, no playground camps</div>
+    <h1>Mount Colah <span class="arrow">→</span> Spirit of Tasmania</h1>
+    <div class="hd-stats">
+      <div class="hd-stat"><b>1,090</b><span>km, give or take</span></div>
+      <div class="hd-stat"><b>4</b><span>nights on road</span></div>
+      <div class="hd-stat"><b>5 Jul</b><span>evening sail</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <h2>The route at a glance</h2>
+  <div class="ribbon">
+    <div class="stop">
+      <span class="leg-tag">Wed 1 Jul · ~385 km · 4¼ hrs</span>
+      <div class="stop-name">Jugiong NSW</div>
+      <div class="stop-sub">Showground camp on the Murrumbidgee — donation</div>
+    </div>
+    <div class="stop">
+      <span class="leg-tag">Thu 2 Jul · ~185 km · 2 hrs</span>
+      <div class="stop-name">Holbrook NSW</div>
+      <div class="stop-sub">Free 24-hr camp beside a submarine. Yes, really.</div>
+    </div>
+    <div class="stop">
+      <span class="leg-tag">Fri 3 Jul · ~85 km · 1 hr</span>
+      <div class="stop-name">Ludlows Reserve, Lake Hume VIC</div>
+      <div class="stop-sub">Free lakeside camp just past Wodonga</div>
+    </div>
+    <div class="stop">
+      <span class="leg-tag">Sat 4 Jul · ~420 km · 4¾ hrs</span>
+      <div class="stop-name">Mount Moriac VIC</div>
+      <div class="stop-sub">Free pub camp, 25 min from the terminal</div>
+    </div>
+    <div class="stop ferry">
+      <span class="leg-tag">Sun 5 Jul · 25 min hop</span>
+      <div class="stop-name">Spirit of Tasmania Quay, Geelong</div>
+      <div class="stop-sub">136 Corio Quay Rd, North Geelong — evening sail</div>
+    </div>
+  </div>
+
+  <h2>The map</h2>
+  <div class="map-card">
+    <div class="map-filters" id="filters"></div>
+    <svg id="mapbox" viewBox="0 0 600 510" role="img" aria-label="Route map from Mount Colah to Geelong with camps, food, groceries and sights"></svg>
+    <div class="map-detail" id="mapdetail">
+      <div class="md-hint">Tap any pin for details and a Google Maps link. Use the chips above to show or hide categories. Works with zero phone reception — it's all built in.</div>
+    </div>
+  </div>
+
+  <h2>Day by day</h2>
+
+  <!-- DAY 1 -->
+  <div class="day">
+    <div class="day-head">
+      <div class="day-date"><span class="dow">Wed</span><span class="dnum">1</span><span class="mon">July</span></div>
+      <div class="day-title">
+        <h3>Mount Colah → Jugiong</h3>
+        <div class="leg">~385 km · ~4 hrs 15 min · M1 → M31 Hume, all easy towing</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="chips">
+        <span class="chip free">Donation camp</span>
+        <span class="chip">Flush toilets</span>
+        <span class="chip">Riverside</span>
+        <span class="chip blue">Big rig friendly</span>
+      </div>
+      <p class="camp-name">📍 <a href="https://maps.google.com/?q=Jugiong+Showground+NSW" target="_blank">Jugiong Showground</a> · <a href="https://www.visitjugiong.com.au/caravans-and-camping-information" target="_blank">visitjugiong.com.au</a></p>
+      <p>Huge flat grassy showground right on the Murrumbidgee, a few minutes off the Hume. Tidy maintained toilets, picnic tables and BBQs, loads of room to park the van without unhitching dramas. Donation box — drop in what you'd like. Some distant freeway hum, but nothing you'll notice from inside the van.</p>
+      <div class="charm">
+        <b>The charm bit</b>
+        Jugiong punches absurdly above its weight: the Long Track Pantry (jams, chutneys, excellent coffee) and the Sir George — an 1852 coaching inn restored with a restaurant and artisan bakery — are a short stroll from camp. Arrive by 3pm and you'll catch the Pantry before close.
+      </div>
+      <details>
+        <summary>Backup option</summary>
+        <div class="inner">
+          <p><b>Gunning Showground</b> (~75 km earlier) — free unpowered camping for up to 3 nights with toilets and hot showers. Sweet heritage main street with cafés and a pub doing meals. <a href="https://www.nsw.gov.au/visiting-and-exploring-nsw/locations-and-attractions/gunning-showground-and-endeavour-park" target="_blank" style="color:var(--river)">Details on nsw.gov.au</a></p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day">
+    <div class="day-head">
+      <div class="day-date"><span class="dow">Thu</span><span class="dnum">2</span><span class="mon">July</span></div>
+      <div class="day-title">
+        <h3>Jugiong → Holbrook</h3>
+        <div class="leg">~185 km · ~2 hrs · short day = slow morning + Gundagai stop</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="chips">
+        <span class="chip free">Free · 24 hr</span>
+        <span class="chip">Toilets</span>
+        <span class="chip">Walk to town</span>
+        <span class="chip gold">Submarine</span>
+      </div>
+      <p class="camp-name">📍 <a href="https://maps.google.com/?q=Ten+Mile+Creek+Gardens+Holbrook+NSW" target="_blank">Ten Mile Creek Gardens, Holbrook</a> · <a href="https://www.greaterhume.nsw.gov.au/Living-in-Greater-Hume/Find-a-Facility-or-Park/Find-a-Park/Ten-Mile-Creek-Gardens-Holbrook" target="_blank">council page</a></p>
+      <p>Free 24-hour stopover in the parkland behind Holbrook's famous landlocked submarine, HMAS Otway. Toilets in the park, level grass, and the bakery and IGA are a flat stroll up the street. It's popular with grey nomads, so arriving by mid-afternoon still gets you the pick of the spots — and with NSW schools in term until 3 July, it should be a peaceful one.</p>
+      <div class="charm">
+        <b>The charm bit</b>
+        A 90-metre submarine in a paddock 300 km from the sea is peak country NSW. The Submarine Museum is small but genuinely good — original control room, working periscope, a real WWII Jolly Roger — and the Woolpack Inn Museum up the street covers the town's pioneering past. Break the morning drive at Gundagai for the Dog on the Tuckerbox.
+      </div>
+      <details>
+        <summary>Backup option</summary>
+        <div class="inner">
+          <p><b>Holbrook Showground</b> — a few minutes away, cheap powered and unpowered sites with showers if the free camp is chockers or you want a hot-shower night.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day">
+    <div class="day-head">
+      <div class="day-date"><span class="dow">Fri</span><span class="dnum">3</span><span class="mon">July</span></div>
+      <div class="day-title">
+        <h3>Holbrook → Lake Hume</h3>
+        <div class="leg">~85 km · ~1 hr · deliberately tiny day — this one's for the view</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="chips">
+        <span class="chip free">Free</span>
+        <span class="chip">Lakefront</span>
+        <span class="chip">BBQ shelter</span>
+        <span class="chip blue">Vans only (no tents)</span>
+      </div>
+      <p class="camp-name">📍 <a href="https://maps.google.com/?q=Ludlows+Reserve+Lake+Hume" target="_blank">Ludlows Reserve, Lake Hume</a> · <a href="https://www.wayandfarer.com/guides/campgrounds/ludlows-reserve-lake-hume-free-campground/" target="_blank">camp guide</a> <span style="font-weight:400;color:var(--muted)">— ~15 min past Wodonga</span></p>
+      <p>Free camp spread along the edge of Lake Hume with big lawns, a covered BBQ/picnic area and water views from the van door. In winter you've a real shot at a spot right on the lake's edge. Caravans and RVs only, no tents — which keeps it quiet and decidedly grown-up. Victorian school holidays will have started, so arrive earlyish for first pick, but the no-tents rule does most of the filtering for you.</p>
+      <div class="charm">
+        <b>The charm bit</b>
+        Sunset over Lake Hume from your annexe, hot drink in hand, halfway point behind you. If you want a leg-stretch en route, cross at Albury and wander Noreuil Park on the Murray. Top up groceries and fuel in Wodonga — it's the last big shop before the final push.
+      </div>
+      <details>
+        <summary>Backup option</summary>
+        <div class="inner">
+          <p><b>Jindera Showground</b> (just NW of Albury) — popular free/donation showground camp with toilets if Ludlows doesn't appeal on the day.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day">
+    <div class="day-head">
+      <div class="day-date"><span class="dow">Sat</span><span class="dnum">4</span><span class="mon">July</span></div>
+      <div class="day-title">
+        <h3>Lake Hume → Mount Moriac</h3>
+        <div class="leg">~420 km · ~4¾ hrs · Hume → M80 Ring Rd → Geelong Rd (skips the CBD entirely)</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="chips">
+        <span class="chip free">Free with a pub meal</span>
+        <span class="chip">Self-contained req'd</span>
+        <span class="chip gold">1844 country pub</span>
+        <span class="chip blue">25 min to terminal</span>
+      </div>
+      <p class="camp-name">📍 <a href="https://maps.google.com/?q=Mount+Moriac+Hotel+VIC" target="_blank">Mount Moriac Hotel</a> · <a href="https://www.mountmoriachotel.com.au/free-camping-at-the-mount-moriac-hotel/" target="_blank">mountmoriachotel.com.au</a> <span style="font-weight:400;color:var(--muted)">— Princes Hwy, just west of Geelong</span></p>
+      <p>A historic country pub trading since 1844 that offers free overnight camping in its large carpark for self-contained rigs — exactly what your off-grid van is built for — when you book a table for dinner. Phone ahead in the morning to lock in a table and mention you're camping.</p>
+      <div class="charm">
+        <b>The charm bit</b>
+        Last night on the mainland: a roaring country-pub dinner, no dishes, no packing up a camp kitchen — and a perfect excuse to NOT cook with the fridge you're trying to empty for biosecurity. The terminal is an easy 25-minute run away tomorrow.
+      </div>
+      <details>
+        <summary>Morning detour + backups</summary>
+        <div class="inner">
+          <p><b>Worth the stop:</b> Chiltern is 10 minutes from Ludlows on your way out — a gold-rush town with a National Trust main street that looks like a film set. Coffee and a wander before the big leg.</p>
+          <p><b>Backup 1 — Hipcamp "Spirit of Tasmania Stopover", Lovely Banks:</b> a private paddock minutes from the port, made exactly for SOT travellers. Paid, <a href="https://www.hipcamp.com/en-AU/land/victoria-spirit-of-tasmania-stopover-5x5hqpln" target="_blank" style="color:var(--river)">book on Hipcamp</a>.</p>
+          <p><b>Backup 2 — Geelong Showgrounds:</b> paid powered sites with showers and a dump point, close to the terminal — pre-booking essential. <a href="https://www.geelongshowgrounds.com.au/camping/" target="_blank" style="color:var(--river)">geelongshowgrounds.com.au</a></p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day ferry-day">
+    <div class="day-head">
+      <div class="day-date"><span class="dow">Sun</span><span class="dnum">5</span><span class="mon">July</span></div>
+      <div class="day-title">
+        <h3>Sailing day · Geelong</h3>
+        <div class="leg">Mount Moriac → Spirit of Tasmania Quay, 136 Corio Quay Rd, North Geelong · ~25 min</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <p>You've got a whole free day in Geelong before an evening sail. Park up along the waterfront (Eastern Beach has long bays), wander the painted bollards, find a long lunch, and eat down the last of the fresh food. Terminal details: <a href="https://www.spiritoftasmania.com.au/geelong-terminal" target="_blank" style="color:var(--river)">spiritoftasmania.com.au/geelong-terminal</a></p>
+      <div class="timeline">
+        <div class="t-row"><span class="t-time">Morning</span><span class="t-what">Geelong waterfront — bollard trail, Eastern Beach, a proper long lunch. Empty the fridge of fruit &amp; veg while you're at it.</span></div>
+        <div class="t-row"><span class="t-time">−3 hrs</span><span class="t-what">Final van check: gas bottles OFF at the valve, no loose jerry cans of concern, e-ticket + number plate details confirmed.</span></div>
+        <div class="t-row"><span class="t-time">−2½ hrs</span><span class="t-what">Check-in opens. Drive-up window — you stay in the car. Free parking at the quay for rigs waiting to board.</span></div>
+        <div class="t-row"><span class="t-time">−2 hrs</span><span class="t-what">Sweet spot to arrive: through check-in and the biosecurity inspection without queue stress.</span></div>
+        <div class="t-row"><span class="t-time">−1½ hrs</span><span class="t-what">Boarding starts. Grab EVERYTHING you need for the night — no returning to the vehicle deck once you sail.</span></div>
+        <div class="t-row"><span class="t-time">−45 min</span><span class="t-what">Check-in closes. Hard cutoff — don't test it.</span></div>
+        <div class="t-row"><span class="t-time">Evening</span><span class="t-what">Sail. Dinner on board, sleep crossing Bass Strait, wake up in Devonport. 🌊</span></div>
+      </div>
+      <div class="note-strip">
+        <b>Biosecurity is the big one:</b> no fruit, vegetables, plants, honey, fish or fish products can go to Tasmania. They inspect at Geelong before boarding (eskies and van fridges get checked), so plan meals from Friday onward to run the fresh stuff down to zero.
+      </div>
+    </div>
+  </div>
+
+  <h2>Before-you-board checklist</h2>
+  <div class="check-card">
+    <p class="lede">Tap items off as you go on sailing day. (Resets if you close the page — it's a day-of list.)</p>
+    <label class="ck"><input type="checkbox"><span>Fridge cleared of fruit, veg, honey, fish — and any plants/seeds out of the van</span></label>
+    <label class="ck"><input type="checkbox"><span>Caravan + car gas bottles turned off at the valve</span></label>
+    <label class="ck"><input type="checkbox"><span>E-ticket checked: names, date, direction, sailing time, number plates for car AND van</span></label>
+    <label class="ck"><input type="checkbox"><span>Overnight bags packed and IN THE CAR CABIN (not buried in the van)</span></label>
+    <label class="ck"><input type="checkbox"><span>Medications, chargers, warm layers, books/downloads in the day bags</span></label>
+    <label class="ck"><input type="checkbox"><span>Van measured length confirmed against booking (car + van combined)</span></label>
+    <label class="ck"><input type="checkbox"><span>Esky accessible for the quarantine check</span></label>
+    <label class="ck"><input type="checkbox"><span>Fuel topped up for the Devonport end — you'll roll off early and hungry</span></label>
+    <div class="ck-progress" id="prog">0 / 8 done</div>
+  </div>
+
+  <footer>
+    Built for the July 2026 run south. Distances and times are towing-pace estimates via the Hume (M31) and the M80 Ring Road — always double-check camp status on WikiCamps the day before, especially in school holidays.
+  </footer>
+</div>
+
+<script>
+  const boxes = document.querySelectorAll('.ck input');
+  const prog = document.getElementById('prog');
+  boxes.forEach(b => b.addEventListener('change', () => {
+    const done = [...boxes].filter(x => x.checked).length;
+    prog.textContent = done + ' / ' + boxes.length + ' done' + (done === boxes.length ? ' — see you in Tassie! 🚢' : '');
+  }));
+
+  /* ================= interactive map ================= */
+  const CATS = {
+    stop:  {label:'Night stops', color:'#0f7fa6'},
+    backup:{label:'Backup camps', color:'#7d6ba0'},
+    eat:   {label:'Eat', color:'#c2563b'},
+    shop:  {label:'Groceries', color:'#3a8f7d'},
+    see:   {label:'See & do', color:'#c99a4a'}
+  };
+
+  // [cat, name, lat, lon, note, gmaps query, badge, website]
+  const POIS = [
+    ['stop','Home — Mount Colah',-33.667,151.117,'Hitch up, coffee in the thermos, M1 south.','Mount Colah NSW','⌂',null],
+    ['stop','Jugiong Showground',-34.837,148.323,'Night 1 · Wed 1 Jul. Donation camp on the Murrumbidgee, flush toilets, walk to the village. Up to 7 days allowed.','Jugiong Showground NSW','1','https://www.visitjugiong.com.au/caravans-and-camping-information'],
+    ['stop','Ten Mile Creek Gardens, Holbrook',-35.720,147.308,'Night 2 · Thu 2 Jul. Free 24-hr camp behind the submarine. NSW schools still in term = quiet midweek.','Ten Mile Creek Gardens Holbrook NSW','2','https://www.greaterhume.nsw.gov.au/Living-in-Greater-Hume/Find-a-Facility-or-Park/Find-a-Park/Ten-Mile-Creek-Gardens-Holbrook'],
+    ['stop','Ludlows Reserve, Lake Hume',-36.158,147.030,'Night 3 · Fri 3 Jul. Free lakefront camp, BBQ shelter, vans only — no tents.','Ludlows Reserve Lake Hume VIC','3','https://www.wayandfarer.com/guides/campgrounds/ludlows-reserve-lake-hume-free-campground/'],
+    ['stop','Mount Moriac Hotel',-38.208,144.202,'Night 4 · Sat 4 Jul. Free camp for self-contained rigs with a table booking. Ring ahead.','Mount Moriac Hotel VIC','4','https://www.mountmoriachotel.com.au/free-camping-at-the-mount-moriac-hotel/'],
+    ['stop','Spirit of Tasmania Quay',-38.094,144.378,'Sun 5 Jul. 136 Corio Quay Rd, North Geelong. Check-in opens 2½ hrs before sailing, closes 45 min before. Free waiting parking for rigs.','Spirit of Tasmania Quay Geelong','⚓','https://www.spiritoftasmania.com.au/geelong-terminal'],
+
+    ['backup','Gunning Showground',-34.783,149.266,'Plan B for Night 1 — free unpowered camping (up to 3 nights) with toilets and hot showers; sweet heritage main street.','Gunning Showground NSW',null,'https://www.nsw.gov.au/visiting-and-exploring-nsw/locations-and-attractions/gunning-showground-and-endeavour-park'],
+    ['backup','Holbrook Showground',-35.728,147.322,'Plan B for Night 2 — minutes away, cheap sites with showers if the free camp is full.','Holbrook Showground NSW',null,null],
+    ['backup','Jindera Showground',-35.954,146.889,'Plan B for Night 3 — popular donation showground camp with toilets, just NW of Albury.','Jindera Showground NSW',null,'https://letsgomum.com.au/hume-highway-road-trip-albury-jindera-freecamping-caravanningaustralia/'],
+    ['backup','Hipcamp stopover, Lovely Banks',-38.060,144.330,'Plan B for Night 4 — private paddock minutes from the port, built for SOT travellers. Book on Hipcamp.','Lovely Banks VIC',null,'https://www.hipcamp.com/en-AU/land/victoria-spirit-of-tasmania-stopover-5x5hqpln'],
+    ['backup','Geelong Showgrounds',-38.158,144.345,'Plan B for Night 4 — paid powered sites with showers and a dump point, close to the terminal. Pre-booking essential.','Geelong Showgrounds',null,'https://www.geelongshowgrounds.com.au/camping/'],
+
+    ['eat','Long Track Pantry, Jugiong',-34.832,148.318,'Famous farm-gate café and providore — excellent coffee, jams and lunches. Steps from camp.','Long Track Pantry Jugiong',null,'https://www.longtrackpantry.com.au/'],
+    ['eat','The Sir George, Jugiong',-34.842,148.328,'Restored 1852 coaching inn — restaurant, bar and artisan bakery. Night 1 dinner sorted.','The Sir George Jugiong',null,'https://www.sirgeorge.com.au/'],
+    ['eat','Holbrook Bakery',-35.724,147.318,'Country bakery a flat stroll from the submarine camp. Breakfast pies and proper coffee.','Holbrook Bakery NSW',null,null],
+    ['eat','Mount Moriac Hotel bistro',-38.212,144.196,'Your Night 4 dinner — country pub classics, no dishes, fridge stays empty for biosecurity.','Mount Moriac Hotel VIC',null,'https://www.mountmoriachotel.com.au/'],
+    ['eat','Eastern Beach eats, Geelong',-38.146,144.365,'Waterfront cafés and fish & chips for the final mainland lunch on sailing day.','Eastern Beach Geelong',null,null],
+
+    ['shop','Big shop: Goulburn',-34.752,149.718,'First major supermarkets out of Sydney — the "we forgot something" stop, ~2 hrs in.','Woolworths Goulburn',null,null],
+    ['shop','IGA Holbrook',-35.722,147.320,'Handy top-up next to the bakery on the main street.','IGA Holbrook NSW',null,null],
+    ['shop','Big shop: Wodonga',-36.121,146.888,'Last full-size supermarkets before the long Victorian leg. Stock the van here Friday.','Woolworths Wodonga',null,null],
+    ['shop','Waurn Ponds Shopping Centre',-38.216,144.305,'10 min from Mount Moriac — final mainland shop, but remember: no fruit/veg/honey to Tassie.','Waurn Ponds Shopping Centre',null,null],
+
+    ['see','Dog on the Tuckerbox, Gundagai',-35.037,148.158,'Five miles from Gundagai — the classic Hume photo stop, with a café for a leg stretch.','Dog on the Tuckerbox Gundagai',null,null],
+    ['see','HMAS Otway submarine, Holbrook',-35.721,147.312,'A 90-m submarine in a paddock 300 km from the sea, plus a great little museum with a working periscope — right at camp.','Holbrook Submarine Museum',null,'https://holbrooksubmarinemuseum.com.au/'],
+    ['see','Noreuil Park, Albury',-36.087,146.903,'Riverside lawns on the Murray — perfect Friday leg-stretch before the lake camp.','Noreuil Park Albury',null,null],
+    ['see','Chiltern historic town',-36.151,146.605,'Gold-rush main street that looks like a film set — 10 min detour Saturday morning, coffee included.','Chiltern VIC',null,null],
+    ['see','Glenrowan — Ned Kelly siege site',-36.467,146.224,'Quick Hume-side history stop with the giant Ned statue, if you fancy stretching the legs.','Glenrowan VIC',null,null],
+    ['see','Geelong waterfront bollards',-38.144,144.360,'100+ painted bollards, Eastern Beach and waterfront coffee — your sailing-day morning.','Geelong Waterfront',null,null]
+  ];
+
+  // route polyline waypoints (lat,lon)
+  const ROUTE = [
+    [-33.667,151.117],[-34.05,150.95],[-34.27,150.63],[-34.55,150.20],[-34.752,149.718],
+    [-34.783,149.266],[-34.85,148.91],[-34.837,148.323],[-35.037,148.158],[-35.30,147.75],
+    [-35.720,147.308],[-36.080,146.920],[-36.158,147.030],[-36.121,146.888],[-36.151,146.605],
+    [-36.36,146.31],[-36.467,146.224],[-36.75,145.57],[-37.03,145.13],[-37.38,145.00],
+    [-37.62,144.93],[-37.75,144.80],[-37.90,144.66],[-38.02,144.45],[-38.094,144.378],
+    [-38.14,144.32],[-38.208,144.202]
+  ];
+
+  // projection: linear lon/lat with cos(lat) aspect correction
+  const B = {latN:-33.50, latS:-38.42, lonW:143.85, lonE:151.45};
+  const W = 600, PAD = 26;
+  const kx = (W - PAD*2) / (B.lonE - B.lonW);
+  const ky = kx / Math.cos(36 * Math.PI/180);
+  const H = Math.round((B.latN - B.latS) * ky + PAD*2);
+  const px = lon => PAD + (lon - B.lonW) * kx;
+  const py = lat => PAD + (B.latN - lat) * ky;
+
+  const svg = document.getElementById('mapbox');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e);
+    return e;
+  };
+
+  // route line (bitumen + gold dashes, matching the ribbon)
+  const d = ROUTE.map((p,i) => (i?'L':'M') + px(p[1]).toFixed(1) + ' ' + py(p[0]).toFixed(1)).join(' ');
+  el('path',{d,fill:'none',stroke:'#18293a','stroke-width':5,'stroke-linecap':'round','stroke-linejoin':'round'});
+  el('path',{d,fill:'none',stroke:'#d3a45c','stroke-width':1.4,'stroke-dasharray':'7 9','stroke-linecap':'round'});
+
+  // NSW / VIC border hint at the Murray
+  const bx1 = px(146.45), bx2 = px(147.55), by = py(-36.10);
+  el('line',{x1:bx1,y1:by+6,x2:bx2,y2:by-4,stroke:'#8fa3ad','stroke-width':1.2,'stroke-dasharray':'4 5'});
+  const bt = el('text',{x:bx1-6,y:by+2,'text-anchor':'end','font-size':11,fill:'#5f7280','font-weight':600,'letter-spacing':'1'});
+  bt.textContent = 'NSW / VIC';
+
+  // pins
+  const detail = document.getElementById('mapdetail');
+  const pinsByCat = {};
+  let activePin = null;
+  POIS.forEach(p => {
+    const [cat,name,lat,lon,note,q,badge,site] = p;
+    const g = el('g',{class:'pin','data-cat':cat,tabindex:0,role:'button','aria-label':name});
+    const x = px(lon), y = py(lat);
+    el('circle',{class:'hit',cx:x,cy:y,r:15},g);
+    const isStop = cat === 'stop';
+    el('circle',{class:'dot',cx:x,cy:y,r:isStop?9:6,fill:CATS[cat].color,stroke:'#fff','stroke-width':2},g);
+    if (isStop && badge){
+      const t = el('text',{x,y:y+3.4,'text-anchor':'middle','font-size':10,fill:'#fff','font-weight':700},g);
+      t.textContent = badge;
+    }
+    (pinsByCat[cat] = pinsByCat[cat] || []).push(g);
+    const show = () => {
+      if (activePin) activePin.classList.remove('active');
+      activePin = g; g.classList.add('active');
+      detail.innerHTML =
+        `<div class="md-cat" style="color:${CATS[cat].color}">${CATS[cat].label}</div>` +
+        `<div class="md-name">${name}</div>` +
+        `<div class="md-note">${note}</div>` +
+        `<a class="md-link" target="_blank" href="https://maps.google.com/?q=${encodeURIComponent(q)}">Open in Google Maps</a>` +
+        (site ? ` <a class="md-link" style="background:var(--strait)" target="_blank" href="${site}">Website</a>` : '');
+    };
+    g.addEventListener('click', show);
+    g.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' '){e.preventDefault();show();} });
+  });
+
+  // labels for the night stops (placed to avoid the route line)
+  const LABELS = [
+    ['MOUNT COLAH',151.117,-33.667,8,-10,'start'],
+    ['JUGIONG',148.323,-34.837,0,-15,'middle'],
+    ['HOLBROOK',147.308,-35.720,13,4,'start'],
+    ['LAKE HUME',147.030,-36.158,13,12,'start'],
+    ['MT MORIAC',144.202,-38.208,0,18,'middle'],
+    ['SOT QUAY ⚓',144.378,-38.094,13,-2,'start']
+  ];
+  LABELS.forEach(([txt,lon,lat,dx,dy,anchor]) => {
+    const t = el('text',{x:px(lon)+dx,y:py(lat)+dy,'text-anchor':anchor,'font-size':12.5,'font-weight':700,fill:'#18293a','letter-spacing':'.5','paint-order':'stroke',stroke:'#dfeaef','stroke-width':3});
+    t.textContent = txt;
+  });
+
+  // filter chips
+  const filters = document.getElementById('filters');
+  Object.keys(CATS).forEach(cat => {
+    const b = document.createElement('button');
+    b.className = 'mf on'; b.dataset.cat = cat;
+    b.innerHTML = `<span class="dot" style="background:${CATS[cat].color}"></span>${CATS[cat].label}`;
+    b.addEventListener('click', () => {
+      b.classList.toggle('on');
+      const on = b.classList.contains('on');
+      (pinsByCat[cat] || []).forEach(g => g.classList.toggle('dim', !on));
+    });
+    filters.appendChild(b);
+  });
+</script>
+</body>
+</html>
