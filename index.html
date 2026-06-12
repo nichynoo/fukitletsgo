@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tasmania, Off-Season — Stable Food Category Map</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+  --bg:#0F161B; --bg2:#131D24; --surface:#1A2730; --surface-hi:#22323D;
+  --line:#2A3A45; --line-soft:#22303A;
+  --frost:#EAF1F4; --dim:#9DB0BB; --faint:#62757F;
+  --ember:#EA8C4E; --ember-deep:#C56F36;
+  --glacier:#74B6C4; --aurora:#7FC9A0; --dusk:#A78FD6; --honey:#D8B25A; --slate:#8FA6B2;
+  --r:14px;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'Space Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg); color:var(--frost); font-family:var(--sans); font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px; margin:0 auto; padding:0 18px 80px}
+
+.mast{position:relative; overflow:hidden; padding:34px 18px 22px; margin:0 -18px}
+.mast .aur{position:absolute; inset:-40% -20% auto -20%; height:300px; pointer-events:none;
+  background:radial-gradient(60% 80% at 25% 0%, rgba(127,201,160,.16), transparent 60%),radial-gradient(50% 80% at 78% 10%, rgba(167,143,214,.14), transparent 60%),radial-gradient(40% 70% at 55% -10%, rgba(116,182,196,.12), transparent 60%); filter:blur(6px)}
+.mast .range{position:absolute; left:0; right:0; bottom:0; height:64px; pointer-events:none; opacity:.5}
+.mast-inner{position:relative; max-width:1044px; margin:0 auto}
+.eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--faint)}
+h1.title{font-family:var(--serif); font-weight:600; font-size:clamp(34px,7vw,58px); line-height:.98; margin:6px 0 4px; letter-spacing:-.01em}
+h1.title .it{font-style:italic; color:var(--ember); font-weight:500}
+.route{color:var(--dim); font-size:14px; margin-top:10px; max-width:640px}
+.route b{color:var(--frost); font-weight:600}
+.readout{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px}
+.gauge{background:var(--surface); border:1px solid var(--line-soft); border-radius:12px; padding:11px 14px; min-width:120px}
+.gauge .lab{font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint)}
+.gauge .val{font-family:var(--mono); font-size:20px; margin-top:3px; color:var(--frost)}
+.gauge .val .u{font-size:12px; color:var(--dim)}
+.gauge.lead{border-color:var(--ember); box-shadow:0 0 0 1px rgba(234,140,78,.25) inset}
+.gauge.lead .val{color:var(--ember)}
+
+.tabs{display:flex; gap:4px; position:sticky; top:0; z-index:20; padding:12px 0 12px; background:linear-gradient(var(--bg) 70%, transparent); margin-bottom:6px}
+.tab{appearance:none; border:1px solid var(--line-soft); background:var(--bg2); color:var(--dim); font-family:var(--sans); font-size:13.5px; font-weight:600; padding:9px 16px; border-radius:999px; cursor:pointer}
+.tab[aria-selected="true"]{background:var(--frost); color:#10171c; border-color:var(--frost)}
+.tab:focus-visible{outline:2px solid var(--glacier); outline-offset:2px}
+
+.controls{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:6px 0 18px}
+.chips{display:flex; flex-wrap:wrap; gap:6px}
+.chip{appearance:none; border:1px solid var(--line); background:transparent; color:var(--dim); font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:7px 11px; border-radius:999px; cursor:pointer}
+.chip[aria-pressed="true"]{color:var(--frost); border-color:var(--frost); background:rgba(234,241,244,.06)}
+.chip[data-type="mine"][aria-pressed="true"]{color:var(--ember); border-color:var(--ember); background:rgba(234,140,78,.08)}
+.chip:focus-visible{outline:2px solid var(--glacier); outline-offset:2px}
+.spacer{flex:1 1 auto}
+input.search,select.reg{background:var(--bg2); border:1px solid var(--line); color:var(--frost); font-family:var(--sans); font-size:13.5px; padding:9px 12px; border-radius:10px}
+input.search{min-width:180px}
+input.search::placeholder{color:var(--faint)}
+.btn{appearance:none; cursor:pointer; border:1px solid var(--line); background:var(--surface); color:var(--frost); font-family:var(--sans); font-weight:600; font-size:13px; padding:9px 13px; border-radius:10px}
+.btn.ember{border-color:var(--ember); color:var(--ember)}
+.btn:hover{background:var(--surface-hi)}
+.btn:focus-visible{outline:2px solid var(--glacier); outline-offset:2px}
+button,select,input,textarea{touch-action:manipulation;-webkit-tap-highlight-color:rgba(234,140,78,.25)}
+
+.grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface); border:1px solid var(--line-soft); border-radius:var(--r); padding:16px 16px 14px; position:relative; transition:transform .15s ease, border-color .15s ease}
+.card:hover{transform:translateY(-2px); border-color:var(--line)}
+.card.in-plan{border-left:3px solid var(--ember)}
+.card.visited{opacity:.62}
+.card .ctop{display:flex; align-items:center; gap:8px; margin-bottom:8px; flex-wrap:wrap}
+.tag{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; padding:3px 8px; border-radius:999px; border:1px solid currentColor}
+.tag.marquee{color:var(--glacier)} .tag.hidden{color:var(--ember)} .tag.event{color:var(--dusk)} .tag.food{color:var(--honey)} .tag.pub{color:var(--ember)} .tag.cafe{color:var(--honey)} .tag.seafood{color:var(--glacier)} .tag.drink{color:var(--dusk)} .tag.dining{color:var(--aurora)} .tag.stay{color:var(--slate)} .tag.fish{color:var(--aurora)}
+.card .reg{font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint)}
+.card .mark{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ember)}
+.card h3{font-family:var(--serif); font-weight:600; font-size:20px; line-height:1.1; margin:2px 0 7px; letter-spacing:-.01em}
+.card p{margin:0 0 9px; color:var(--dim); font-size:13.5px}
+.note-line{display:flex; gap:7px; font-size:12.5px; margin:5px 0; color:var(--dim)}
+.note-line .k{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; padding-top:2px; flex:0 0 auto; color:var(--faint)}
+.note-line.van .k{color:var(--ember)} .note-line.when .k{color:var(--dusk)} .note-line.tip .k{color:var(--glacier)}
+.cactions{display:flex; align-items:center; gap:8px; margin-top:12px; padding-top:12px; border-top:1px solid var(--line-soft); flex-wrap:wrap}
+select.day{background:var(--bg2); border:1px solid var(--line); color:var(--frost); font-family:var(--sans); font-size:12.5px; padding:7px 9px; border-radius:9px; max-width:170px}
+.iconbtn{appearance:none; cursor:pointer; border:1px solid var(--line); background:transparent; width:34px; height:34px; border-radius:9px; color:var(--dim); font-size:15px; line-height:1; display:grid; place-items:center}
+.iconbtn:hover{background:var(--surface-hi)}
+.iconbtn.on.fav{color:var(--honey); border-color:var(--honey)}
+.iconbtn.on.vis{color:var(--aurora); border-color:var(--aurora)}
+.iconbtn:focus-visible{outline:2px solid var(--glacier); outline-offset:2px}
+
+.panel{background:var(--bg2); border:1px solid var(--line-soft); border-radius:var(--r); padding:16px 18px; margin-bottom:16px}
+.panel h2{font-family:var(--serif); font-weight:600; font-size:21px; margin:0 0 4px}
+.panel .sub{color:var(--dim); font-size:13px; margin:0 0 12px}
+details.route-d summary{cursor:pointer; font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--glacier); list-style:none}
+details.route-d summary::-webkit-details-marker{display:none}
+details.route-d[open] summary{margin-bottom:10px}
+.leg{display:flex; gap:11px; padding:8px 0; border-top:1px solid var(--line-soft); font-size:13.5px}
+.leg:first-of-type{border-top:none}
+.leg .n{font-family:var(--mono); color:var(--ember); font-size:12px; flex:0 0 22px}
+.leg .b{color:var(--dim)} .leg .b b{color:var(--frost); font-weight:600}
+.whatson{display:flex; gap:10px; overflow-x:auto; padding-bottom:4px}
+.ev{flex:0 0 auto; min-width:200px; max-width:240px; background:var(--surface); border:1px solid var(--line-soft); border-left:3px solid var(--dusk); border-radius:11px; padding:11px 13px}
+.ev .d{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--dusk)}
+.ev .nm{font-family:var(--serif); font-size:16px; font-weight:600; margin:3px 0 4px; line-height:1.1}
+.ev p{margin:0; font-size:12px; color:var(--dim)}
+.shortlist{display:flex; flex-wrap:wrap; gap:8px; margin-top:4px}
+.slpill{display:inline-flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:6px 8px 6px 13px; font-size:13px}
+.slpill .x{cursor:pointer; color:var(--faint); border:none; background:none; font-size:14px; padding:0 2px}
+.slpill .x:hover{color:var(--frost)}
+.day{display:grid; grid-template-columns:84px 1fr; gap:14px; padding:14px 0; border-top:1px solid var(--line-soft)}
+.day.today{background:linear-gradient(90deg, rgba(234,140,78,.08), transparent); border-radius:10px; padding:14px 12px; margin:0 -12px; border-top:1px solid rgba(234,140,78,.3)}
+.day .date{font-family:var(--mono)}
+.day .date .dow{font-size:11px; color:var(--faint); text-transform:uppercase; letter-spacing:.08em}
+.day .date .dnum{font-size:22px; color:var(--frost); line-height:1.1; margin-top:2px}
+.day .date .trip{font-size:10px; color:var(--ember); margin-top:3px}
+.day.today .date .dow{color:var(--ember)}
+.day .items{display:flex; flex-direction:column; gap:7px; min-width:0}
+.di{display:flex; align-items:flex-start; gap:9px; background:var(--surface); border:1px solid var(--line-soft); border-radius:10px; padding:9px 11px}
+.di.done{opacity:.55}
+.di .check{flex:0 0 auto; width:22px; height:22px; border-radius:6px; border:1px solid var(--line); background:transparent; cursor:pointer; color:var(--aurora); font-size:13px; display:grid; place-items:center; margin-top:1px}
+.di .check.on{border-color:var(--aurora); background:rgba(127,201,160,.12)}
+.di .meat{min-width:0; flex:1}
+.di .nm{font-weight:600; font-size:14px}
+.di .nm .t{font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; margin-left:7px; color:var(--faint); vertical-align:1px}
+.di .ntxt{margin-top:5px}
+.di textarea{width:100%; background:var(--bg); border:1px solid var(--line-soft); color:var(--dim); border-radius:7px; font-family:var(--sans); font-size:12.5px; padding:6px 8px; resize:vertical; min-height:30px}
+.di .rm{flex:0 0 auto; cursor:pointer; background:none; border:none; color:var(--faint); font-size:16px; padding:0 2px}
+.di .rm:hover{color:var(--ember)}
+.day .empty{color:var(--faint); font-size:12.5px; font-style:italic; align-self:center}
+.kg{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+@media(max-width:680px){.kg{grid-template-columns:1fr}}
+.kcard{background:var(--surface); border:1px solid var(--line-soft); border-radius:var(--r); padding:15px 17px}
+.kcard h3{font-family:var(--serif); font-weight:600; font-size:18px; margin:0 0 8px}
+.kcard ul{margin:0; padding-left:18px; color:var(--dim); font-size:13.5px}
+.kcard li{margin:6px 0} .kcard li b{color:var(--frost); font-weight:600}
+.addform{background:var(--bg2); border:1px dashed var(--line); border-radius:var(--r); padding:16px; margin-bottom:16px; display:none}
+.addform.open{display:block}
+.addrow{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+.addform input,.addform select,.addform textarea{background:var(--surface); border:1px solid var(--line); color:var(--frost); font-family:var(--sans); font-size:13.5px; padding:9px 11px; border-radius:9px}
+.addform input.nm{flex:1 1 220px} .addform textarea{flex:1 1 100%; resize:vertical; min-height:46px}
+.muted{color:var(--faint); font-size:12px}
+.count{font-family:var(--mono); font-size:11px; color:var(--faint); margin:0 0 10px; letter-spacing:.06em}
+.mapctl{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:6px 0 12px}
+.mapwrap{background:var(--bg2); border:1px solid var(--line-soft); border-radius:var(--r); padding:10px; margin-bottom:12px}
+.mapwrap > svg{display:block; width:100%; height:auto; max-height:64vh; touch-action:manipulation}
+#leafmap svg{width:auto; height:auto; max-height:none; display:inline}
+.coast{fill:#16222B; stroke:#3C5862; stroke-width:1.4; stroke-linejoin:round}
+.mk{cursor:pointer; stroke:#0F161B; stroke-width:1.1}
+.mk.marquee{fill:var(--glacier)} .mk.hidden{fill:var(--ember)} .mk.event{fill:var(--dusk)} .mk.food{fill:var(--honey)} .mk.stay{fill:var(--slate)} .mk.fish{fill:var(--aurora)}
+.mk.visited{fill:var(--aurora)}
+.mk.planned{stroke:#fff; stroke-width:1.6}
+.mk.sel{stroke:#fff; stroke-width:2.4}
+.maplegend{display:flex; flex-wrap:wrap; gap:9px 14px; margin:2px 2px 12px; font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--dim)}
+.maplegend i{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px}
+.mapdetail{background:var(--surface); border:1px solid var(--line-soft); border-radius:var(--r); padding:14px 16px; min-height:56px}
+.mapdetail .hint{color:var(--faint); font-size:13px; font-style:italic; margin:0}
+#leafmap{height:62vh; min-height:340px; border-radius:var(--r); border:1px solid var(--line-soft); background:var(--bg2); z-index:1}
+.leaflet-popup-content-wrapper{background:var(--surface); color:var(--frost); border-radius:12px; border:1px solid var(--line); box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.leaflet-popup-tip{background:var(--surface)}
+.leaflet-popup-content{margin:12px 14px; font-family:var(--sans); font-size:13px; line-height:1.45}
+.leaflet-popup-content .pp-tag{font-family:var(--mono); font-size:9px; letter-spacing:.08em; text-transform:uppercase; padding:2px 7px; border-radius:999px; border:1px solid currentColor}
+.leaflet-popup-content .pp-mine{font-family:var(--mono); font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:var(--ember); margin-left:6px}
+.leaflet-popup-content h3{font-family:var(--serif); font-weight:600; font-size:17px; margin:6px 0 5px; color:var(--frost)}
+.leaflet-popup-content p{margin:0 0 7px; color:var(--dim)}
+.leaflet-popup-content .pp-note{color:var(--faint); font-size:11.5px; margin:0 0 7px}
+.leaflet-popup-content a.gmap{display:inline-block; margin-top:2px}
+.leaflet-container a.leaflet-popup-close-button{color:var(--dim)}
+.leaflet-bar a{background:var(--surface); color:var(--frost); border-bottom:1px solid var(--line-soft)}
+.leaflet-bar a:hover{background:var(--surface-hi)}
+.leaflet-control-layers{background:var(--surface); color:var(--frost); border:1px solid var(--line); border-radius:10px}
+.leaflet-control-attribution{background:rgba(15,22,27,.7)!important; color:var(--faint)!important; font-size:9px}
+.leaflet-control-attribution a{color:var(--glacier)!important}
+a.gmap{font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--glacier); text-decoration:none; border:1px solid var(--line-soft); padding:8px 10px; border-radius:9px; white-space:nowrap}
+a.gmap:hover{border-color:var(--glacier)}
+
+.fee{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid currentColor}
+.fee.free{color:var(--aurora)}
+.fee.paid{color:var(--honey)}
+.fee.low{color:var(--glacier)}
+
+
+.leaflet-popup-content .fee{vertical-align:middle;margin-left:6px}
+.leaflet-popup-content h3 .fee{font-size:9px;font-family:var(--mono);font-weight:400}
+
+
+.detour{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid var(--ember);color:var(--ember)}
+.leaflet-popup-content .detour{vertical-align:middle;margin-left:6px}
+.map-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:14px;align-items:start}
+@media(max-width:900px){.map-layout{grid-template-columns:1fr}}
+#leafmap{height:50vh;min-height:330px}
+.map-side{background:var(--bg2);border:1px solid var(--line-soft);border-radius:var(--r);padding:12px;max-height:50vh;overflow:auto}
+@media(max-width:900px){.map-side{max-height:none}}
+.mapresults{display:grid;grid-template-columns:1fr;gap:10px;margin-top:8px}
+.mapresults .mcard{background:var(--surface);border:1px solid var(--line-soft);border-radius:12px;padding:12px 13px}
+.mapresults .mcard h3{font-family:var(--serif);font-size:17px;margin:6px 0 5px}
+.mapresults .mcard p{margin:0 0 8px;color:var(--dim);font-size:12.5px}
+.mapresults-title{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+.mapresults .m-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.mapresults .m-focus{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--frost);background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:8px 10px;cursor:pointer}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+
+<div class="mast">
+  <div class="aur"></div>
+  <svg class="range" viewBox="0 0 1080 64" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 64 L0 40 L120 16 L210 38 L330 8 L430 34 L540 18 L660 40 L770 14 L880 36 L990 20 L1080 42 L1080 64 Z" fill="#1A2730"/>
+    <path d="M0 64 L0 50 L150 30 L280 48 L400 26 L540 46 L690 30 L820 48 L960 32 L1080 50 L1080 64 Z" fill="#131D24"/>
+    <g fill="#EAF1F4" opacity=".85"><path d="M310 8 L300 18 L322 18 Z"/><path d="M760 14 L749 25 L772 25 Z"/></g>
+  </svg>
+  <div class="mast-inner">
+    <div class="eyebrow">Caravan field journal · winter 2026 · camps + trout + fee labels added</div>
+    <h1 class="title">Tasmania, <span class="it">Off-Season</span></h1>
+    <p class="route">Sydney → Geelong, the overnight <b>Spirit of Tasmania</b> to Devonport, and five weeks around the island in the <b>Lotus Trooper</b> — <b>6 Jul → 9 Aug</b>.</p>
+    <div class="readout" id="readout"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-discover" aria-selected="true" aria-controls="view-discover">Discover</button>
+    <button class="tab" role="tab" id="tab-itin" aria-selected="false" aria-controls="view-itin">Itinerary</button>
+    <button class="tab" role="tab" id="tab-map" aria-selected="false" aria-controls="view-map">Map</button>
+    <button class="tab" role="tab" id="tab-know" aria-selected="false" aria-controls="view-know">Good to know</button>
+  </div>
+
+  <section id="view-discover" role="tabpanel" aria-labelledby="tab-discover">
+    <div class="controls">
+      <div class="chips" id="typeChips">
+        <button class="chip" data-type="all" aria-pressed="true">All</button>
+        <button class="chip" data-type="mine" aria-pressed="false">★ Your list</button>
+        <button class="chip" data-type="marquee" aria-pressed="false">Must-see</button>
+        <button class="chip" data-type="hidden" aria-pressed="false">Hidden gems</button>
+        <button class="chip" data-type="event" aria-pressed="false">What's on</button>
+        <button class="chip" data-type="food" aria-pressed="false">All Food</button>
+        <button class="chip" data-type="pub" aria-pressed="false">Pubs</button>
+        <button class="chip" data-type="cafe" aria-pressed="false">Cafés</button>
+        <button class="chip" data-type="seafood" aria-pressed="false">Seafood</button>
+        <button class="chip" data-type="drink" aria-pressed="false">Wine/Cider</button>
+        <button class="chip" data-type="dining" aria-pressed="false">Dining</button>
+        <button class="chip" data-type="stay" aria-pressed="false">Stays</button>
+        <button class="chip" data-type="fish" aria-pressed="false">Trout Fishing</button>
+      </div>
+      <div class="spacer"></div>
+      <select class="reg" id="regSel"></select>
+      <input class="search" id="search" type="search" placeholder="Search places…">
+      <button class="btn ember" id="addToggle">+ Add a place</button>
+    </div>
+
+    <div class="addform" id="addForm">
+      <div class="addrow">
+        <input class="nm" id="af-name" placeholder="Place name (e.g. a spot a friend tipped you off about)">
+        <select id="af-region"></select>
+        <select id="af-type">
+          <option value="hidden">Hidden gem</option>
+          <option value="marquee">Must-see</option>
+          <option value="food">Food &amp; drink</option>
+          <option value="pub">Pub stop</option>
+          <option value="cafe">Café / bakery</option>
+          <option value="seafood">Seafood</option>
+          <option value="drink">Wine / cider / distillery</option>
+          <option value="dining">Destination dining</option>
+          <option value="event">Event</option>
+          <option value="stay">Stay / caravan park</option>
+          <option value="fish">Trout fishing</option>
+        </select>
+      </div>
+      <div class="addrow"><textarea id="af-blurb" placeholder="A line or two — why you want to go (optional)"></textarea></div>
+      <div class="addrow" style="margin-bottom:0">
+        <button class="btn ember" id="af-save">Save place</button>
+        <button class="btn" id="af-cancel">Cancel</button>
+      </div>
+    </div>
+
+    <p class="count" id="discCount"></p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="view-itin" role="tabpanel" aria-labelledby="tab-itin" hidden></section>
+  <section id="view-map" role="tabpanel" aria-labelledby="tab-map" hidden></section>
+  <section id="view-know" role="tabpanel" aria-labelledby="tab-know" hidden></section>
+</div>
+
+<script>
+/* iPhone/Safari compatibility helpers */
+(function(){
+  if (!String.prototype.includes) { String.prototype.includes = function(search, start) { return this.indexOf(search, start || 0) !== -1; }; }
+  if (!Array.prototype.find) { Array.prototype.find = function(predicate) { for (var i=0;i<this.length;i++){ if (predicate(this[i], i, this)) return this[i]; } }; }
+  if (!Element.prototype.matches) { Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector; }
+  if (!Element.prototype.closest) { Element.prototype.closest = function(s) { var el = this; while (el && el.nodeType === 1) { if (el.matches && el.matches(s)) return el; el = el.parentElement || el.parentNode; } return null; }; }
+})();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+var TRIP = { departSydney: '2026-07-01', ferry: '2026-07-05', arrive: '2026-07-06', leave: '2026-08-09', back: '2026-08-10' };
+var GEO = { "w": 600.0, "h": 647.4, "path": "M36.4 100.7 L25.6 95.7 L22.2 99.0 L14.0 89.8 L17.9 86.7 L17.6 78.1 L14.7 74.7 L21.4 70.2 L20.4 67.3 L25.7 68.8 L29.9 58.7 L27.7 48.6 L29.7 38.7 L24.8 29.5 L27.8 23.9 L26.0 20.3 L32.0 14.0 L35.6 23.9 L33.7 24.0 L39.1 27.3 L38.2 35.0 L41.2 27.8 L62.3 39.2 L70.7 35.0 L74.0 41.5 L77.6 40.6 L76.7 44.5 L81.9 44.0 L83.8 50.6 L85.6 48.4 L89.1 52.3 L90.4 49.6 L92.4 54.5 L93.9 50.6 L99.4 50.6 L90.7 45.5 L102.5 47.5 L113.0 44.6 L106.8 48.9 L113.4 47.9 L113.6 28.6 L120.9 39.3 L117.9 39.7 L114.9 48.9 L118.6 52.2 L116.6 45.4 L122.9 56.9 L122.0 54.4 L133.6 56.9 L141.9 61.4 L140.2 66.1 L142.1 61.9 L151.9 57.7 L153.5 64.8 L159.3 70.8 L185.1 76.6 L186.9 84.9 L180.1 82.7 L191.0 87.3 L201.8 96.0 L201.3 99.7 L202.1 95.9 L207.6 95.5 L214.3 98.5 L212.5 99.8 L214.6 104.0 L219.9 100.9 L224.0 103.4 L222.3 106.0 L224.2 103.2 L244.6 112.5 L251.9 118.2 L249.6 121.3 L252.1 117.9 L264.2 120.4 L264.5 128.5 L265.3 119.3 L277.1 120.3 L274.5 125.7 L280.7 120.6 L282.3 127.7 L279.3 132.8 L281.9 131.0 L281.2 133.8 L285.6 137.1 L287.4 135.0 L281.6 129.4 L282.7 122.5 L297.3 120.9 L307.4 112.4 L312.0 122.5 L308.7 124.9 L313.7 127.0 L312.5 139.7 L315.5 130.3 L318.8 141.5 L317.0 139.7 L319.2 131.7 L316.0 132.2 L314.5 126.0 L319.3 120.6 L312.7 121.7 L312.4 118.2 L322.9 113.9 L325.0 107.3 L329.9 108.7 L334.2 101.1 L343.5 104.2 L351.4 116.3 L342.7 118.8 L343.8 122.0 L351.0 118.0 L354.2 129.2 L357.1 127.8 L353.5 121.6 L357.5 123.5 L360.2 118.9 L367.1 123.0 L363.2 129.7 L370.5 141.6 L374.9 139.9 L374.3 151.7 L383.9 161.4 L390.5 158.3 L390.1 167.2 L397.6 172.5 L397.4 179.5 L402.6 174.1 L398.2 177.1 L390.0 156.1 L385.8 157.4 L384.9 153.7 L375.5 151.7 L381.1 145.0 L375.2 136.1 L370.5 135.2 L370.4 130.6 L365.4 131.7 L369.2 125.5 L373.5 127.2 L363.6 116.2 L352.5 116.1 L353.2 109.2 L350.9 110.6 L346.3 99.1 L350.2 100.6 L359.7 91.8 L372.6 93.6 L382.0 83.9 L396.5 86.8 L403.0 90.8 L399.3 95.1 L402.9 94.4 L403.4 89.6 L413.1 85.7 L421.5 75.9 L424.9 79.2 L431.5 75.4 L433.0 84.3 L445.0 90.4 L439.3 88.5 L453.6 83.7 L467.7 65.9 L469.5 56.8 L480.9 51.0 L486.5 59.1 L494.3 58.6 L493.4 62.3 L516.6 62.7 L513.7 62.7 L514.0 59.8 L525.0 39.4 L521.9 34.3 L536.2 36.6 L537.9 41.4 L537.0 38.9 L543.3 40.3 L552.7 53.0 L558.0 52.8 L548.8 49.5 L550.5 54.1 L557.8 54.7 L558.4 51.0 L565.2 56.2 L565.8 62.4 L571.2 65.7 L580.6 85.4 L584.5 86.5 L577.2 94.0 L576.5 100.7 L576.1 93.9 L569.3 98.5 L576.7 101.1 L572.3 113.9 L574.7 122.7 L569.8 127.3 L572.7 125.2 L573.8 135.5 L582.8 141.6 L578.2 150.3 L575.6 150.7 L574.2 145.0 L573.5 153.0 L567.2 154.5 L572.7 158.0 L581.9 145.0 L586.0 145.6 L577.2 163.5 L573.8 164.6 L576.3 164.6 L570.9 182.9 L572.6 191.6 L571.4 186.4 L569.3 188.2 L573.3 191.8 L575.2 203.1 L579.5 206.7 L580.1 216.2 L576.0 223.9 L574.6 236.5 L577.7 242.3 L571.6 254.5 L572.8 263.1 L578.7 268.1 L580.6 277.2 L577.4 281.3 L574.6 302.3 L583.2 315.5 L582.8 321.7 L580.0 321.6 L580.7 325.1 L576.6 328.6 L585.7 331.5 L584.0 340.5 L575.9 352.5 L569.6 341.8 L575.8 333.8 L570.8 328.4 L576.8 320.2 L569.0 318.4 L568.1 313.1 L563.0 310.3 L565.0 308.5 L555.2 309.6 L557.6 303.2 L563.9 301.7 L568.3 291.9 L563.9 291.4 L561.4 298.6 L556.1 293.9 L551.6 303.4 L554.9 301.6 L556.4 305.0 L545.4 311.0 L554.2 309.7 L567.1 314.5 L550.1 313.4 L538.4 318.7 L544.2 320.2 L542.1 326.1 L544.0 328.9 L533.3 343.7 L535.5 348.1 L531.3 358.3 L527.8 357.7 L526.7 363.0 L520.8 365.2 L525.5 368.0 L530.7 358.6 L534.1 359.3 L535.4 366.4 L528.3 377.9 L531.1 383.7 L527.7 385.3 L532.8 385.4 L529.5 397.1 L532.9 399.6 L530.5 402.9 L526.5 401.7 L523.5 408.5 L518.2 400.8 L519.6 396.8 L515.6 402.4 L518.0 407.5 L512.2 408.8 L522.9 419.4 L520.8 424.6 L524.8 429.0 L520.5 427.4 L525.6 432.5 L521.9 438.9 L523.1 444.5 L512.8 453.2 L511.4 463.2 L513.6 468.8 L510.6 462.4 L506.1 472.0 L507.6 474.7 L505.7 472.9 L499.3 480.7 L488.9 477.2 L480.8 480.4 L476.4 475.8 L485.7 474.2 L483.1 472.3 L478.4 475.6 L471.2 473.7 L473.6 468.6 L468.0 454.9 L469.1 459.6 L464.1 458.8 L461.0 453.5 L459.2 460.4 L458.2 456.4 L453.1 460.0 L447.8 455.6 L450.2 453.4 L445.1 454.0 L448.9 461.3 L452.8 461.0 L452.1 464.9 L457.0 461.7 L458.4 465.2 L467.0 464.6 L472.3 468.9 L464.9 467.2 L455.6 472.6 L454.3 482.3 L459.7 486.5 L463.3 497.7 L458.6 499.1 L458.2 505.0 L442.6 511.1 L438.6 495.6 L441.1 493.0 L444.4 506.3 L450.3 506.2 L451.7 497.0 L446.7 496.2 L446.8 493.3 L449.6 484.9 L453.7 485.6 L451.8 481.3 L445.1 481.8 L441.1 488.0 L440.5 476.8 L432.5 475.0 L431.7 466.6 L421.7 459.6 L423.4 457.3 L419.1 454.9 L418.8 445.0 L417.9 450.5 L409.1 444.0 L396.3 453.8 L409.0 447.1 L417.4 452.3 L417.3 456.6 L422.0 457.3 L418.3 457.7 L417.8 462.4 L427.9 466.0 L426.5 469.5 L428.8 468.6 L430.8 475.3 L429.4 480.1 L433.8 482.9 L428.2 501.9 L431.3 511.3 L426.7 512.9 L422.2 502.4 L419.3 505.1 L421.5 506.2 L417.8 515.8 L424.7 518.8 L416.4 525.9 L418.9 527.6 L415.2 532.5 L418.6 546.8 L415.8 556.0 L404.4 559.1 L400.5 556.6 L401.8 550.4 L392.3 550.8 L392.7 546.0 L396.8 544.1 L391.4 534.3 L391.5 543.3 L388.2 547.1 L376.4 539.7 L385.0 515.0 L385.6 510.4 L383.3 512.8 L374.6 529.2 L375.8 533.4 L371.2 534.5 L374.9 535.6 L374.5 542.7 L388.6 552.1 L394.1 560.5 L391.1 561.0 L388.8 569.3 L385.7 565.1 L376.1 568.8 L387.8 573.5 L381.3 583.9 L381.5 592.2 L374.7 589.8 L371.3 593.0 L367.1 586.4 L365.9 592.9 L376.2 594.5 L379.1 599.6 L370.0 599.3 L368.0 603.1 L370.2 606.3 L375.4 602.6 L371.6 610.6 L367.2 610.1 L366.2 613.4 L363.6 607.2 L360.1 615.8 L364.1 616.6 L362.3 620.5 L366.1 618.0 L366.7 624.5 L359.1 632.4 L352.4 633.4 L353.1 627.6 L346.0 624.5 L333.9 631.4 L330.9 623.8 L327.0 626.1 L326.7 620.0 L323.9 621.9 L321.4 616.7 L317.7 616.6 L319.0 614.2 L314.0 608.9 L314.5 600.8 L311.6 596.6 L310.4 606.0 L317.2 612.8 L309.0 608.6 L300.5 612.9 L288.2 612.0 L278.9 606.5 L270.6 613.0 L267.0 609.7 L267.9 603.5 L259.3 600.8 L258.3 611.0 L255.8 612.1 L248.9 604.1 L248.8 609.7 L243.2 608.7 L243.1 615.6 L238.4 612.3 L231.1 618.5 L232.9 605.6 L230.8 596.5 L227.2 596.4 L229.1 594.6 L225.9 584.6 L221.9 583.9 L220.9 579.6 L214.4 579.3 L222.9 574.0 L225.4 582.0 L226.6 576.1 L222.5 572.7 L224.3 568.6 L239.1 577.3 L235.2 571.7 L246.2 574.0 L248.4 585.0 L246.9 578.4 L250.3 581.6 L253.3 579.5 L250.0 575.5 L258.4 575.7 L260.4 580.9 L258.8 575.8 L261.6 567.2 L253.2 568.1 L252.0 560.7 L247.1 572.0 L243.4 572.5 L237.3 568.2 L236.2 560.4 L235.3 569.5 L226.9 569.9 L219.2 558.6 L222.2 557.0 L223.3 549.1 L213.7 544.3 L215.4 551.2 L205.4 557.0 L208.1 560.4 L211.2 555.4 L214.7 555.8 L215.1 562.7 L206.6 567.2 L202.1 565.7 L204.0 562.6 L198.2 558.1 L199.0 552.3 L195.3 545.9 L197.0 543.9 L194.0 539.5 L190.0 540.5 L189.4 534.7 L183.9 528.8 L186.1 524.7 L179.7 525.1 L175.2 520.5 L179.2 514.6 L177.9 511.1 L172.6 510.7 L163.9 495.0 L149.3 498.9 L150.8 490.1 L147.3 486.4 L148.2 482.8 L142.8 479.6 L137.1 455.4 L132.2 452.9 L134.3 446.3 L129.6 436.5 L129.7 429.8 L124.7 430.0 L125.1 424.8 L121.4 422.4 L114.0 422.6 L119.9 417.9 L120.3 412.2 L116.2 410.5 L112.4 402.0 L113.7 398.3 L109.8 391.5 L112.6 386.8 L109.6 380.4 L111.2 378.1 L103.8 361.9 L106.5 351.6 L102.9 337.2 L99.1 334.9 L105.5 335.6 L107.6 344.2 L112.9 349.5 L112.5 353.8 L122.3 353.2 L121.1 360.4 L143.0 377.8 L142.0 384.6 L146.1 402.8 L147.1 392.4 L143.7 384.0 L148.9 381.4 L154.8 387.1 L168.1 386.2 L152.1 384.0 L158.9 368.0 L152.0 371.5 L150.5 369.4 L154.2 368.7 L149.2 360.7 L147.2 369.5 L144.5 361.0 L129.5 346.2 L130.6 336.0 L126.6 337.0 L130.7 334.6 L126.8 329.1 L124.0 330.1 L124.8 325.6 L120.8 325.0 L122.4 330.7 L114.7 336.1 L118.1 334.9 L118.0 341.2 L107.9 339.4 L113.4 329.0 L114.1 317.5 L111.9 303.8 L102.9 283.2 L104.7 285.8 L105.0 281.3 L103.6 283.7 L92.8 273.8 L78.2 255.7 L71.6 239.7 L62.7 236.7 L60.3 230.6 L74.7 215.4 L81.5 217.1 L79.2 215.3 L81.6 212.0 L61.8 225.7 L49.4 192.3 L35.1 174.9 L41.8 169.5 L38.9 158.4 L33.9 155.1 L25.6 136.4 L27.3 129.2 L24.0 120.8 L25.6 115.3 L22.7 112.8 L24.8 104.4 L21.9 99.8 L25.7 95.9 L36.4 100.7 Z", "xy": { "stanley": [119.0, 39.7], "anvers": [288.1, 136.6], "tarkine": [89.1, 149.8], "trowutta": [83.0, 92.1], "gunns": [220.2, 143.7], "leven": [224.8, 170.5], "penguin": [237.5, 113.3], "trespass": [183.6, 85.9], "cradle": [219.8, 225.2], "ronnycreek": [217.9, 219.6], "cradlesummit": [218.9, 231.1], "cradlenight": [217.2, 207.6], "mtroland": [261.4, 179.6], "trowunna": [280.1, 204.1], "stclair": [253.0, 317.0], "walls": [264.4, 273.7], "greatlake": [337.6, 267.5], "bronte": [302.6, 322.2], "derwentbridge": [261.4, 322.2], "hungrywombat": [261.7, 322.2], "tungatinah": [292.6, 346.9], "platypus": [284.3, 136.4], "cataract": [399.4, 179.4], "tamarisland": [390.2, 166.4], "tamarwine": [386.4, 149.8], "bridestowe": [436.7, 138.1], "bayfires": [577.0, 141.6], "swimcart": [575.5, 127.1], "sloop": [577.8, 138.5], "peron": [577.0, 149.8], "pubpaddock": [551.1, 147.8], "derby": [500.8, 118.5], "bridport": [438.3, 87.9], "bluelake": [522.1, 94.1], "denison": [572.4, 180.8], "chainlagoons": [575.5, 232.4], "freycinet": [577.0, 326.3], "hazardscircuit": [575.5, 327.3], "kelvedon": [543.5, 298.4], "maria": [540.4, 414.0], "bicheno": [577.0, 268.5], "spiky": [543.5, 328.3], "lisdillon": [531.3, 356.2], "bushgardens": [494.7, 422.2], "ross": [453.5, 301.1], "campbelltown": [453.5, 279.4], "mona": [418.0, 460.6], "kunanyi": [414.9, 479.2], "salamanca": [429.3, 477.1], "voices": [429.1, 476.3], "beaker": [429.1, 476.7], "whisky": [427.6, 475.9], "bonorong": [416.9, 438.7], "richmond": [445.6, 446.2], "mtfield": [335.3, 435.6], "cascadebrewery": [424.5, 479.4], "femalefactory": [425.3, 478.8], "sparkle": [442.8, 494.5], "bruny": [430.6, 560.5], "huonfest": [387.9, 500.7], "tahune": [337.6, 521.3], "hastings": [360.5, 587.3], "cockle": [362.0, 621.4], "portarthur": [508.5, 531.0], "nrmaportarthur": [507.9, 529.5], "eaglehawk": [519.1, 504.8], "tessellated": [519.8, 502.7], "tasmanarch": [522.9, 509.9], "caperaoul": [497.7, 541.9], "strahan": [123.7, 326.3], "queenstown": [158.5, 310.8], "gordondam": [235.5, 450.1], "nelson": [189.7, 322.2], "montezuma": [153.1, 259.2], "camp_devonport_holiday": [288.0, 137.0], "camp_mersey_bluff": [285.0, 130.0], "camp_picnic_point": [242.0, 122.0], "camp_midway_sulphur": [226.0, 113.0], "camp_penguin": [237.0, 113.0], "camp_burnie_ocean": [205.0, 104.0], "camp_wynyard": [175.0, 88.0], "camp_boat_harbour": [155.0, 78.0], "camp_stanley": [119.0, 40.0], "camp_smithton": [98.0, 73.0], "camp_arthur_river": [67.0, 170.0], "camp_nelson_bay": [55.0, 178.0], "camp_waratah": [145.0, 195.0], "camp_cradle_discovery": [218.0, 208.0], "camp_lake_gairdner": [232.0, 190.0], "camp_mole_creek": [282.0, 204.0], "camp_deloraine": [318.0, 185.0], "camp_liffey_falls": [338.0, 225.0], "camp_great_lake": [338.0, 268.0], "camp_derwent_bridge": [261.0, 322.0], "camp_lake_st_clair": [253.0, 317.0], "camp_teds_beach": [235.0, 450.0], "camp_edgar": [232.0, 462.0], "camp_launceston_big4": [399.0, 179.0], "camp_old_mac": [395.0, 176.0], "camp_beauty_point": [381.0, 98.0], "camp_george_town": [405.0, 80.0], "camp_lilydale": [430.0, 145.0], "camp_dorset_derby": [501.0, 119.0], "camp_branxholm": [488.0, 127.0], "camp_scottsdale": [462.0, 130.0], "camp_bridport": [438.0, 88.0], "camp_tomahawk": [495.0, 74.0], "camp_waterhouse": [522.0, 72.0], "camp_bayfires_swimcart": [576.0, 127.0], "camp_cosy_north": [577.0, 135.0], "camp_cosy_south": [577.0, 139.0], "camp_sloop_lagoon": [578.0, 141.0], "camp_policemans_point": [575.0, 113.0], "camp_dora_point": [566.0, 165.0], "camp_st_helens": [570.0, 155.0], "camp_dianas_basin": [575.0, 205.0], "camp_chain_lagoons": [575.0, 232.0], "camp_scamander": [573.0, 215.0], "camp_bicheno": [577.0, 269.0], "camp_bicheno_cabins": [574.0, 270.0], "camp_friendly_beaches": [571.0, 305.0], "camp_freycinet": [577.0, 326.0], "camp_coles_bay": [573.0, 324.0], "camp_swansea": [542.0, 342.0], "camp_mayfield_bay": [548.0, 356.0], "camp_triaby": [520.0, 395.0], "camp_orford": [508.0, 420.0], "camp_maria_darlington": [540.0, 414.0], "camp_oatlands": [420.0, 330.0], "camp_campbell_town": [454.0, 279.0], "camp_ross": [454.0, 301.0], "camp_kempton": [410.0, 385.0], "camp_hobart_discovery": [430.0, 455.0], "camp_barilla": [448.0, 462.0], "camp_snug": [425.0, 515.0], "camp_new_norfolk": [382.0, 430.0], "camp_left_field": [350.0, 433.0], "camp_mount_field": [335.0, 436.0], "camp_brighton": [417.0, 438.0], "camp_gordon_foreshore": [400.0, 545.0], "camp_bruni_captain_cook": [432.0, 558.0], "camp_bruni_neck": [430.0, 560.0], "camp_cloudy_corner": [425.0, 595.0], "camp_huonville": [386.0, 501.0], "camp_franklin": [374.0, 512.0], "camp_southport": [365.0, 592.0], "camp_cockle_creek": [362.0, 621.0], "camp_nrma_portarthur": [508.0, 530.0], "camp_white_beach": [490.0, 525.0], "camp_lime_bay": [468.0, 520.0], "camp_fortescue": [530.0, 525.0], "camp_dunalley": [493.0, 485.0], "camp_strahan": [124.0, 326.0], "camp_strahan_big4": [128.0, 323.0], "camp_macquarie_heads": [105.0, 333.0], "camp_queenstown": [159.0, 311.0], "camp_rosebery": [153.0, 259.0], "camp_zeehan": [133.0, 292.0], "camp_trial_harbour": [105.0, 285.0], "camp_granville": [94.0, 270.0], "camp_lake_burbury": [190.0, 322.0], "fish_great_lake": [336.9, 366.0], "fish_great_lake_tods": [331.7, 362.4], "fish_brushy_lagoon": [367.9, 271.7], "fish_craigbourne": [439.1, 466.6], "fish_bradys": [309.1, 412.7], "fish_binney": [306.1, 411.9], "fish_tungatinah_fish": [297.9, 419.4], "fish_lake_burbury": [191.4, 395.6], "fish_lake_pedder": [268.6, 515.8], "fish_king_william": [287.1, 412.7], "fish_meadowbank": [356.4, 473.7], "fish_barrington": [266.4, 286.9], "fish_huntsman": [322.1, 325.5], "fish_river_leven": [258.6, 255.4], "fish_huon_lower": [386.4, 536.0], "fish_four_springs": [364.3, 308.0], "fish_arthurs": [365.4, 379.9], "fish_penstock": [347.9, 389.8], "fish_little_pine": [325.7, 382.0], "fish_bronte": [307.1, 401.4], "fish_lake_echo": [324.3, 409.7], "fish_woods": [382.0, 383.8], "fish_lake_sorell": [403.6, 404.4], "fish_lake_leake": [493.9, 381.9], "fish_tooms": [483.6, 412.7], "fish_tyenna": [337.1, 491.2], "fish_south_esk": [400.0, 317.7], "fish_meander": [324.3, 314.3], "food_raspberry": [317.4, 304.1], "food_ashgrove": [313.0, 304.9], "food_mrs_jones": [287.6, 258.4], "food_rocky_cape_tavern": [163.7, 210.4], "food_breadbutter": [398.1, 297.1], "food_blackcow": [398.3, 296.9], "food_saintjohn": [398.4, 297.2], "food_stillwater": [397.0, 296.9], "food_josef_chromy": [401.9, 307.7], "food_clarendon_arms": [414.6, 316.7], "food_lobster_shack": [565.1, 362.4], "food_melshell": [526.1, 400.7], "food_freycinet_marine": [557.4, 396.7], "food_kates_berry": [527.6, 401.0], "food_devils_corner": [539.1, 378.1], "food_farmshed": [564.7, 362.5], "food_bayfires_lobster": [557.0, 280.0], "food_hope_anchor": [425.9, 513.2], "food_preachers": [424.9, 513.6], "food_barilla": [448.0, 504.9], "food_peppina": [426.1, 513.4], "food_fico": [425.1, 513.1], "food_dier_makr": [424.7, 513.1], "food_bar_wa": [425.0, 512.8], "food_willie": [385.4, 534.4], "food_agrarian": [387.1, 498.0], "food_lostcaptain": [385.4, 535.4], "food_get_shucked": [426.1, 560.1], "food_callington": [431.4, 426.1], "food_kentish": [431.6, 426.3], "food_bunch_oatlands": [431.6, 426.2], "food_great_lake_hotel": [340.0, 378.7]} };
+var REGIONS = ["North-West & Tarkine", "Cradle & Central Highlands", "Launceston & Tamar", "North-East", "East Coast", "Hobart & Surrounds", "Bruny & the Huon", "Tasman & Port Arthur", "West Coast", "Midlands"];
+var PLACES = [
+    // North-West & Tarkine
+    { id: 'stanley', r: 0, t: 'marquee', n: 'Stanley & The Nut', b: "A sheer volcanic plug rising 143 m straight out of a fishing village. Ride the chairlift or climb it for a windblown 360° over Bass Strait.", tip: "The chairlift closes in high wind — check on the day." },
+    { id: 'anvers', r: 0, t: 'cafe', n: 'House of Anvers', b: "A Belgian-style chocolate factory and café on the Bass Highway — hot chocolate that earns its name in July.", van: "Easy parking right off the highway, ten minutes from Devonport." },
+    { id: 'tarkine', r: 0, t: 'marquee', n: 'Tarkine Drive (takayna)', b: "A loop through one of the largest tracts of cool-temperate rainforest left on earth — myrtle, sassafras, thousand-year-old trees.", van: "Mostly sealed, some narrow/unsealed sections; best as a day trip without the van from a Smithton base.", tip: "Trowutta Arch and Julius River are short walks just off the drive." },
+    { id: 'trowutta', r: 0, t: 'hidden', n: 'Trowutta Arch', b: "A collapsed cave that left a soaring rock arch over a still green sinkhole — five minutes through dripping forest and you're somewhere prehistoric." },
+    { id: 'gunns', r: 0, t: 'hidden', n: 'Gunns Plains Caves', b: "No fanfare above ground, just farmland — then a guided drop into glow-worm dark and sideways 'shawl' formations. A quiet marvel.", tip: "Guided tours only — check the reduced winter tour times." },
+    { id: 'leven', r: 0, t: 'hidden', mine: 1, n: 'Leven Canyon', b: "A 275 m-deep ravine with a short, easy rim walk to a lookout platform cantilevered over the gorge.", tip: "The edge-lookout walk is the quick one — about 20 minutes return." },
+    { id: 'penguin', r: 0, t: 'cafe', n: 'Penguin', b: "A seaside town that leans all the way into its name — a giant penguin statue, penguin-shaped bins, and a good Sunday market." },
+    { id: 'trespass', r: 0, t: 'event', n: 'Permission to Trespass', when: "Early–mid July", b: "The north-west unlocks private gates, heritage land and hidden homes normally off-limits — long lunches, clifftop dining and art in places you couldn't otherwise reach.", tip: "Ticketed and sells out — book ahead, confirm 2026 dates." },
+    // Cradle & Central Highlands
+    { id: 'cradle', r: 1, t: 'marquee', mine: 1, n: 'Cradle Mountain & Dove Lake', b: "The headline act — the jagged peak above black, glacial Dove Lake, wombats on the buttongrass, and in July a real chance of snow.", van: "Leave the van at the visitor centre; the shuttle runs in to Dove Lake.", tip: "Check park road alerts for ice before you drive up." },
+    { id: 'ronnycreek', r: 1, t: 'hidden', mine: 1, n: 'Ronny Creek & the Overland Track start', b: "The official start of the Overland Track and the best wombat boardwalk in the park — a flat, short loop, brilliant at dawn or dusk." },
+    { id: 'cradlesummit', r: 1, t: 'hidden', mine: 1, n: 'Cradle Mountain summit climb', b: "The hard one — a steep, exposed scramble to the 1,545 m summit. A long alpine day even in summer; in winter it's snow-and-ice territory.", tip: "Only with the right gear, settled conditions and an early start — weather-dependent." },
+    { id: 'cradlenight', r: 1, t: 'marquee', mine: 1, n: 'Cradle Mountain night tour', b: "After dark the bush comes alive — Tasmanian devils, quolls and possums. Devils@Cradle runs keeper-led nocturnal feeding tours.", tip: "Book ahead; tours run on set nights." },
+    { id: 'mtroland', r: 1, t: 'hidden', mine: 1, n: 'Mount Roland', b: "A bold ridge rising above Sheffield — a steep, rewarding climb to big views over the Cradle country. A proper half-to-full-day hike." },
+    { id: 'trowunna', r: 1, t: 'marquee', mine: 1, n: 'Trowunna Wildlife Sanctuary', b: "A long-running sanctuary at Mole Creek — hands-on devil, wombat and quoll encounters with keepers who clearly adore them. (You may have called it 'Chiuana'.)" },
+    { id: 'stclair', r: 1, t: 'marquee', n: 'Lake St Clair', b: "Australia's deepest lake and the quiet southern end of the Overland Track — still water, snow gums, a wallaby at a metre in the frost." },
+    { id: 'walls', r: 1, t: 'hidden', n: 'Walls of Jerusalem', b: "No road in — a steep walk-up to a hidden alpine basin of pencil pines and tarns named like a cathedral. Remote, and in winter, snowbound.", van: "Walk-in only — a full-kit, fit-walkers objective.", tip: "Genuine alpine winter — only with experience and gear." },
+    { id: 'greatlake', r: 1, t: 'hidden', n: 'Great Lake & the Highlands', b: "High, wind-scoured lake country of trout, old fishing shacks and huge skies — proper off-season solitude.", van: "Long sealed touring roads; watch for black ice morning and evening." },
+    { id: 'bronte', r: 1, t: 'hidden', mine: 1, n: 'Bronte Lagoon', b: "A trout-fishing lagoon in the high lake country near Bronte Park — wide skies, fly-fishers, and proper off-season quiet." },
+    { id: 'derwentbridge', r: 1, t: 'hidden', mine: 1, n: 'Derwent Bridge & The Wall', b: "The little crossroads township by Lake St Clair — home of The Wall in the Wilderness, an astonishing carved-timber panorama of highland history (no photos inside)." },
+    { id: 'hungrywombat', r: 1, t: 'cafe', mine: 1, n: 'Hungry Wombat Café', b: "The roadhouse café at Derwent Bridge — the pie-and-coffee stop on the run between the west coast and the highlands." },
+    { id: 'tungatinah', r: 1, t: 'hidden', mine: 1, n: 'Tungatinah Lagoon', b: "A hydro lagoon up in the Central Highlands near Tarraleah, part of the high lake-and-canal country.", tip: "Worth confirming this is the spot you meant by 'Lake Tungatina'." },
+    { id: 'platypus', r: 1, t: 'hidden', mine: 1, n: 'Platypus spotting', b: "Platypus are most reliably seen at dawn or dusk in quiet highland and northern waterways — Warrawee Forest Reserve near Latrobe is the classic spot.", tip: "I couldn't pin a Tasmanian 'Lake Gairdner' — tell me the spot you had in mind and I'll set it properly." },
+    // Launceston & Tamar
+    { id: 'cataract', r: 2, t: 'marquee', mine: 1, n: 'Cataract Gorge', b: "A wild river gorge a 15-minute walk from the city centre — Victorian gardens, a chairlift across the basin, peacocks, and a cold-season hush." },
+    { id: 'tamarisland', r: 2, t: 'hidden', n: 'Tamar Island Wetlands', b: "A boardwalk out across reedbeds to a chain of islands ten minutes from town — herons, swans, and the Tamar sliding past." },
+    { id: 'tamarwine', r: 2, t: 'drink', n: 'Tamar Valley wineries', b: "Cool-climate pinot and sparkling country — winter is the time to take it indoors by a fire with a tasting.", van: "Cellar doors are spread up the valley; pick a designated driver." },
+    { id: 'bridestowe', r: 2, t: 'hidden', mine: 1, n: 'Bridestowe Lavender Estate', b: "The famous lavender estate — but in winter the rows are cut back and bare, so it's a café-and-shop stop rather than a purple-field one." },
+    // North-East
+    { id: 'bayfires', r: 3, t: 'marquee', mine: 1, n: 'Bay of Fires', b: "Orange lichen-painted granite, white sand and pool-blue water strung along the coast north of St Helens — empty and silent off-season." },
+    { id: 'swimcart', r: 3, t: 'hidden', mine: 1, n: 'Swimcart Beach', b: "A classic Bay of Fires beach and free camp behind the dunes — granite boulders, clear water, easy van access.", van: "Popular free camp; arrive early off-season and check current conditions." },
+    { id: 'sloop', r: 3, t: 'hidden', mine: 1, n: 'Sloop Reef / Sloop Rock', b: "A lookout and rocky reef in the Bay of Fires near Binalong Bay — lichen-orange boulders over clear water.", tip: "Reading your 'slip reef' as Sloop Reef/Rock — confirm if you meant another spot." },
+    { id: 'peron', r: 3, t: 'hidden', mine: 1, n: 'Peron Dunes', b: "Big, pale sand dunes at Stieglitz near St Helens — a striking, slightly surreal stop on the north-east coast." },
+    { id: 'pubpaddock', r: 3, t: 'pub', mine: 1, n: 'The Pub in the Paddock, Pyengana', b: "An 1880s country pub famous for its beer-drinking pig — a charming detour inland from St Helens." },
+    { id: 'derby', r: 3, t: 'marquee', n: 'Derby & the Floating Sauna', b: "A former tin town reborn as a world-class mountain-bike network in the rainforest. Even without a bike, the Floating Sauna on Lake Derby is worth it.", tip: "Book the lake sauna ahead — a perfect cold-day soak." },
+    { id: 'bridport', r: 3, t: 'event', n: 'Tassie Scallop Fiesta, Bridport', when: "Early August", b: "A small north-east fishing town throws a scallop festival at the peak of the season — chowder, shucking and maritime tradition.", tip: "Confirm the 2026 date." },
+    { id: 'bluelake', r: 3, t: 'hidden', n: 'Little Blue Lake, Gladstone', b: "A startling milky-aqua lake coloured by old tin-mine minerals (look, don't swim). A surreal far-north-east stop." },
+    // East Coast
+    { id: 'denison', r: 4, t: 'hidden', mine: 1, n: 'Denison Beach', b: "A long, quiet sweep of east-coast sand near Scamander — the kind of empty winter beach you stop at and have to yourself." },
+    { id: 'chainlagoons', r: 4, t: 'hidden', mine: 1, n: 'Chain of Lagoons', b: "A string of coastal lagoons below Elephant Pass — a pretty, low-key stretch between Bicheno and St Helens." },
+    { id: 'freycinet', r: 4, t: 'marquee', mine: 1, n: 'Freycinet & Wineglass Bay', b: "The Hazards' pink-granite peaks over the perfect curve of Wineglass Bay. The lookout walk is short and steep; in winter you may have it to yourself." },
+    { id: 'hazardscircuit', r: 4, t: 'hidden', mine: 1, n: 'Hazards Beach Circuit', b: "The fuller Freycinet loop — over the saddle to Wineglass Bay, along the sand and back via Hazards Beach. A big half-day on the legs.", tip: "Roughly 4–5 hours; check timing against short winter daylight." },
+    { id: 'kelvedon', r: 4, t: 'hidden', mine: 1, n: 'Kelvedon Beach boatshed', b: "The much-photographed old boatshed on Kelvedon Beach near Swansea, with Freycinet across the water. Best in soft early or late light.", tip: "Reading your 'Kalvedon' as Kelvedon." },
+    { id: 'maria', r: 4, t: 'marquee', mine: 1, n: 'Maria Island', b: "A car-free island off Triabunna — convict ruins at Darlington, the swirled Painted Cliffs, fearless wombats, and brilliant flat cycling.", tip: "Day-trip by passenger ferry; bring the bikes — no vehicles on the island." },
+    { id: 'bicheno', r: 4, t: 'marquee', n: 'Bicheno', b: "A blowhole that fires on the right swell, little penguins coming ashore at dusk, and Bicheno Beams lighting the town through the dark months.", tip: "Penguin tours and Beams run set nights — check dates." },
+    { id: 'spiky', r: 4, t: 'hidden', n: 'Spiky Bridge', b: "A convict-built bridge bristling with vertical stones — nobody's quite sure why. A quick, strange roadside stop south of Swansea." },
+    { id: 'lisdillon', r: 4, t: 'hidden', n: 'Lisdillon Saltworks', b: "Crumbling 19th-century saltworks ruins above Great Oyster Bay — sun-bleached stone, big views, and almost no one." },
+    { id: 'bushgardens', r: 4, t: 'hidden', n: 'Tasmanian Bushland Gardens', b: "A volunteer-built native garden south of Orford — eucalypts, orchids and banksias, a living scrapbook of the island's flora." },
+    // Midlands
+    { id: 'ross', r: 9, t: 'hidden', n: 'Ross', b: "A midlands village built by convicts in the 1830s — its carved sandstone bridge is among the oldest in Australia, and the bakery is a reason in itself.", van: "Easy main-street stop on the Midland Highway." },
+    { id: 'campbelltown', r: 9, t: 'hidden', mine: 1, n: 'Campbell Town', b: "A Georgian midlands town on the highway — the convict-built Red Bridge and a paving 'brick trail', each brick naming a transported convict." },
+    // Hobart & Surrounds
+    { id: 'mona', r: 5, t: 'marquee', mine: 1, n: 'MONA', b: "David Walsh's subterranean 'subversive adult Disneyland' — confronting, funny, unforgettable. Take the ferry up the Derwent to arrive properly.", tip: "Closed some weekdays in winter — check opening days." },
+    { id: 'kunanyi', r: 5, t: 'marquee', n: 'kunanyi / Mt Wellington', b: "1,271 m straight above the city, often under snow in July — drive (or be driven) to the summit for views to the Southern Ocean.", van: "Don't take the van up — steep, narrow and ices over. Leave it in town.", tip: "The road closes for snow/ice; check the gate status." },
+    { id: 'salamanca', r: 5, t: 'food', mine: 1, n: 'Salamanca Market', when: "Saturdays", b: "Hundreds of stalls along the sandstone warehouses every Saturday morning — produce, makers and hot food, rain, shine or sleet.", tip: "Plan a Saturday in Hobart around this." },
+    { id: 'voices', r: 5, t: 'event', n: 'Festival of Voices', when: "Early–mid July", b: "Australia's big celebration of the voice — choirs filling Hobart's halls, churches, pubs and street corners, capped by a fire-lit night.", tip: "Confirm 2026 dates." },
+    { id: 'beaker', r: 5, t: 'event', n: 'Beaker Street Festival', when: "Mid August", b: "A genuinely quirky science-and-art festival — glowing flora-and-fauna tours, dark-sky nights and the hunt for the Aurora Australis with actual scientists.", tip: "Confirm 2026 dates." },
+    { id: 'whisky', r: 5, t: 'event', n: 'Tasmanian Whisky Week', when: "Early August", b: "A week of tastings and stories across the island's distilleries, north and south. Just don't drive on the good stuff." },
+    { id: 'bonorong', r: 5, t: 'marquee', n: 'Bonorong Wildlife Sanctuary', b: "A rescue sanctuary north of Hobart — close-up devils, wombats and quolls, with night feeding tours and hand-feeding roos in the frost." },
+    { id: 'richmond', r: 5, t: 'hidden', mine: 1, n: 'Richmond & the Pooseum', b: "Australia's oldest road bridge, a convict gaol, a Georgian village — and, yes, the Pooseum, a whole museum of animal droppings. Half an hour from Hobart." },
+    { id: 'mtfield', r: 5, t: 'marquee', mine: 1, n: 'Mount Field — Russell Falls', b: "Russell Falls — tiered rainforest falls on an easy, pram-flat stroll from the car park — plus towering swamp gums and snow up at Lake Dobson." },
+    { id: 'cascadebrewery', r: 5, t: 'drink', mine: 1, n: 'Cascade Brewery', b: "Australia's oldest continually operating brewery, in a grand Gothic building below kunanyi — tours and tastings in South Hobart." },
+    { id: 'femalefactory', r: 5, t: 'marquee', mine: 1, n: 'Cascades Female Factory', b: "A World-Heritage convict site that tells the women's side of the story. Spare, moving, and powerfully done — guided tours bring it to life." },
+    { id: 'sparkle', r: 5, t: 'hidden', mine: 1, n: 'Sea sparkle (bioluminescence)', b: "Bioluminescent plankton that lights the water electric-blue on dark, still nights, often around southern Hobart beaches.", tip: "Reading your 'sparkly water' as this — needs a dark, moonless night and luck. Check local sightings pages, or tell me if you meant a named place." },
+    // Bruny & the Huon
+    { id: 'bruny', r: 6, t: 'marquee', mine: 1, n: 'Bruny Island', b: "Cross by ferry to oysters, cheese, whisky and the wind-blasted Neck lookout — two islands joined by a sandspit, a lighthouse at the far south.", van: "The vehicle ferry takes caravans (priced by length); some island roads are unsealed." },
+    { id: 'huonfest', r: 6, t: 'event', n: 'Huon Valley Mid-Winter Festival', when: "Mid July", b: "A pagan-flavoured apple-country knees-up at Willie Smith's Apple Shed near Huonville — cider, wassailing, fire and a fair bit of costume.", tip: "Ticketed — confirm 2026 dates." },
+    { id: 'tahune', r: 6, t: 'marquee', n: 'Tahune Airwalk', b: "A steel walkway out over the Huon and Picton rivers, high in the canopy — cantilevered ends that bounce gently above the confluence." },
+    { id: 'hastings', r: 6, t: 'hidden', n: 'Hastings Caves & Thermal Springs', b: "A grand dolomite cave, then a warm thermal pool in the forest — the one place in Tasmania where winter swimming actually makes sense." },
+    { id: 'cockle', r: 6, t: 'hidden', mine: 1, n: 'Cockle Creek', b: "The southernmost point you can drive to in Australia — the road just runs out at the edge of the wilderness. Bleak, beautiful, the end of the map.", van: "Final stretch is unsealed and remote; check conditions and fuel first." },
+    // Tasman & Port Arthur
+    { id: 'portarthur', r: 7, t: 'marquee', n: 'Port Arthur Historic Site', b: "Australia's most intact convict settlement, hauntingly beautiful around the harbour — at its eeriest on a grey winter's day. Ghost tours after dark." },
+    { id: 'nrmaportarthur', r: 7, t: 'stay', mine: 1, fee: 'PAID', n: 'NRMA Port Arthur Holiday Park', b: "Your Tasman Peninsula base — powered sites handy to the historic site and the coastal walks.", van: "Book ahead even in winter; good base for Cape Raoul and Eaglehawk Neck day trips." },
+    { id: 'eaglehawk', r: 7, t: 'marquee', mine: 1, n: 'Eaglehawk Neck', b: "The narrow isthmus onto the Tasman Peninsula and a cluster of coastal drama within minutes — the Tessellated Pavement, Tasman Arch, the Devil's Kitchen and a blowhole." },
+    { id: 'tessellated', r: 7, t: 'hidden', n: 'Tessellated Pavement', b: "A flat rock shelf cracked by nature into a near-perfect tiled grid — best at low tide, dawn or dusk." },
+    { id: 'tasmanarch', r: 7, t: 'marquee', n: 'Tasman Arch & blowholes', b: "Tasman Arch, the Devil's Kitchen and a blowhole within a few minutes of each other — raw dolerite coast, most dramatic in a winter swell." },
+    { id: 'caperaoul', r: 7, t: 'hidden', mine: 1, n: 'Cape Raoul hike', b: "A spectacular Tasman Peninsula day walk out to towering dolerite sea-cliffs, with a seal colony on the rocks below.", tip: "Reading 'Cape rowl' as Cape Raoul — a solid half-day; check the forecast for the exposed clifftops." },
+    // West Coast
+    { id: 'strahan', r: 8, t: 'marquee', mine: 1, n: 'Strahan & the Gordon River', b: "A tiny harbour town on the wild west — cruise the tannin-dark Gordon River into ancient rainforest and the old penal island of Sarah Island." },
+    { id: 'queenstown', r: 8, t: 'marquee', mine: 1, n: 'Queenstown', b: "A copper-mining town ringed by bare, lunar hills stripped by a century of smelting — stark and unforgettable. Ride the West Coast Wilderness Railway out of town." },
+    { id: 'gordondam', r: 8, t: 'hidden', n: 'Gordon Dam', b: "A 140 m curved concrete wall holding back a vast hydro lake deep in the south-west — vertigo with a view.", van: "Long sealed dead-end road in from Strathgordon; plan fuel and the return run." },
+    { id: 'nelson', r: 8, t: 'hidden', n: 'Nelson Falls', b: "A short, easy rainforest boardwalk off the Lyell Highway to a tall, fern-framed waterfall — an effortless leg-stretch between Queenstown and Derwent Bridge." },
+    { id: 'montezuma', r: 8, t: 'hidden', mine: 1, n: 'Montezuma Falls', b: "Tasmania's highest waterfall at the end of an old tramway track near Rosebery — a longer rainforest walk to a swing bridge and a 100 m drop." },
+
+    // Added campgrounds, free camps and caravan parks
+    {"id": "camp_devonport_holiday", "r": 0, "t": "stay", "n": "Discovery Parks Devonport", "b": "Caravan park / holiday park option near the Devonport ferry arrival point. Good practical first or last night with powered sites and facilities.", "van": "Caravan-friendly; book ahead around ferry days.", "fee": "PAID"},
+    {"id": "camp_mersey_bluff", "r": 0, "t": "stay", "n": "Mersey Bluff Caravan Park", "b": "Devonport-area caravan park close to the coast and ferry logistics.", "van": "Powered sites and facilities; handy ferry base.", "fee": "PAID"},
+    {"id": "camp_picnic_point", "r": 0, "t": "stay", "n": "Picnic Point Camping Ground, West Ulverstone", "b": "Low-cost/free-style coastal camping commonly used by caravans and motorhomes on the north-west coast.", "van": "Check current stay limits and whether self-contained rules apply.", "fee": "FREE"},
+    {"id": "camp_midway_sulphur", "r": 0, "t": "stay", "n": "Midway Point, Sulphur Creek", "b": "Popular north-west free/low-cost coastal stop for self-contained travellers.", "van": "Council rules and stay limits can change; check signage on arrival.", "fee": "FREE"},
+    {"id": "camp_penguin", "r": 0, "t": "stay", "n": "Penguin Caravan Park", "b": "Small coastal caravan park in Penguin, useful between Devonport and Burnie.", "van": "Caravan-friendly with town access.", "fee": "PAID"},
+    {"id": "camp_burnie_ocean", "r": 0, "t": "stay", "n": "Burnie Ocean View", "b": "Caravan park / tourist park option on the north-west coast near Burnie.", "van": "Good serviced stop for showers, laundry and supplies.", "fee": "PAID"},
+    {"id": "camp_wynyard", "r": 0, "t": "stay", "n": "Wynyard Caravan Park", "b": "North-west caravan park base near the Inglis River and Table Cape area.", "van": "Caravan-friendly; good resupply stop.", "fee": "PAID"},
+    {"id": "camp_boat_harbour", "r": 0, "t": "stay", "n": "Boat Harbour Beach Camping", "b": "Coastal camping/holiday area near one of the prettiest beaches on the north-west coast.", "van": "Check local rules and site access before towing in.", "fee": "FREE"},
+    {"id": "camp_stanley", "r": 0, "t": "stay", "n": "Stanley Cabin & Tourist Park", "b": "Caravan park right near Stanley and The Nut.", "van": "Caravan-friendly; book ahead if you want a powered site.", "fee": "PAID"},
+    {"id": "camp_smithton", "r": 0, "t": "stay", "n": "Smithton / Tall Timbers RV base", "b": "Practical north-west base for Tarkine and Stanley touring, with caravan/RV options in town.", "van": "Good base to drop the van before narrower Tarkine roads.", "fee": "PAID"},
+    {"id": "camp_arthur_river", "r": 0, "t": "stay", "n": "Arthur River / Manuka Campground", "b": "West coast/Tarkine-side camping near Arthur River, useful for the Edge of the World area.", "van": "Remote; check road/weather conditions and supplies.", "fee": "FREE"},
+    {"id": "camp_nelson_bay", "r": 0, "t": "stay", "n": "Nelson Bay Camping, Arthur River", "b": "Remote coastal camping option in the Arthur River area.", "van": "Best for self-contained travellers; check current access.", "fee": "FREE"},
+    {"id": "camp_waratah", "r": 0, "t": "stay", "n": "Waratah Campground", "b": "Low-cost inland campground near Waratah, useful between the north-west and west coast.", "van": "Caravan-friendly in suitable weather; check facilities.", "fee": "LOW COST"},
+    {"id": "camp_cradle_discovery", "r": 1, "t": "stay", "n": "Discovery Parks Cradle Mountain", "b": "Serviced caravan park base for Cradle Mountain and Dove Lake.", "van": "Leave the van here/near visitor areas rather than towing into alpine roads.", "fee": "PAID"},
+    {"id": "camp_lake_gairdner", "r": 1, "t": "stay", "n": "Lake Gairdner Free Camping Area", "b": "Free/low-cost highland-style camping option often used as a quieter base near the Cradle/Moina side.", "van": "Check current access, weather and surface conditions before towing.", "fee": "FREE"},
+    {"id": "camp_mole_creek", "r": 1, "t": "stay", "n": "Mole Creek Caravan Park", "b": "Caravan park base for Mole Creek, caves, Trowunna and the central north.", "van": "Good serviced stop before Cradle or the highlands.", "fee": "PAID"},
+    {"id": "camp_deloraine", "r": 1, "t": "stay", "n": "Deloraine Apex / caravan stop", "b": "Practical Deloraine-area camping/caravan stop between Devonport, Launceston and Cradle country.", "van": "Check current council rules and signage.", "fee": "PAID"},
+    {"id": "camp_liffey_falls", "r": 1, "t": "stay", "n": "Liffey Falls Camping Area", "b": "Forest camping option near Liffey Falls, useful between the central north and Launceston.", "van": "Access can be narrow/forested; confirm caravan suitability before towing.", "fee": "FREE"},
+    {"id": "camp_great_lake", "r": 1, "t": "stay", "n": "Great Lake Hotel / Miena camping base", "b": "Highlands stop around Great Lake and Miena, useful for a cold-weather serviced break.", "van": "Watch for black ice and winter road conditions.", "fee": "LOW COST"},
+    {"id": "camp_derwent_bridge", "r": 1, "t": "stay", "n": "Derwent Bridge Wilderness Hotel camping", "b": "Highland camping/caravan option near Lake St Clair and The Wall.", "van": "Useful between west coast and Hobart; check winter availability.", "fee": "LOW COST"},
+    {"id": "camp_lake_st_clair", "r": 1, "t": "stay", "n": "Lake St Clair Tourist Park", "b": "Serviced camping/caravan base for Lake St Clair.", "van": "Caravan-friendly but alpine weather can affect roads.", "fee": "PAID"},
+    {"id": "camp_teds_beach", "r": 1, "t": "stay", "n": "Teds Beach Campground, Lake Pedder", "b": "Remote south-west campground suitable for exploring Lake Pedder/Gordon Dam country.", "van": "Long remote drive; plan fuel and check weather.", "fee": "FREE"},
+    {"id": "camp_edgar", "r": 1, "t": "stay", "n": "Edgar Campground, Lake Pedder", "b": "Remote south-west campground near Lake Pedder.", "van": "Remote, exposed and weather-dependent; check current PWS advice.", "fee": "FREE"},
+    {"id": "camp_launceston_big4", "r": 2, "t": "stay", "n": "BIG4 Launceston Holiday Park", "b": "Serviced caravan park option for Launceston, Cataract Gorge and the Tamar.", "van": "Good city-base option with facilities.", "fee": "PAID"},
+    {"id": "camp_old_mac", "r": 2, "t": "stay", "n": "Old Mac's Caravan & Motorhome Farm Stay", "b": "Launceston-area caravan/motorhome stay with farm-style setting.", "van": "Useful serviced stop close to Launceston.", "fee": "PAID"},
+    {"id": "camp_beauty_point", "r": 2, "t": "stay", "n": "Beauty Point Tourist Park", "b": "Tamar River caravan park base for wineries, Beaconsfield and the northern Tamar.", "van": "Caravan-friendly; good northern Tamar base.", "fee": "PAID"},
+    {"id": "camp_george_town", "r": 2, "t": "stay", "n": "George Town / Low Head Tourist Park", "b": "Caravan park option near Low Head and the mouth of the Tamar.", "van": "Good for Tamar touring and penguin viewing.", "fee": "PAID"},
+    {"id": "camp_lilydale", "r": 2, "t": "stay", "n": "Lilydale Falls Camping Area", "b": "Low-cost/free-style camping near Lilydale Falls north-east of Launceston.", "van": "Check site size and access; useful for smaller rigs.", "fee": "FREE"},
+    {"id": "camp_dorset_derby", "r": 3, "t": "stay", "n": "Derby camping / RV options", "b": "Camping and caravan-friendly options around Derby for mountain biking and Lake Derby.", "van": "Can be busy in peak MTB periods; book or check ahead.", "fee": "LOW COST"},
+    {"id": "camp_branxholm", "r": 3, "t": "stay", "n": "Branxholm camping / caravan stop", "b": "Quiet north-east camping/caravan stop near Derby and Scottsdale.", "van": "Useful overflow/base for Derby.", "fee": "LOW COST"},
+    {"id": "camp_scottsdale", "r": 3, "t": "stay", "n": "Scottsdale Northeast Park", "b": "Well-known low-cost/free-style camping stop in Scottsdale.", "van": "Popular with caravans; check donation/stay limit rules.", "fee": "FREE"},
+    {"id": "camp_bridport", "r": 3, "t": "stay", "n": "Bridport Holiday Park", "b": "Caravan park base for Bridport, beaches and north-east touring.", "van": "Serviced sites; good coastal base.", "fee": "PAID"},
+    {"id": "camp_tomahawk", "r": 3, "t": "stay", "n": "Tomahawk Caravan Park", "b": "Quiet north-east coastal caravan park option.", "van": "Good for a slower coastal stop.", "fee": "PAID"},
+    {"id": "camp_waterhouse", "r": 3, "t": "stay", "n": "Waterhouse Conservation Area camping", "b": "Remote north-east coastal camping with several beach/bush camp areas.", "van": "Check access roads and weather; some sections suit smaller/off-road rigs better.", "fee": "FREE"},
+    {"id": "camp_bayfires_swimcart", "r": 3, "t": "stay", "n": "Swimcart Beach Campground", "b": "Bay of Fires beach camping behind the dunes, matching an existing app stop.", "van": "Basic facilities; arrive early and check current rules.", "fee": "FREE"},
+    {"id": "camp_cosy_north", "r": 3, "t": "stay", "n": "Cosy Corner North Campground", "b": "Classic Bay of Fires designated beach campground.", "van": "Basic facilities; no bookings generally required, but check current rules.", "fee": "FREE"},
+    {"id": "camp_cosy_south", "r": 3, "t": "stay", "n": "Cosy Corner South Campground", "b": "Popular designated Bay of Fires beach campground.", "van": "Caravan-friendly for many rigs; basic facilities.", "fee": "FREE"},
+    {"id": "camp_sloop_lagoon", "r": 3, "t": "stay", "n": "Sloop Lagoon Campground", "b": "Bay of Fires designated camping area near Binalong Bay.", "van": "Basic beach-camp setup; check current suitability for your rig.", "fee": "FREE"},
+    {"id": "camp_policemans_point", "r": 3, "t": "stay", "n": "Policemans Point Campground", "b": "Camping near Ansons Bay at the northern end of Bay of Fires country.", "van": "Remote basic camp; check roads and supplies.", "fee": "FREE"},
+    {"id": "camp_dora_point", "r": 3, "t": "stay", "n": "Dora Point Campground", "b": "Humbug Point / St Helens area campground with upgraded facilities noted by PWS.", "van": "Caravan-friendly coastal base near St Helens.", "fee": "FREE"},
+    {"id": "camp_st_helens", "r": 3, "t": "stay", "n": "St Helens Holiday Park", "b": "Serviced caravan park base for Bay of Fires, St Helens and east-coast resupply.", "van": "Good showers/laundry/restock stop.", "fee": "PAID"},
+    {"id": "camp_dianas_basin", "r": 4, "t": "stay", "n": "Dianas Basin Camping Area", "b": "East-coast lagoon/beach camping near St Helens/Scamander area.", "van": "Check road and site conditions; basic facilities.", "fee": "FREE"},
+    {"id": "camp_chain_lagoons", "r": 4, "t": "stay", "n": "Chain of Lagoons Camping", "b": "Low-key east-coast camping near Chain of Lagoons.", "van": "Useful beach/lagoon stop between St Helens and Bicheno.", "fee": "FREE"},
+    {"id": "camp_scamander", "r": 4, "t": "stay", "n": "Scamander Tourist Park", "b": "Serviced caravan park option on the east coast.", "van": "Good facilities and resupply on the coastal run.", "fee": "PAID"},
+    {"id": "camp_bicheno", "r": 4, "t": "stay", "n": "Bicheno Caravan Park", "b": "Caravan park base for Bicheno, penguins and the blowhole.", "van": "Good serviced stop between Bay of Fires and Freycinet.", "fee": "PAID"},
+    {"id": "camp_bicheno_cabins", "r": 4, "t": "stay", "n": "Bicheno East Coast Holiday Park", "b": "Holiday/caravan park option in Bicheno.", "van": "Book ahead for powered sites.", "fee": "PAID"},
+    {"id": "camp_friendly_beaches", "r": 4, "t": "stay", "n": "Friendly Beaches Campground", "b": "Iconic free/basic campground in Freycinet National Park area near long surf beaches.", "van": "Access is unsealed; check suitability for your caravan and current PWS rules.", "fee": "FREE"},
+    {"id": "camp_freycinet", "r": 4, "t": "stay", "n": "Freycinet National Park Campground", "b": "Very convenient paid campground for Wineglass Bay and Freycinet walks.", "van": "Popular; ballot/booking rules can apply in busy periods.", "fee": "PAID"},
+    {"id": "camp_coles_bay", "r": 4, "t": "stay", "n": "BIG4 Iluka on Freycinet / Coles Bay", "b": "Serviced caravan park base at Coles Bay for Freycinet.", "van": "Good facilities and easiest Freycinet base with the van.", "fee": "PAID"},
+    {"id": "camp_swansea", "r": 4, "t": "stay", "n": "Swansea Holiday Park", "b": "East-coast caravan park base overlooking Great Oyster Bay.", "van": "Good serviced stop between Freycinet and Hobart/Triabunna.", "fee": "PAID"},
+    {"id": "camp_mayfield_bay", "r": 4, "t": "stay", "n": "Mayfield Bay Campground", "b": "Easy-access beach campground with campervan and caravan sites noted by Parks & Wildlife Tasmania.", "van": "Beachside basic camping; check fees and current rules.", "fee": "FREE"},
+    {"id": "camp_triaby", "r": 4, "t": "stay", "n": "Triabunna Cabin & Caravan Park", "b": "Caravan park base for the Maria Island ferry.", "van": "Good place to leave the van while visiting Maria Island.", "fee": "PAID"},
+    {"id": "camp_orford", "r": 4, "t": "stay", "n": "Orford / Raspins Beach camping base", "b": "Orford-area caravan/camping option useful before Maria Island or Hobart.", "van": "Check current park/site options before arrival.", "fee": "PAID"},
+    {"id": "camp_maria_darlington", "r": 4, "t": "stay", "n": "Maria Island — Darlington Campground", "b": "Parks & Wildlife campground on Maria Island near Darlington.", "van": "No vehicles/caravans on Maria Island; tent/cycling option only.", "fee": "LOW COST"},
+    {"id": "camp_oatlands", "r": 9, "t": "stay", "n": "Oatlands Free Camping, Dulverton Street", "b": "Well-known free/low-cost Midlands stop in Oatlands.", "van": "Good north-south transit stop; check current stay limits.", "fee": "FREE"},
+    {"id": "camp_campbell_town", "r": 9, "t": "stay", "n": "Campbell Town free/low-cost RV stop", "b": "Midlands stop around Campbell Town useful on the Launceston-Hobart run.", "van": "Check signage and current council rules.", "fee": "FREE"},
+    {"id": "camp_ross", "r": 9, "t": "stay", "n": "Ross Caravan Park / RV stop", "b": "Historic Midlands stop with caravan/RV options near the bridge and bakery.", "van": "Good small-town overnight stop.", "fee": "LOW COST"},
+    {"id": "camp_kempton", "r": 9, "t": "stay", "n": "Kempton free/low-cost camping stop", "b": "Small Midlands stop between Hobart and Oatlands.", "van": "Check current council rules and facilities.", "fee": "FREE"},
+    {"id": "camp_hobart_discovery", "r": 5, "t": "stay", "n": "Discovery Parks Hobart", "b": "Serviced caravan park base for Hobart, MONA and Richmond.", "van": "Good city-base option with showers, laundry and powered sites.", "fee": "PAID"},
+    {"id": "camp_barilla", "r": 5, "t": "stay", "n": "BIG4 Hobart Airport Tourist Park / Barilla area", "b": "Serviced caravan park close to Hobart Airport and the eastern shore.", "van": "Good access for Hobart, Richmond and Tasman Peninsula.", "fee": "PAID"},
+    {"id": "camp_snug", "r": 5, "t": "stay", "n": "Snug Beach Cabin & Caravan Park", "b": "Southern Hobart-area caravan park useful for Bruny and the Channel.", "van": "Good serviced base before Bruny Island.", "fee": "PAID"},
+    {"id": "camp_new_norfolk", "r": 5, "t": "stay", "n": "New Norfolk Caravan Park", "b": "Derwent Valley caravan park base for Mount Field and Hobart surrounds.", "van": "Useful alternative to staying in Hobart.", "fee": "PAID"},
+    {"id": "camp_left_field", "r": 5, "t": "stay", "n": "Left of Field Camping Gardens", "b": "Quirky camping/caravan base near Mount Field and the Derwent Valley.", "van": "Good for self-contained caravans; check site type.", "fee": "LOW COST"},
+    {"id": "camp_mount_field", "r": 5, "t": "stay", "n": "Mount Field Campground", "b": "Parks & Wildlife campground in Mount Field National Park.", "van": "Forest campground; check availability and winter access.", "fee": "LOW COST"},
+    {"id": "camp_brighton", "r": 5, "t": "stay", "n": "Brighton / Pontville RV stop", "b": "Practical low-cost/free-style stop north of Hobart.", "van": "Useful for Hobart without driving into the city with the rig.", "fee": "FREE"},
+    {"id": "camp_gordon_foreshore", "r": 6, "t": "stay", "n": "Gordon Foreshore Reserve Campground", "b": "Beautiful waterside camping south of Hobart in the Channel/Huon area.", "van": "Popular with caravans; check current fees/rules.", "fee": "FREE"},
+    {"id": "camp_bruni_captain_cook", "r": 6, "t": "stay", "n": "Captain Cook Holiday Park, Bruny Island", "b": "Bruny Island caravan/holiday park option.", "van": "Vehicle ferry takes caravans but island roads vary; book ahead.", "fee": "PAID"},
+    {"id": "camp_bruni_neck", "r": 6, "t": "stay", "n": "The Neck / Bruny Island camping areas", "b": "Bruny Island camping options near the Neck and island touring routes.", "van": "Check current PWS/council rules and road conditions.", "fee": "FREE"},
+    {"id": "camp_cloudy_corner", "r": 6, "t": "stay", "n": "Cloudy Corner Campground, Bruny Island", "b": "Remote Bruny Island beach camping option.", "van": "Access can be sandy/rough; check suitability for your rig.", "fee": "FREE"},
+    {"id": "camp_huonville", "r": 6, "t": "stay", "n": "Huonville / River's Edge camping base", "b": "Huon Valley camping/caravan base for cider country, Tahune and the far south.", "van": "Useful serviced/low-cost base depending on current operator rules.", "fee": "LOW COST"},
+    {"id": "camp_franklin", "r": 6, "t": "stay", "n": "Franklin Foreshore Camping", "b": "Huon River foreshore-style camping option in Franklin.", "van": "Check current council rules, fees and stay limits.", "fee": "FREE"},
+    {"id": "camp_southport", "r": 6, "t": "stay", "n": "Southport Hotel & Caravan Park", "b": "Southern caravan park base before Cockle Creek and Hastings Caves.", "van": "Good last serviced stop before remote far south roads.", "fee": "PAID"},
+    {"id": "camp_cockle_creek", "r": 6, "t": "stay", "n": "Cockle Creek Campground", "b": "Free remote camping at the southern end of the road, first-come first-served.", "van": "Last stretch is gravel, narrow and remote; take supplies and check road conditions.", "fee": "FREE"},
+    {"id": "camp_nrma_portarthur", "r": 7, "t": "stay", "n": "NRMA Port Arthur Holiday Park", "b": "Serviced caravan park base for Port Arthur and Tasman Peninsula walks.", "van": "Caravan-friendly and already a strong base for the peninsula.", "fee": "PAID"},
+    {"id": "camp_white_beach", "r": 7, "t": "stay", "n": "White Beach Tourist Park", "b": "Caravan park option on the Tasman Peninsula near Port Arthur.", "van": "Good serviced peninsula base.", "fee": "PAID"},
+    {"id": "camp_lime_bay", "r": 7, "t": "stay", "n": "Lime Bay Campground", "b": "Tasman Peninsula campground near beaches and convict-era sites.", "van": "Basic campground; check current fees, fire bans and road access.", "fee": "FREE"},
+    {"id": "camp_fortescue", "r": 7, "t": "stay", "n": "Fortescue Bay Campground", "b": "Beautiful Tasman National Park campground for Cape Hauy and coastal walks.", "van": "Check booking/access rules; road is unsealed.", "fee": "PAID"},
+    {"id": "camp_dunalley", "r": 7, "t": "stay", "n": "Dunalley Hotel self-contained camping", "b": "Pub-style stop sometimes used by self-contained campers before the Tasman Peninsula.", "van": "Rules can change; ask at the hotel and support the venue.", "fee": "LOW COST"},
+    {"id": "camp_strahan", "r": 8, "t": "stay", "n": "Strahan Beach Tourist Park", "b": "Serviced west-coast caravan park base for Gordon River cruises and Strahan.", "van": "Good showers/laundry/resupply stop.", "fee": "PAID"},
+    {"id": "camp_strahan_big4", "r": 8, "t": "stay", "n": "BIG4 Strahan Holiday Retreat", "b": "Caravan park / holiday retreat base in Strahan.", "van": "Book ahead for powered sites.", "fee": "PAID"},
+    {"id": "camp_macquarie_heads", "r": 8, "t": "stay", "n": "Macquarie Heads Campground", "b": "Low-cost west-coast camping near the entrance to Macquarie Harbour.", "van": "Check road/sand/weather conditions and current fees.", "fee": "FREE"},
+    {"id": "camp_queenstown", "r": 8, "t": "stay", "n": "Queenstown Cabin & Tourist Park", "b": "Serviced caravan park base for Queenstown and the West Coast Wilderness Railway.", "van": "Good facilities before/after remote west-coast driving.", "fee": "PAID"},
+    {"id": "camp_rosebery", "r": 8, "t": "stay", "n": "Rosebery / Lake Rosebery camping", "b": "West-coast camping/caravan stop near Rosebery and Montezuma Falls.", "van": "Useful base for Montezuma Falls; check current facilities.", "fee": "LOW COST"},
+    {"id": "camp_zeehan", "r": 8, "t": "stay", "n": "Zeehan Caravan Park", "b": "Small west-coast caravan park base between Strahan, Queenstown and the north-west.", "van": "Good practical serviced stop.", "fee": "PAID"},
+    {"id": "camp_trial_harbour", "r": 8, "t": "stay", "n": "Trial Harbour Camping", "b": "Remote west-coast camping by the ocean.", "van": "Road is narrow/winding; check if suitable for your caravan before towing.", "fee": "FREE"},
+    {"id": "camp_granville", "r": 8, "t": "stay", "n": "Granville Harbour Camping", "b": "Remote west-coast camping area north of Strahan.", "van": "Remote gravel/coastal access; check conditions carefully.", "fee": "FREE"},
+    {"id": "camp_lake_burbury", "r": 8, "t": "stay", "n": "Lake Burbury Camping", "b": "Scenic low-cost/free-style camping near Queenstown and the Lyell Highway.", "van": "Windy/exposed; check conditions.", "fee": "FREE"},
+
+    // Added trout fishing spots — July/all-year and Autumn/open-season waters
+    {"id": "fish_great_lake", "r": 1, "t": "fish", "n": "yingina / Great Lake — Liawenee & Swan Bay", "b": "Premium wild trout fishery and one of the best July options because most of Great Lake is open all year. Good for shore, lure, fly and bait where permitted.", "when": "July + Autumn", "tip": "Check sub-areas: Canal Bay and Tods Corner have special rules.", "van": "Good caravan base from Miena/Liawenee; watch black ice and wind."},
+    {"id": "fish_great_lake_tods", "r": 1, "t": "fish", "n": "Great Lake — Tods Corner", "b": "Famous Great Lake shore-based trout area and a serious cold-weather option, with tighter rules than the general lake.", "when": "July + Autumn", "tip": "Artificials only at Tods Corner; confirm IFS rules before fishing.", "van": "Roadside access nearby, but exposed highland weather."},
+    {"id": "fish_brushy_lagoon", "r": 2, "t": "fish", "n": "Brushy Lagoon", "b": "Regularly stocked family trout fishery with brown trout, rainbow trout and Atlantic salmon; lower altitude and comfortable in winter.", "when": "July + Autumn", "tip": "Dam wall is popular for shore anglers; small boats and kayaks are common.", "van": "Easy access north-west of Launceston."},
+    {"id": "fish_craigbourne", "r": 5, "t": "fish", "n": "Craigbourne Dam", "b": "Accessible stocked trout water north-east of Hobart; useful cold-season and autumn option with shore fishing.", "when": "July + Autumn", "tip": "Often worth checking after stocking reports; exposed in wind.", "van": "Good day trip from Hobart/Richmond with the caravan left at camp."},
+    {"id": "fish_bradys", "r": 1, "t": "fish", "n": "Bradys Lake", "b": "Part of the Bradys chain: popular, stocked and productive for trolling, spin, bait and fly. IFS notes the Bradys chain as open all year for 2025–26.", "when": "July + Autumn", "tip": "Good winter fallback when many brown-trout waters are closed.", "van": "A10 access; check snow/ice before towing high."},
+    {"id": "fish_binney", "r": 1, "t": "fish", "n": "Lake Binney", "b": "Part of the Bradys chain, with brown and rainbow trout supported by natural recruitment and stocking.", "when": "July + Autumn", "tip": "Check rules for connecting canals and exclusions.", "van": "Highland access; winter road conditions matter."},
+    {"id": "fish_tungatinah_fish", "r": 1, "t": "fish", "n": "Tungatinah Lagoon", "b": "Hydro lagoon in the Bradys/Tungatinah system and a July-capable trout option under the 2025–26 rule change.", "when": "July + Autumn", "tip": "Pair with Bradys Lake and Lake Binney.", "van": "Highland weather and roads can change quickly."},
+    {"id": "fish_lake_burbury", "r": 8, "t": "fish", "n": "Lake Burbury", "b": "Large west-coast trout lake near Queenstown. Strong all-year option, especially for lure and trolling when conditions allow.", "when": "July + Autumn", "tip": "Can be windy and wild; pick sheltered shores.", "van": "Good with Queenstown/Strahan touring."},
+    {"id": "fish_lake_pedder", "r": 1, "t": "fish", "n": "Lake Pedder", "b": "Huge south-west trout water with remote scenery and shore/boat options; listed among year-round trout fisheries.", "when": "July + Autumn", "tip": "Remote, cold and exposed; treat as weather-dependent.", "van": "Long drive to Strathgordon/Teds Beach; plan fuel."},
+    {"id": "fish_king_william", "r": 1, "t": "fish", "n": "Lake King William", "b": "Highland hydro lake on the Derwent system, useful between Derwent Bridge and Hobart.", "when": "July + Autumn", "tip": "Access and water levels affect shore fishing.", "van": "Good stop between Lake St Clair and Hobart."},
+    {"id": "fish_meadowbank", "r": 5, "t": "fish", "n": "Meadowbank Lake", "b": "Lower-altitude Derwent system lake and a practical trout option when highlands are icy.", "when": "July + Autumn", "tip": "Good weather fallback compared with the plateau.", "van": "Accessible from Derwent Valley/Hobart side."},
+    {"id": "fish_barrington", "r": 0, "t": "fish", "n": "Lake Barrington", "b": "Deep lake near Sheffield with trout fishing opportunities; better with boat/kayak access.", "when": "July + Autumn", "tip": "Shore access can be limited.", "van": "Good north-west/Cradle-side add-on."},
+    {"id": "fish_huntsman", "r": 1, "t": "fish", "n": "Huntsman Lake", "b": "Small stocked lake near Meander/Deloraine; useful lower-altitude option close to northern caravan bases.", "when": "July + Autumn", "tip": "Good when highland weather is unpleasant.", "van": "Easy from Deloraine or Mole Creek."},
+    {"id": "fish_river_leven", "r": 0, "t": "fish", "n": "River Leven — lower reaches", "b": "Lower River Leven is a year-round inland trout option downstream of the Allison Bridge area.", "when": "July + Autumn", "tip": "Check the exact boundary and river levels.", "van": "Near Ulverstone/Leven Canyon."},
+    {"id": "fish_huon_lower", "r": 6, "t": "fish", "n": "Huon River — downstream of Huonville Bridge", "b": "Lower Huon is a year-round inland option, with resident and sea-run trout possibilities in the right conditions.", "when": "July + Autumn", "tip": "Check boundaries, tide and river flow.", "van": "Handy from Huonville/Franklin/Gordon."},
+    {"id": "fish_four_springs", "r": 2, "t": "fish", "n": "Four Springs Lake", "b": "Trophy-style stocked trout fishery known for excellent early and late season angling.", "when": "Autumn + from season opening", "tip": "Not normally a July option; excellent in autumn and early August.", "van": "20 km north of Hagley; easy northern base."},
+    {"id": "fish_arthurs", "r": 1, "t": "fish", "n": "Arthurs Lake", "b": "One of Tasmania's most popular brown trout fisheries, famous for numbers and highland lake fishing.", "when": "Autumn + from season opening", "tip": "Normally closed in July; opens with brown trout season.", "van": "Good Highland Lakes Road base."},
+    {"id": "fish_penstock", "r": 1, "t": "fish", "n": "Penstock Lagoon", "b": "Highly regarded Central Plateau fly-fishing lagoon with clear-water trout and challenging conditions.", "when": "Autumn + from season opening", "tip": "Confirm season and method rules before fishing.", "van": "Close to Great Lake; exposed weather."},
+    {"id": "fish_little_pine", "r": 1, "t": "fish", "n": "Little Pine Lagoon", "b": "Reputable fly-fishing water for sight fishing and autumn highland trout.", "when": "Autumn + from season opening", "tip": "Confirm season and artificial-only style rules.", "van": "Highland road access; weather can change fast."},
+    {"id": "fish_bronte", "r": 1, "t": "fish", "n": "Bronte Lagoon", "b": "Excellent Central Highlands trout fishery rewarding fly and lure anglers with well-conditioned fish.", "when": "Autumn + from season opening", "tip": "Check current season before fishing in July.", "van": "Good stop on A10 highland route."},
+    {"id": "fish_lake_echo", "r": 1, "t": "fish", "n": "Lake Echo", "b": "Large Central Highlands brown trout water with shore and boat options, especially as autumn cools.", "when": "Autumn + from season opening", "tip": "Wind direction matters on this exposed lake.", "van": "Remote highland access; check roads."},
+    {"id": "fish_woods", "r": 1, "t": "fish", "n": "Woods Lake", "b": "Popular Central Highlands brown trout water with strong reputation among lure and fly anglers.", "when": "Autumn + from season opening", "tip": "Usually not a July fishery; better in autumn/open season.", "van": "Highland access; exposed in bad weather."},
+    {"id": "fish_lake_sorell", "r": 9, "t": "fish", "n": "Lake Sorell", "b": "Large Midlands trout water and notable fishing option; check current access and rules.", "when": "Autumn + from season opening", "tip": "Confirm current IFS rules before committing.", "van": "Accessible Midlands option near Interlaken/Oatlands."},
+    {"id": "fish_lake_leake", "r": 4, "t": "fish", "n": "Lake Leake", "b": "East-coast/Midlands trout lake often mentioned as a popular early-season and autumn option.", "when": "Autumn + from season opening", "tip": "Useful between east coast and Midlands.", "van": "Caravan-friendly touring country."},
+    {"id": "fish_tooms", "r": 9, "t": "fish", "n": "Tooms Lake", "b": "Productive Midlands-style trout lake with shore and boat possibilities.", "when": "Autumn + from season opening", "tip": "Check water levels and current rules.", "van": "Quiet inland touring stop."},
+    {"id": "fish_tyenna", "r": 5, "t": "fish", "n": "Tyenna River", "b": "Reputable Derwent Valley river trout fishery for fly and lure anglers in suitable flows.", "when": "Autumn + from season opening", "tip": "Not usually a July trout target; check season and river level.", "van": "Pairs with Mount Field/New Norfolk bases."},
+    {"id": "fish_south_esk", "r": 2, "t": "fish", "n": "South Esk River", "b": "Major northern trout river with resident trout and excellent autumn fishing when flows suit.", "when": "Autumn + from season opening", "tip": "River conditions matter; check access and levels.", "van": "Good northern touring option."},
+    {"id": "fish_meander", "r": 1, "t": "fish", "n": "Meander River", "b": "Well-known northern trout river below the Western Tiers with fly and lure options.", "when": "Autumn + from season opening", "tip": "Check private-property boundaries and river levels.", "van": "Good from Deloraine/Meander bases."},
+
+    // Additional food, pubs, seafood and cafe stops
+
+    // Expanded food and drink categories with real map pins
+    {"id": "food_raspberry", "r": 0, "t": "cafe", "n": "Christmas Hills Raspberry Farm", "b": "Legendary raspberry desserts, coffee and lunch stop at Elizabeth Town.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_ashgrove", "r": 0, "t": "cafe", "n": "Ashgrove Cheese", "b": "Cheese tastings, ice cream and local produce near Elizabeth Town.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_mrs_jones", "r": 0, "t": "dining", "n": "Mrs Jones Restaurant Bar Lounge", "b": "Waterfront Devonport dining stop after or before the ferry.", "tip": "Good first/last night option."},
+    {"id": "food_rocky_cape_tavern", "r": 0, "t": "pub", "n": "Rocky Cape Tavern", "b": "Country/coastal tavern stop on the north-west coast.", "tip": "Handy with Rocky Cape/Stanley touring."},
+    {"id": "food_breadbutter", "r": 2, "t": "cafe", "n": "Bread + Butter", "b": "Legendary bakery and coffee stop in Launceston.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_blackcow", "r": 2, "t": "dining", "n": "Black Cow Bistro", "b": "Well-known Launceston steak restaurant.", "tip": "Book ahead."},
+    {"id": "food_saintjohn", "r": 2, "t": "pub", "n": "Saint John Craft Beer", "b": "Craft beer destination in Launceston.", "tip": "Great pub-style stop."},
+    {"id": "food_stillwater", "r": 2, "t": "dining", "n": "Stillwater", "b": "Highly regarded dining destination beside the Tamar.", "tip": "Worth booking."},
+    {"id": "food_josef_chromy", "r": 2, "t": "drink", "n": "Josef Chromy Wines", "b": "Beautiful winery and restaurant south of Launceston.", "tip": "Good cellar-door lunch."},
+    {"id": "food_clarendon_arms", "r": 2, "t": "pub", "n": "Clarendon Arms, Evandale", "b": "Historic village pub stop near Launceston.", "tip": "Good road-trip lunch."},
+    {"id": "food_lobster_shack", "r": 4, "t": "seafood", "n": "Lobster Shack Tasmania", "b": "Fresh seafood with ocean views in Bicheno.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_melshell", "r": 4, "t": "seafood", "n": "Melshell Oyster Shack", "b": "One of Tasmania's best oyster stops near Swansea.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_freycinet_marine", "r": 4, "t": "seafood", "n": "Freycinet Marine Farm", "b": "Oysters and seafood by the water near Coles Bay.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_kates_berry", "r": 4, "t": "cafe", "n": "Kate's Berry Farm", "b": "Desserts, berries and sweeping coastal views near Swansea.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_devils_corner", "r": 4, "t": "drink", "n": "Devil's Corner", "b": "Wine, views and food trucks on the east coast.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_farmshed", "r": 4, "t": "drink", "n": "The Farm Shed East Coast Wine Centre", "b": "East Coast wine and produce showcase in Bicheno.", "tip": "Good tasting stop."},
+    {"id": "food_bayfires_lobster", "r": 3, "t": "seafood", "n": "Bay of Fires Lobster", "b": "Popular St Helens seafood stop.", "tip": "Great with Bay of Fires touring."},
+    {"id": "food_hope_anchor", "r": 5, "t": "pub", "n": "Hope & Anchor", "b": "Historic Hobart pub near the waterfront.", "tip": "Classic pub stop."},
+    {"id": "food_preachers", "r": 5, "t": "pub", "n": "Preachers", "b": "Relaxed Hobart beer garden and food stop.", "tip": "Easy casual night."},
+    {"id": "food_barilla", "r": 5, "t": "seafood", "n": "Barilla Bay Oyster Farm", "b": "Seafood destination close to Hobart Airport.", "tip": "Good before/after airport or eastern shore."},
+    {"id": "food_peppina", "r": 5, "t": "dining", "n": "Peppina", "b": "Popular Hobart Italian dining in The Tasman.", "tip": "Book ahead."},
+    {"id": "food_fico", "r": 5, "t": "dining", "n": "Fico", "b": "Highly regarded Hobart dining destination.", "tip": "Book well ahead."},
+    {"id": "food_dier_makr", "r": 5, "t": "dining", "n": "Dier Makr", "b": "Creative Hobart restaurant and wine-bar style experience.", "tip": "Book ahead."},
+    {"id": "food_bar_wa", "r": 5, "t": "dining", "n": "Bar Wa Izakaya", "b": "Fun Hobart izakaya for a lively dinner.", "tip": "Good casual city option."},
+    {"id": "food_willie", "r": 6, "t": "drink", "n": "Willie Smith's Apple Shed", "b": "Tasmania's most famous cider stop near Huonville.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_agrarian", "r": 5, "t": "dining", "n": "The Agrarian Kitchen", "b": "Destination dining and cooking-school experience at New Norfolk.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_lostcaptain", "r": 6, "t": "pub", "n": "Lost Captain Taphouse", "b": "Great food, beer and local produce in Huonville.", "tip": "Good Huon Valley stop."},
+    {"id": "food_get_shucked", "r": 6, "t": "seafood", "n": "Get Shucked, Bruny Island", "b": "Bruny Island oyster stop.", "tip": "Good with Bruny touring."},
+    {"id": "food_callington", "r": 9, "t": "drink", "n": "Callington Mill", "b": "Whisky, dining and heritage precinct in Oatlands.", "tip": "Worth the detour.", "detour": 1},
+    {"id": "food_kentish", "r": 9, "t": "pub", "n": "The Kentish", "b": "Classic country pub stop in Oatlands.", "tip": "Good Midlands road stop."},
+    {"id": "food_bunch_oatlands", "r": 9, "t": "cafe", "n": "Bunch Café, Oatlands", "b": "Cute café stop in the Midlands.", "tip": "Good coffee/lunch break."},
+    {"id": "food_great_lake_hotel", "r": 1, "t": "pub", "n": "Great Lake Hotel", "b": "Excellent highland stop for trout fishers, with hearty meals and fire-side weather refuge.", "tip": "Worth the detour.", "detour": 1},
+];
+var ROUTE = [
+    ["1", "<b>Devonport & the North-West</b> — settle in, Stanley, the Tarkine. (3–4 nights)"],
+    ["2", "<b>Cradle Mountain</b> if the weather opens up — then drop to the <b>West Coast</b>, Strahan & Queenstown. (4–5 nights)"],
+    ["3", "South via <b>Lake St Clair</b> and Derwent Bridge to <b>Hobart</b> — your base for the festivals. (week+)"],
+    ["4", "Day-trip out from Hobart: <b>Bruny & the Huon</b>, <b>Tasman & Port Arthur</b>, MONA, kunanyi."],
+    ["5", "Up the <b>East Coast</b> — Maria Island, Freycinet, Bicheno, Bay of Fires. (5–6 nights)"],
+    ["6", "Across the <b>North-East</b> (Derby) to <b>Launceston & the Tamar</b>, then back to Devonport for the ferry. (4–5 nights)"]
+];
+var KNOW = [
+    ["Trout fishing notes", "<li><b>July:</b> most brown trout waters are closed until the first Saturday in August, so use Trout Fishing pins marked July/all-year and check IFS before fishing.</li><li><b>Autumn:</b> many major brown trout waters fish well through autumn, but most close around late April/early May depending on the season.</li><li><b>Licence:</b> a Tasmanian inland angling licence is required for most freshwater trout fishing. Check the current IFS Code or InFish app for the exact water before you go.</li><li><b>Safety:</b> highland trout waters can be icy, windy and remote in winter; wear a PFD around cold water and do not tow into marginal roads.</li>"],
+    ["Booking ahead", "<li><b>Ferry:</b> winter sailings are usually overnight — board Geelong evening, wake in Devonport. Book the caravan length in early; the Flex fare is worth it.</li><li><b>Sites:</b> many parks and free camps run reduced winter capacity — call ahead rather than rolling up at dusk.</li><li><b>Festivals:</b> the July–August events here are ticketed and popular — lock them in once you've fixed your dates.</li>"],
+    ["Winter driving with the rig", "<li><b>Highlands ice & snow:</b> Cradle, the Central Plateau, kunanyi and Mount Field can hold snow and black ice. Drive slow, leave gaps, check road status before you climb.</li><li><b>Leave the van low:</b> don't tow up the kunanyi summit road or other steep narrow climbs — drop the caravan and go up light.</li><li><b>Daylight is short</b> (~9 hrs). Be parked and set up well before dark; wildlife on the roads peaks at dusk.</li><li><b>Unsealed stretches:</b> Tarkine Drive, Bruny, Cockle Creek and Gordon Dam have gravel or remote runs — fuel up and check conditions.</li>"],
+    ["What winter does well", "<li><b>It's the off-season</b> — Wineglass Bay, Bay of Fires and Port Arthur can be near-empty and at their most atmospheric.</li><li><b>Snow</b> dusts the peaks; <b>aurora</b> and dark skies are a genuine drawcard in the south.</li><li><b>In season:</b> oysters, scallops, truffles and whisky — and a fire and a pinot most evenings.</li><li><b>Storm-watching</b> on the east and west coasts is its own reward.</li>"],
+    ["Your key dates", "<li><b>1 Jul</b> — leave Sydney, towing for Geelong.</li><li><b>5 Jul</b> — overnight Spirit of Tasmania, Geelong → Devonport.</li><li><b>6 Jul</b> — wheels down in Tasmania.</li><li><b>9 Aug</b> — afternoon sailing back; <b>10 Aug</b> arrive Geelong.</li><li>That's <b>35 days</b> on the island — enough slack to wait out the weather.</li>"]
+];
+var KEY = 'tas_v1_state';
+var state = { assign: {}, userPlaces: [] };
+var mem = {};
+function load() {
+    try {
+        var v = null;
+        if (window.localStorage) v = window.localStorage.getItem(KEY);
+        if (!v && mem[KEY]) v = mem[KEY];
+        if (v) state = JSON.parse(v);
+    } catch (e) {}
+    state.assign = state.assign || {};
+    state.userPlaces = state.userPlaces || [];
+}
+var saveT = null;
+function save() {
+    clearTimeout(saveT);
+    saveT = setTimeout(function () {
+        var v = JSON.stringify(state);
+        try {
+            if (window.localStorage) window.localStorage.setItem(KEY, v);
+            mem[KEY] = v;
+        } catch (e) { mem[KEY] = v; }
+    }, 250);
+}
+
+var $ = function (s) { return document.querySelector(s); };
+var esc = function (s) { return (s || '').replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]); }); };
+function allPlaces() { return PLACES.concat(state.userPlaces.map(function (p) { return (__assign(__assign({}, p), { user: true })); })); }
+function pById(id) { return allPlaces().find(function (p) { return p.id === id; }); }
+function ymd(d) { return d.toISOString().slice(0, 10); }
+function tripDays() {
+    var out = [], a = new Date(TRIP.arrive + 'T00:00:00'), b = new Date(TRIP.leave + 'T00:00:00');
+    for (var d = new Date(a); d <= b; d.setDate(d.getDate() + 1))
+        out.push(ymd(d));
+    return out;
+}
+var DAYS = tripDays();
+function fmtDay(iso) { var d = new Date(iso + 'T00:00:00'); return { dow: d.toLocaleDateString('en-AU', { weekday: 'short' }), dnum: d.getDate(), mon: d.toLocaleDateString('en-AU', { month: 'short' }) }; }
+function tripNo(iso) { return DAYS.indexOf(iso) + 1; }
+var TYPE_LABEL = { marquee: 'Must-see', hidden: 'Hidden gem', event: 'Event', food: 'Food', pub: 'Pub Stop', cafe: 'Café & Bakery', seafood: 'Seafood', drink: 'Wine / Cider / Distillery', dining: 'Destination Dining', stay: 'Stay', fish: 'Trout Fishing' };
+var LL={"stanley":[-40.766,145.296],"anvers":[-41.236,146.405],"tarkine":[-41.3,145.1],"trowutta":[-41.02,145.06],"gunns":[-41.27,145.96],"leven":[-41.4,145.99],"penguin":[-41.123,146.073],"trespass":[-40.99,145.72],"cradle":[-41.665,145.957],"ronnycreek":[-41.638,145.945],"cradlesummit":[-41.694,145.951],"cradlenight":[-41.58,145.94],"mtroland":[-41.444,146.23],"trowunna":[-41.563,146.353],"stclair":[-42.11,146.175],"walls":[-41.9,146.25],"greatlake":[-41.87,146.73],"bronte":[-42.135,146.5],"derwentbridge":[-42.135,146.23],"hungrywombat":[-42.135,146.232],"tungatinah":[-42.255,146.435],"platypus":[-41.235,146.38],"cataract":[-41.443,147.135],"tamarisland":[-41.38,147.075],"tamarwine":[-41.3,147.05],"bridestowe":[-41.243,147.38],"bayfires":[-41.26,148.3],"swimcart":[-41.19,148.29],"sloop":[-41.245,148.305],"peron":[-41.3,148.3],"pubpaddock":[-41.29,148.13],"derby":[-41.148,147.8],"bridport":[-41.0,147.39],"bluelake":[-41.03,147.94],"denison":[-41.45,148.27],"chainlagoons":[-41.7,148.29],"freycinet":[-42.155,148.3],"hazardscircuit":[-42.16,148.29],"kelvedon":[-42.02,148.08],"maria":[-42.58,148.06],"bicheno":[-41.875,148.3],"spiky":[-42.165,148.08],"lisdillon":[-42.3,148.0],"bushgardens":[-42.62,147.76],"ross":[-42.033,147.49],"campbelltown":[-41.928,147.49],"mona":[-42.806,147.257],"kunanyi":[-42.896,147.237],"salamanca":[-42.886,147.331],"voices":[-42.882,147.33],"beaker":[-42.884,147.33],"whisky":[-42.88,147.32],"bonorong":[-42.7,147.25],"richmond":[-42.736,147.438],"mtfield":[-42.685,146.715],"cascadebrewery":[-42.897,147.3],"femalefactory":[-42.894,147.305],"sparkle":[-42.97,147.42],"bruny":[-43.29,147.34],"huonfest":[-43.0,147.06],"tahune":[-43.1,146.73],"hastings":[-43.42,146.88],"cockle":[-43.585,146.89],"portarthur":[-43.147,147.851],"nrmaportarthur":[-43.14,147.847],"eaglehawk":[-43.02,147.92],"tessellated":[-43.01,147.925],"tasmanarch":[-43.045,147.945],"caperaoul":[-43.2,147.78],"strahan":[-42.155,145.327],"queenstown":[-42.08,145.555],"gordondam":[-42.755,146.06],"nelson":[-42.135,145.76],"montezuma":[-41.83,145.52],"camp_devonport_holiday":[-41.1837,146.352],"camp_mersey_bluff":[-41.158,146.357],"camp_picnic_point":[-41.145,146.203],"camp_midway_sulphur":[-41.06,146.022],"camp_penguin":[-41.118,146.073],"camp_burnie_ocean":[-41.046,145.88],"camp_wynyard":[-40.989,145.74],"camp_boat_harbour":[-40.957,145.633],"camp_stanley":[-40.765,145.297],"camp_smithton":[-40.853,145.117],"camp_arthur_river":[-41.054,144.665],"camp_nelson_bay":[-41.08,144.67],"camp_waratah":[-41.4397,145.5305],"camp_cradle_discovery":[-41.58,145.928],"camp_lake_gairdner":[-41.487,146.075],"camp_mole_creek":[-41.575,146.392],"camp_deloraine":[-41.524,146.654],"camp_liffey_falls":[-41.684,146.766],"camp_great_lake":[-41.989,146.722],"camp_derwent_bridge":[-42.135,146.236],"camp_lake_st_clair":[-42.117,146.176],"camp_teds_beach":[-42.7754,146.0623],"camp_edgar":[-43.003,146.343],"camp_launceston_big4":[-41.452,147.151],"camp_old_mac":[-41.408,147.109],"camp_beauty_point":[-41.16,146.82],"camp_george_town":[-41.104,146.833],"camp_lilydale":[-41.247,147.217],"camp_dorset_derby":[-41.149,147.802],"camp_branxholm":[-41.165,147.74],"camp_scottsdale":[-41.158,147.519],"camp_bridport":[-41.0,147.392],"camp_tomahawk":[-40.865,147.754],"camp_waterhouse":[-40.91,147.62],"camp_bayfires_swimcart":[-41.26,148.29],"camp_cosy_north":[-41.24,148.293],"camp_cosy_south":[-41.248,148.292],"camp_sloop_lagoon":[-41.243,148.276],"camp_policemans_point":[-41.03,148.265],"camp_dora_point":[-41.3,148.31],"camp_st_helens":[-41.33,148.252],"camp_dianas_basin":[-41.37,148.28],"camp_chain_lagoons":[-41.633,148.305],"camp_scamander":[-41.46,148.26],"camp_bicheno":[-41.873,148.302],"camp_bicheno_cabins":[-41.876,148.3],"camp_friendly_beaches":[-41.992,148.284],"camp_freycinet":[-42.123,148.29],"camp_coles_bay":[-42.118,148.282],"camp_swansea":[-42.123,148.073],"camp_mayfield_bay":[-42.243,148.022],"camp_triaby":[-42.507,147.911],"camp_orford":[-42.56,147.87],"camp_maria_darlington":[-42.578,148.067],"camp_oatlands":[-42.297,147.369],"camp_campbell_town":[-41.928,147.493],"camp_ross":[-42.03,147.491],"camp_kempton":[-42.53,147.2],"camp_hobart_discovery":[-42.82,147.32],"camp_barilla":[-42.833,147.433],"camp_snug":[-43.07,147.253],"camp_new_norfolk":[-42.782,147.058],"camp_left_field":[-42.798,147.64],"camp_mount_field":[-42.683,146.7],"camp_brighton":[-42.69,147.26],"camp_gordon_foreshore":[-43.255,147.231],"camp_bruni_captain_cook":[-43.36,147.33],"camp_bruni_neck":[-43.276,147.34],"camp_cloudy_corner":[-43.44,147.24],"camp_huonville":[-43.022,147.072],"camp_franklin":[-43.089,147.009],"camp_southport":[-43.43,146.98],"camp_cockle_creek":[-43.586,146.893],"camp_nrma_portarthur":[-43.14,147.847],"camp_white_beach":[-43.12,147.71],"camp_lime_bay":[-42.962,147.688],"camp_fortescue":[-43.128,147.965],"camp_dunalley":[-42.89,147.8],"camp_strahan":[-42.155,145.322],"camp_strahan_big4":[-42.151,145.33],"camp_macquarie_heads":[-42.21,145.23],"camp_queenstown":[-42.078,145.545],"camp_rosebery":[-41.78,145.54],"camp_zeehan":[-41.88,145.34],"camp_trial_harbour":[-41.93,145.17],"camp_granville":[-41.81,145.03],"camp_lake_burbury":[-42.094,145.69],"fish_great_lake":[-41.898000,146.708000],"fish_great_lake_tods":[-41.874000,146.672000],"fish_brushy_lagoon":[-41.267000,146.925000],"fish_craigbourne":[-42.571000,147.424000],"fish_bradys":[-42.210000,146.514000],"fish_binney":[-42.205000,146.493000],"fish_tungatinah_fish":[-42.255000,146.435000],"fish_lake_burbury":[-42.096000,145.690000],"fish_lake_pedder":[-42.900000,146.230000],"fish_king_william":[-42.210000,146.360000],"fish_meadowbank":[-42.618000,146.845000],"fish_barrington":[-41.369000,146.215000],"fish_huntsman":[-41.627000,146.605000],"fish_river_leven":[-41.158000,146.160000],"fish_huon_lower":[-43.035000,147.055000],"fish_four_springs":[-41.510000,146.900000],"fish_arthurs":[-41.991000,146.908000],"fish_penstock":[-42.057000,146.785000],"fish_little_pine":[-42.005000,146.630000],"fish_bronte":[-42.135000,146.500000],"fish_lake_echo":[-42.190000,146.620000],"fish_woods":[-42.017000,147.024000],"fish_lake_sorell":[-42.155000,147.175000],"fish_lake_leake":[-42.004000,147.807000],"fish_tooms":[-42.210000,147.735000],"fish_tyenna":[-42.735000,146.710000],"fish_south_esk":[-41.575000,147.150000],"fish_meander":[-41.552000,146.620000],"food_raspberry":[-41.484000,146.572000],"food_ashgrove":[-41.489000,146.541000],"food_mrs_jones":[-41.178500,146.363000],"food_rocky_cape_tavern":[-40.857000,145.496000],"food_breadbutter":[-41.437000,147.137000],"food_blackcow":[-41.435500,147.137800],"food_saintjohn":[-41.437800,147.139000],"food_stillwater":[-41.436000,147.129000],"food_josef_chromy":[-41.508000,147.163000],"food_clarendon_arms":[-41.568000,147.252000],"food_lobster_shack":[-41.874000,148.306000],"food_melshell":[-42.130000,148.033000],"food_freycinet_marine":[-42.103000,148.252000],"food_kates_berry":[-42.132000,148.043000],"food_devils_corner":[-41.979000,148.124000],"food_farmshed":[-41.874500,148.303000],"food_bayfires_lobster":[-41.323000,148.249000],"food_hope_anchor":[-42.882500,147.331000],"food_preachers":[-42.885000,147.324000],"food_barilla":[-42.827000,147.486000],"food_peppina":[-42.884000,147.333000],"food_fico":[-42.882000,147.326000],"food_dier_makr":[-42.882000,147.323000],"food_bar_wa":[-42.879500,147.325000],"food_willie":[-43.024000,147.048000],"food_agrarian":[-42.781000,147.060000],"food_lostcaptain":[-43.031000,147.048000],"food_get_shucked":[-43.196000,147.333000],"food_callington":[-42.300000,147.370000],"food_kentish":[-42.301000,147.371000],"food_bunch_oatlands":[-42.300500,147.371500],"food_great_lake_hotel":[-41.983000,146.730000]};
+
+function detourBadge(p) {
+    if (!p || !p.detour) return '';
+    return '<span class="detour">Worth the detour</span>';
+}
+
+function feeClass(fee) {
+    if (fee === 'FREE') return 'free';
+    if (fee === 'LOW COST') return 'low';
+    if (fee === 'PAID') return 'paid';
+    return '';
+}
+function feeBadge(p) {
+    if (!p || !p.fee) return '';
+    return '<span class="fee ' + feeClass(p.fee) + '">' + esc(p.fee) + '</span>';
+}
+
+function gmap(p){ if (typeof LL !== 'undefined' && LL[p.id]) return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(LL[p.id][0].toFixed(6)+','+LL[p.id][1].toFixed(6)); return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((p.n||'')+', Tasmania'); }
+function gmapLink(p){ return '<a class="gmap" href="'+gmap(p)+'" target="_blank" rel="noopener">Maps \u2197</a>'; }
+function buildReadout() {
+    var now = new Date();
+    now.setHours(0, 0, 0, 0);
+    var dS = new Date(TRIP.departSydney + 'T00:00:00'), dA = new Date(TRIP.arrive + 'T00:00:00'), dL = new Date(TRIP.leave + 'T00:00:00');
+    var dayMs = 86400000;
+    var lead;
+    if (now < dS) {
+        lead = { lab: 'Leave Sydney in', val: Math.round((dS - now) / dayMs) + '<span class="u"> days</span>' };
+    }
+    else if (now < dA) {
+        lead = { lab: 'Status', val: 'On the road' };
+    }
+    else if (now <= dL) {
+        var n = Math.round((now - dA) / dayMs) + 1;
+        lead = { lab: 'On the island', val: 'Day ' + n + '<span class="u"> of ' + DAYS.length + '</span>' };
+    }
+    else {
+        lead = { lab: 'Status', val: 'Trip complete' };
+    }
+    var planned = Object.keys(state.assign).filter(function (k) { return state.assign[k].in; }).length;
+    var visited = Object.keys(state.assign).filter(function (k) { return state.assign[k].visited; }).length;
+    var g = function (lab, val, lead) { return "<div class=\"gauge".concat(lead ? ' lead' : '', "\"><div class=\"lab\">").concat(lab, "</div><div class=\"val\">").concat(val, "</div></div>"); };
+    $('#readout').innerHTML = g(lead.lab, lead.val, true) + g('Island days', '35') + g('Planned', '<span class="val">' + planned + '</span>') + g('Ticked off', '<span style="color:var(--aurora)">' + visited + '</span>');
+}
+var filterType = 'all', filterReg = 'all', q = '';
+function setAssign(id, patch) {
+    var cur = state.assign[id] || {};
+    state.assign[id] = __assign(__assign({}, cur), patch);
+    var a = state.assign[id];
+    if (!a.in && !a.date && !a.visited && !a.fav && !a.note) {
+        delete state.assign[id];
+    }
+    save();
+    buildReadout();
+}
+function dayOptions(sel) {
+    var o = '<option value="none">Add to plan…</option><option value="shortlist"' + (sel === 'shortlist' ? ' selected' : '') + '>★ Shortlist (no date)</option>';
+    DAYS.forEach(function (iso) { var f = fmtDay(iso); o += '<option value="' + iso + '"' + (sel === iso ? ' selected' : '') + '>' + f.dow + ' ' + f.dnum + ' ' + f.mon + ' · day ' + tripNo(iso) + '</option>'; });
+    return o;
+}
+function placeCard(p) {
+    var a = state.assign[p.id] || {};
+    var inPlan = !!(a.in || a.date || a.visited);
+    var sel = a.date || (a.in ? 'shortlist' : 'none');
+    var lines = [];
+    if (p.when)
+        lines.push('<div class="note-line when"><span class="k">When</span><span>' + esc(p.when) + '</span></div>');
+    if (p.van)
+        lines.push('<div class="note-line van"><span class="k">Van</span><span>' + esc(p.van) + '</span></div>');
+    if (p.tip)
+        lines.push('<div class="note-line tip"><span class="k">Tip</span><span>' + esc(p.tip) + '</span></div>');
+    var mark = '';
+    if (p.user)
+        mark = '<span class="mark">· added</span>';
+    else if (p.mine)
+        mark = '<span class="mark">★ your list</span>';
+    return "<article class=\"card ".concat(inPlan ? 'in-plan' : '', " ").concat(a.visited ? 'visited' : '', "\" data-id=\"").concat(p.id, "\">\n    <div class=\"ctop\"><span class=\"tag ").concat(p.t, "\">").concat(TYPE_LABEL[p.t] || p.t, "</span>").concat(feeBadge(p), detourBadge(p), "<span class=\"reg\">").concat(esc(REGIONS[p.r] || ''), "</span>").concat(mark, "</div>\n    <h3>").concat(esc(p.n), "</h3>\n    ").concat(p.b ? '<p>' + esc(p.b) + '</p>' : '', "\n    ").concat(lines.join(''), "\n    <div class=\"cactions\">\n      <select class=\"day\" data-act=\"day\">").concat(dayOptions(sel), "</select>\n      <button class=\"iconbtn vis ").concat(a.visited ? 'on' : '', "\" data-act=\"vis\" title=\"Mark visited\" aria-label=\"Mark visited\">\u2713</button>\n      <button class=\"iconbtn fav ").concat(a.fav ? 'on' : '', "\" data-act=\"fav\" title=\"Save favourite\" aria-label=\"Save favourite\">\u2605</button>\n      ").concat(gmapLink(p), "\n      ").concat(p.user ? '<button class="iconbtn" data-act="del" title="Delete" aria-label="Delete place">✕</button>' : '', "\n    </div>\n  </article>");
+}
+function renderDiscover() {
+    var list = allPlaces().filter(function (p) {
+        if (filterType === 'mine') {
+            if (!p.mine && !p.user)
+                return false;
+        }
+        else if (filterType === 'food') {
+            if (['food','pub','cafe','seafood','drink','dining'].indexOf(p.t) === -1) return false;
+        }
+        else if (filterType !== 'all' && p.t !== filterType)
+            return false;
+        if (filterReg !== 'all' && String(p.r) !== filterReg)
+            return false;
+        if (q) {
+            var hay = (p.n + ' ' + (p.b || '') + ' ' + (REGIONS[p.r] || '')).toLowerCase();
+            if (!hay.includes(q))
+                return false;
+        }
+        return true;
+    });
+    var suffix = '';
+    if (filterType === 'hidden')
+        suffix = ' off the beaten track';
+    else if (filterType === 'mine')
+        suffix = ' from your list';
+    $('#discCount').textContent = list.length + ' place' + (list.length !== 1 ? 's' : '') + suffix;
+    $('#grid').innerHTML = list.map(placeCard).join('') || '<p class="muted">No matches. Try clearing a filter, or add the place yourself.</p>';
+}
+function onGridClick(e) {
+    var btn = e.target.closest('[data-act]');
+    if (!btn)
+        return;
+    var card = e.target.closest('.card');
+    var id = card.dataset.id;
+    var act = btn.dataset.act;
+    var sy = window.scrollY;
+    if (act === 'vis') {
+        var a = state.assign[id] || {};
+        setAssign(id, { visited: !a.visited, in: true });
+        renderDiscover();
+    }
+    else if (act === 'fav') {
+        var a = state.assign[id] || {};
+        setAssign(id, { fav: !a.fav, in: true });
+        renderDiscover();
+    }
+    else if (act === 'del') {
+        state.userPlaces = state.userPlaces.filter(function (p) { return p.id !== id; });
+        delete state.assign[id];
+        save();
+        renderDiscover();
+    }
+    window.scrollTo(0, sy);
+}
+function onGridChange(e) {
+    var sel = e.target.closest('[data-act="day"]');
+    if (!sel)
+        return;
+    var card = e.target.closest('.card');
+    var id = card.dataset.id;
+    var v = sel.value;
+    var sy = window.scrollY;
+    if (v === 'none') {
+        setAssign(id, { in: false, date: null });
+    }
+    else if (v === 'shortlist') {
+        setAssign(id, { in: true, date: null });
+    }
+    else {
+        setAssign(id, { in: true, date: v });
+    }
+    renderDiscover();
+    window.scrollTo(0, sy);
+}
+function renderItin() {
+    var v = $('#view-itin');
+    var events = allPlaces().filter(function (p) { return p.t === 'event'; });
+    var evHtml = events.map(function (p) { return '<div class="ev"><div class="d">' + esc(p.when || 'Winter') + '</div><div class="nm">' + esc(p.n) + '</div><p>' + esc(p.b || '') + '</p></div>'; }).join('');
+    var short = Object.keys(state.assign).filter(function (k) { var a = state.assign[k]; return a.in && !a.date && !a.visited; });
+    var shortHtml = short.map(function (id) { var p = pById(id); if (!p)
+        return ''; return '<span class="slpill">' + esc(p.n) + '<button class="x" data-rm="' + id + '" aria-label="Remove">✕</button></span>'; }).join('')
+        || '<p class="muted" style="margin:0">Nothing on the shortlist yet — star places in Discover and they\u2019ll wait here until you give them a day.</p>';
+    var rows = DAYS.map(function (iso) {
+        var f = fmtDay(iso);
+        var items = Object.keys(state.assign).filter(function (k) { return state.assign[k].date === iso; });
+        var today = (ymd(new Date()) === iso);
+        var itemsHtml = items.length ? items.map(function (id) {
+            var p = pById(id);
+            if (!p)
+                return '';
+            var a = state.assign[id];
+            return '<div class="di ' + (a.visited ? 'done' : '') + '" data-id="' + id + '">' +
+                '<button class="check ' + (a.visited ? 'on' : '') + '" data-dact="vis" aria-label="Mark visited">' + (a.visited ? '✓' : '') + '</button>' +
+                '<div class="meat"><div class="nm">' + esc(p.n) + '<span class="t">' + (TYPE_LABEL[p.t] || '') + '</span></div>' +
+                '<div class="ntxt"><textarea data-dact="note" placeholder="Notes — booking time, where you parked the van…">' + esc(a.note || '') + '</textarea></div></div>' +
+                '<button class="rm" data-dact="unset" aria-label="Remove from this day">✕</button></div>';
+        }).join('') : '<div class="empty">Open — drop something in from Discover</div>';
+        return '<div class="day ' + (today ? 'today' : '') + '"><div class="date"><div class="dow">' + f.dow + (today ? ' · today' : '') + '</div><div class="dnum">' + f.dnum + ' ' + f.mon + '</div><div class="trip">Day ' + tripNo(iso) + '</div></div><div class="items">' + itemsHtml + '</div></div>';
+    }).join('');
+    v.innerHTML =
+        '<div class="panel"><h2>What\u2019s on while you\u2019re there</h2><p class="sub">Winter festivals across your dates. Dates shift year to year — confirm the 2026 ones before you bank on them.</p><div class="whatson">' + evHtml + '</div></div>' +
+            '<div class="panel"><details class="route-d"><summary>A sensible five-week winter loop ▾</summary>' +
+            ROUTE.map(function (l) { return '<div class="leg"><span class="n">' + l[0] + '</span><span class="b">' + l[1] + '</span></div>'; }).join('') +
+            '<p class="muted" style="margin:10px 0 0">Counter-clockwise from Devonport, with Hobart as a mid-trip base. There\u2019s slack built in to wait out the weather.</p></details></div>' +
+            '<div class="panel"><h2>Shortlist</h2><p class="sub">Saved, waiting for a day.</p><div class="shortlist">' + shortHtml + '</div></div>' +
+            '<div class="panel"><h2>Day by day</h2><p class="sub">6 July → 9 August. Tick places off as you go; today is lit in ember.</p>' + rows + '</div>';
+}
+function onItinClick(e) {
+    var rm = e.target.closest('[data-rm]');
+    if (rm) {
+        setAssign(rm.dataset.rm, { in: false });
+        renderItin();
+        buildReadout();
+        return;
+    }
+    var b = e.target.closest('[data-dact]');
+    if (!b)
+        return;
+    var act = b.dataset.dact;
+    var di = e.target.closest('.di');
+    var id = di.dataset.id;
+    var sy = window.scrollY;
+    if (act === 'vis') {
+        var a = state.assign[id] || {};
+        setAssign(id, { visited: !a.visited });
+        renderItin();
+        buildReadout();
+    }
+    else if (act === 'unset') {
+        setAssign(id, { date: null, in: true });
+        renderItin();
+        buildReadout();
+    }
+    window.scrollTo(0, sy);
+}
+function onItinInput(e) {
+    var t = e.target.closest('[data-dact="note"]');
+    if (!t)
+        return;
+    var di = e.target.closest('.di');
+    setAssign(di.dataset.id, { note: t.value });
+}
+function renderKnow() { $('#view-know').innerHTML = '<div class="kg">' + KNOW.map(function (k) { return '<div class="kcard"><h3>' + k[0] + '</h3><ul>' + k[1] + '</ul></div>'; }).join('') + '</div>'; }
+var MAP_CHIPS = [['all', 'All'], ['mine', '★ Your list'], ['marquee', 'Must-see'], ['hidden', 'Hidden'], ['event', 'Events'], ['food', 'All Food'], ['pub', 'Pubs'], ['cafe', 'Cafés'], ['seafood', 'Seafood'], ['drink', 'Wine/Cider'], ['dining', 'Dining'], ['stay', 'Stays'], ['fish', 'Trout Fishing']];
+var mapFilter = 'all', mapSel = null;
+var LMAP = null, MGROUP = null, MARKERS = {};
+var TAS_BOUNDS = [[-43.80, 144.45], [-40.50, 148.55]];
+var TYPE_COLOR = { marquee:'#74B6C4', hidden:'#EA8C4E', event:'#A78FD6', food:'#D8B25A', pub:'#EA8C4E', cafe:'#D8B25A', seafood:'#74B6C4', drink:'#A78FD6', dining:'#7FC9A0', stay:'#8FA6B2', fish:'#7FC9A0' };
+
+function isFoodType(t) {
+    return ['food','pub','cafe','seafood','drink','dining'].indexOf(t) !== -1;
+}
+function currentMapRegionValue() {
+    var r = document.getElementById('mapRegion');
+    return r ? r.value : 'all';
+}
+function placesForMap() {
+    var reg = currentMapRegionValue();
+    return allPlaces().filter(function (p) {
+        if (!LL[p.id]) return false;
+        if (reg !== 'all' && String(p.r) !== String(reg)) return false;
+        if (mapFilter === 'mine') return !!p.mine;
+        if (mapFilter === 'all') return true;
+        if (mapFilter === 'food') return isFoodType(p.t);
+        return p.t === mapFilter;
+    });
+}
+function mapFilterLabel() {
+    if (mapFilter === 'food') return 'food & drink places';
+    if (mapFilter === 'pub') return 'pub stops';
+    if (mapFilter === 'cafe') return 'cafés & bakeries';
+    if (mapFilter === 'seafood') return 'seafood places';
+    if (mapFilter === 'drink') return 'wine/cider/distillery stops';
+    if (mapFilter === 'dining') return 'dining places';
+    if (TYPE_LABEL[mapFilter]) return TYPE_LABEL[mapFilter].toLowerCase() + ' places';
+    return 'places';
+}
+function markerFill(p) {
+    if ((state.assign[p.id] || {}).visited) return '#7FC9A0';
+    if (p.t === 'stay' && p.fee === 'FREE') return '#7FC9A0';
+    if (p.t === 'stay' && p.fee === 'LOW COST') return '#74B6C4';
+    if (p.t === 'stay' && p.fee === 'PAID') return '#D8B25A';
+    return TYPE_COLOR[p.t] || '#8FA6B2';
+}
+function markerStyle(p) {
+    var a = state.assign[p.id] || {};
+    var sel = (mapSel === p.id), planned = !!(a.in || a.date);
+    return { radius: sel ? 10 : 7,
+        color: (sel || planned) ? '#ffffff' : '#0F161B',
+        weight: sel ? 3 : (planned ? 2 : 1.2),
+        fillColor: markerFill(p),
+        fillOpacity: 0.95 };
+}
+function popupHtml(p) {
+    var a = state.assign[p.id] || {};
+    var hue = TYPE_COLOR[p.t] || '#8FA6B2';
+    var html = '<span class="pp-tag" style="color:' + hue + '">' + (TYPE_LABEL[p.t] || p.t) + '</span>';
+    if (p.mine) html += '<span class="pp-mine">\u2605 your list</span>';
+    if (a.visited) html += '<span class="pp-mine" style="color:#7FC9A0">\u2713 visited</span>';
+    html += '<h3>' + esc(p.n) + ' ' + feeBadge(p) + ' ' + detourBadge(p) + '</h3>';
+    if (p.b) html += '<p>' + esc(p.b) + '</p>';
+    if (p.van) html += '<p class="pp-note"><b>Van:</b> ' + esc(p.van) + '</p>';
+    if (p.tip) html += '<p class="pp-note"><b>Tip:</b> ' + esc(p.tip) + '</p>';
+    if (p.when) html += '<p class="pp-note"><b>When:</b> ' + esc(p.when) + '</p>';
+    html += gmapLink(p) + '<p class="pp-note" style="margin-top:8px">Plan it in the panel under the map.</p>';
+    return html;
+}
+function buildMarkers() {
+    if (!LMAP) return;
+    if (MGROUP) MGROUP.clearLayers(); else MGROUP = L.layerGroup().addTo(LMAP);
+    MARKERS = {};
+    placesForMap().forEach(function (p) {
+        var m = L.circleMarker(LL[p.id], markerStyle(p));
+        m.bindPopup(popupHtml(p), { maxWidth: 270 });
+        m.on('click', function () {
+            mapSel = p.id;
+            restyleMarkers();
+            refreshDetail();
+        });
+        m.addTo(MGROUP);
+        MARKERS[p.id] = m;
+    });
+}
+function restyleMarkers() {
+    Object.keys(MARKERS).forEach(function (id) {
+        var p = pById(id); if (!p) return;
+        MARKERS[id].setStyle(markerStyle(p));
+        MARKERS[id].setPopupContent(popupHtml(p));
+    });
+}
+function refreshMarkers() { buildMarkers(); }
+
+function mapResultCard(p) {
+    var meta = '<span class="tag ' + p.t + '">' + (TYPE_LABEL[p.t] || p.t) + '</span>' + feeBadge(p) + detourBadge(p) + '<span class="reg">' + esc(REGIONS[p.r] || '') + '</span>';
+    var body = p.b ? '<p>' + esc(p.b) + '</p>' : '';
+    var notes = '';
+    if (p.when) notes += '<div class="note-line when"><span class="k">When</span><span>' + esc(p.when) + '</span></div>';
+    if (p.van) notes += '<div class="note-line van"><span class="k">Van</span><span>' + esc(p.van) + '</span></div>';
+    if (p.tip) notes += '<div class="note-line tip"><span class="k">Tip</span><span>' + esc(p.tip) + '</span></div>';
+    return '<article class="mcard" data-id="' + p.id + '"><div class="ctop">' + meta + '</div><h3>' + esc(p.n) + '</h3>' + body + notes +
+        '<div class="m-actions"><button class="m-focus" data-map-focus="' + p.id + '">Show on map</button>' + gmapLink(p) + '</div></article>';
+}
+function renderMapResults() {
+    var count = document.getElementById('mapResultsCount');
+    var box = document.getElementById('mapResults');
+    if (!count || !box) return;
+    var list = placesForMap();
+    var reg = currentMapRegionValue();
+    var regName = reg === 'all' ? 'all regions' : (REGIONS[+reg] || 'selected region');
+    count.textContent = list.length + ' ' + mapFilterLabel() + ' in ' + regName;
+    box.innerHTML = list.length ? list.map(mapResultCard).join('') : '<p class="muted">No matching places for this filter and region.</p>';
+}
+function fitCurrentMapToPlaces() {
+    if (!LMAP) return;
+    var pts = placesForMap().map(function (p) { return LL[p.id]; }).filter(Boolean);
+    if (pts.length) LMAP.fitBounds(L.latLngBounds(pts).pad(0.25));
+    else LMAP.fitBounds(TAS_BOUNDS);
+}
+
+function mapDetailHtml() {
+    if (!mapSel) return '<p class="hint">Tap a pin for a quick card — assign it to a day right here.</p>';
+    var p = pById(mapSel); if (!p) return '<p class="hint">\u2014</p>';
+    var a = state.assign[mapSel] || {}; var sel = a.date || (a.in ? 'shortlist' : 'none');
+    var lines = '';
+    if (p.when) lines += '<div class="note-line when"><span class="k">When</span><span>' + esc(p.when) + '</span></div>';
+    if (p.van) lines += '<div class="note-line van"><span class="k">Van</span><span>' + esc(p.van) + '</span></div>';
+    if (p.tip) lines += '<div class="note-line tip"><span class="k">Tip</span><span>' + esc(p.tip) + '</span></div>';
+    return '<div class="ctop"><span class="tag ' + p.t + '">' + (TYPE_LABEL[p.t] || p.t) + '</span><span class="reg">' + esc(REGIONS[p.r] || '') + '</span>' + (p.mine ? '<span class="mark">\u2605 your list</span>' : '') + '</div>' +
+        '<h3 style="font-family:var(--serif);font-weight:600;font-size:20px;margin:4px 0 7px;letter-spacing:-.01em">' + esc(p.n) + '</h3>' +
+        (p.b ? '<p style="margin:0 0 9px;color:var(--dim);font-size:13.5px">' + esc(p.b) + '</p>' : '') + lines +
+        '<div class="cactions"><select class="day" data-act="day">' + dayOptions(sel) + '</select>' +
+        '<button class="iconbtn vis ' + (a.visited ? 'on' : '') + '" data-act="vis" aria-label="Mark visited">\u2713</button>' +
+        '<button class="iconbtn fav ' + (a.fav ? 'on' : '') + '" data-act="fav" aria-label="Save favourite">\u2605</button>' + gmapLink(p) + '</div>';
+}
+function refreshDetail() { var d = $('#mapDetail'); if (d) d.innerHTML = mapDetailHtml(); }
+function regionBoundsFit(ri) {
+    fitCurrentMapToPlaces();
+}
+function renderMap() {
+    if (!$('#leafmap')) {
+        var chips = MAP_CHIPS.map(function (c) { return '<button class="chip" data-type="' + c[0] + '" aria-pressed="' + (mapFilter === c[0] ? 'true' : 'false') + '">' + c[1] + '</button>'; }).join('');
+        var regOpts = '<option value="all">Whole Tasmania</option>' + REGIONS.map(function (r, i) { return '<option value="' + i + '">' + esc(r) + '</option>'; }).join('');
+        $('#view-map').innerHTML =
+            '<div class="mapctl"><div class="chips" id="mapChips">' + chips + '</div><div class="spacer"></div><select class="reg" id="mapRegion" aria-label="Zoom to region">' + regOpts + '</select></div>' +
+            '<div class="map-layout">' +
+              '<div class="map-main">' +
+                '<div class="mapwrap"><div id="leafmap"></div></div>' +
+                '<div class="maplegend"><span><i style="background:#74B6C4"></i>Must-see / Seafood</span><span><i style="background:#EA8C4E"></i>Hidden / Pubs</span><span><i style="background:#D8B25A"></i>Cafés / Paid</span><span><i style="background:#A78FD6"></i>Events / Wine</span><span><i style="background:#7FC9A0"></i>Free / Trout / Dining</span><span><i style="background:transparent;border:1.5px solid #fff;width:8px;height:8px;border-radius:50%"></i>Planned</span></div>' +
+                '<p class="count" style="margin:2px 2px 10px">Pinch or scroll to zoom · drag to move · tap a pin for its story</p>' +
+                '<div class="mapdetail" id="mapDetail"></div>' +
+              '</div>' +
+              '<aside class="map-side"><div class="mapresults-title" id="mapResultsCount"></div><div class="mapresults" id="mapResults"></div></aside>' +
+            '</div>';
+        if (typeof L === 'undefined') {
+            $('#leafmap').innerHTML = '<p style="padding:18px;color:var(--dim)">The live map needs an internet connection the first time it loads — reconnect and reopen this tab.</p>';
+            refreshDetail(); renderMapResults(); return;
+        }
+        LMAP = L.map('leafmap', { zoomControl: true, attributionControl: true });
+        var sat = L.layerGroup([
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Imagery © Esri' }),
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 })
+        ]);
+        var streets = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' });
+        var terrain = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: '© OpenStreetMap · © OpenTopoMap (CC-BY-SA)' });
+        var night = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19, attribution: '© OpenStreetMap · © CARTO' });
+        sat.addTo(LMAP);
+        L.control.layers({ 'Satellite': sat, 'Streets': streets, 'Terrain': terrain, 'Night': night }, null, { position: 'topright', collapsed: false }).addTo(LMAP);
+        LMAP.fitBounds(TAS_BOUNDS);
+        window.addEventListener('resize', function () { if (LMAP) LMAP.invalidateSize(); });
+    }
+    buildMarkers();
+    refreshDetail();
+    renderMapResults();
+    if (LMAP) setTimeout(function () {
+        LMAP.invalidateSize();
+        if (!LMAP._didFit) { LMAP.fitBounds(TAS_BOUNDS); LMAP._didFit = true; }
+    }, 120);
+}
+function onMapClick(e) {
+    var chip = e.target.closest('#mapChips .chip');
+    if (chip) {
+        mapFilter = chip.dataset.type;
+        Array.prototype.forEach.call(chip.parentNode.children, function (x) { x.setAttribute('aria-pressed', x === chip ? 'true' : 'false'); });
+        buildMarkers();
+        renderMapResults();
+        fitCurrentMapToPlaces();
+        refreshDetail();
+        return;
+    }
+    var focus = e.target.closest('[data-map-focus]');
+    if (focus) {
+        var id = focus.getAttribute('data-map-focus');
+        mapSel = id;
+        restyleMarkers();
+        refreshDetail();
+        if (LMAP && MARKERS[id]) {
+            LMAP.setView(LL[id], Math.max(LMAP.getZoom(), 11));
+            MARKERS[id].openPopup();
+        }
+        return;
+    }
+    var da = e.target.closest('#mapDetail [data-act]');
+    if (da && mapSel) {
+        var act = da.dataset.act, id = mapSel, a = state.assign[id] || {};
+        if (act === 'vis') setAssign(id, { visited: !a.visited, in: true });
+        else if (act === 'fav') setAssign(id, { fav: !a.fav, in: true });
+        restyleMarkers();
+        refreshDetail();
+        renderMapResults();
+    }
+}
+function onMapChange(e) {
+    var reg = e.target.closest('#mapRegion');
+    if (reg) {
+        buildMarkers();
+        renderMapResults();
+        fitCurrentMapToPlaces();
+        refreshDetail();
+        return;
+    }
+    var day = e.target.closest('#mapDetail [data-act="day"]');
+    if (day && mapSel) {
+        var v = day.value, id = mapSel;
+        if (v === 'none') setAssign(id, { in: false, date: null });
+        else if (v === 'shortlist') setAssign(id, { in: true, date: null });
+        else setAssign(id, { in: true, date: v });
+        restyleMarkers();
+        refreshDetail();
+        renderMapResults();
+    }
+}
+
+function showTab(name) {
+    var map = { discover: '#view-discover', itin: '#view-itin', map: '#view-map', know: '#view-know' };
+    ['discover', 'itin', 'map', 'know'].forEach(function (n) { var tab = $('#tab-' + n), panel = $(map[n]); var on = (n === name); tab.setAttribute('aria-selected', on ? 'true' : 'false'); panel.hidden = !on; });
+    if (name === 'itin')
+        renderItin();
+    if (name === 'map')
+        renderMap();
+    if (name === 'know')
+        renderKnow();
+    window.scrollTo(0, 0);
+}
+function fillRegionSelects() {
+    $('#regSel').innerHTML = '<option value="all">All regions</option>' + REGIONS.map(function (r, i) { return '<option value="' + i + '">' + esc(r) + '</option>'; }).join('');
+    $('#af-region').innerHTML = REGIONS.map(function (r, i) { return '<option value="' + i + '">' + esc(r) + '</option>'; }).join('');
+}
+function wireAdd() {
+    $('#addToggle').onclick = function () { return $('#addForm').classList.toggle('open'); };
+    $('#af-cancel').onclick = function () { return $('#addForm').classList.remove('open'); };
+    $('#af-save').onclick = function () {
+        var n = $('#af-name').value.trim();
+        if (!n) {
+            $('#af-name').focus();
+            return;
+        }
+        state.userPlaces.push({ id: 'u' + Date.now(), n: n, r: +$('#af-region').value, t: $('#af-type').value, b: $('#af-blurb').value.trim() });
+        save();
+        $('#af-name').value = '';
+        $('#af-blurb').value = '';
+        $('#addForm').classList.remove('open');
+        renderDiscover();
+    };
+}
+(function init() {
+    fillRegionSelects();
+    wireAdd();
+    $('#typeChips').addEventListener('click', function (e) {
+        var c = e.target.closest('.chip');
+        if (!c)
+            return;
+        filterType = c.dataset.type;
+        __spreadArray([], $('#typeChips').children, true).forEach(function (x) { return x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
+        renderDiscover();
+    });
+    $('#regSel').addEventListener('change', function (e) { filterReg = e.target.value; renderDiscover(); });
+    $('#search').addEventListener('input', function (e) { q = e.target.value.trim().toLowerCase(); renderDiscover(); });
+    $('#grid').addEventListener('click', onGridClick);
+    $('#grid').addEventListener('touchend', onGridClick);
+    $('#grid').addEventListener('change', onGridChange);
+    $('#view-itin').addEventListener('click', onItinClick);
+    $('#view-itin').addEventListener('touchend', onItinClick);
+    $('#view-itin').addEventListener('change', onItinInput);
+    $('#view-map').addEventListener('click', onMapClick);
+    $('#view-map').addEventListener('change', onMapChange);
+    $('#tab-discover').onclick = function () { return showTab('discover'); };
+    $('#tab-itin').onclick = function () { return showTab('itin'); };
+    $('#tab-map').onclick = function () { return showTab('map'); };
+    $('#tab-know').onclick = function () { return showTab('know'); };
+    buildReadout();
+    renderDiscover();
+    try { load(); } catch(e) {} buildReadout(); renderDiscover();
+})();
+
+</script>
+</body>
+</html>
