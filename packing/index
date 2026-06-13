@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FUKITLETSGO — Packing List</title>
+<meta name="description" content="Packing checklist for the FUKITLETSGO trip: Tasmania winter through to the outback. Tick, add and delete as you pack.">
+<script>(function(){var t='dark';try{t=localStorage.getItem('pack_theme')||'dark'}catch(e){}document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F161B; --bg2:#131D24; --surface:#1A2730; --surface-hi:#22323D;
+  --line:#2A3A45; --line-soft:#22303A;
+  --frost:#EAF1F4; --dim:#9DB0BB; --faint:#62757F;
+  --ember:#EA8C4E; --ember-deep:#C56F36;
+  --glacier:#74B6C4; --aurora:#7FC9A0; --dusk:#A78FD6; --honey:#D8B25A; --slate:#8FA6B2;
+  --cold:#74B6C4; --warm:#EA8C4E;
+  --r:14px;
+  --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif; --mono:'Space Mono',ui-monospace,monospace;
+}
+html[data-theme="light"]{
+  --bg:#F5F1E9; --bg2:#EDE7DB; --surface:#FFFFFF; --surface-hi:#F3EEE4;
+  --line:#D7CFBF; --line-soft:#E4DDCD;
+  --frost:#243440; --dim:#566875; --faint:#8E9AA4;
+  --ember:#C96A2A; --ember-deep:#AD5719;
+  --glacier:#1F7A94; --aurora:#27926B; --dusk:#6E54B8; --honey:#9A7714; --slate:#5D7484;
+  --cold:#1F7A94; --warm:#C96A2A;
+}
+*{box-sizing:border-box; margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg); color:var(--frost); font-family:var(--sans); font-size:15px; line-height:1.5; -webkit-text-size-adjust:100%}
+
+/* masthead */
+.mast{position:relative; padding:30px 18px 22px; border-bottom:1px solid var(--line-soft); overflow:hidden}
+.mast .aur{position:absolute; inset:0; background:radial-gradient(60% 80% at 25% 0%, rgba(127,201,160,.12), transparent 60%),radial-gradient(50% 80% at 80% 10%, rgba(167,143,214,.10), transparent 60%); pointer-events:none}
+.eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--faint)}
+h1{font-family:var(--serif); font-weight:600; font-size:clamp(30px,7vw,46px); line-height:1; margin-top:8px; letter-spacing:.005em}
+h1 .go{color:var(--ember)}
+.sub{color:var(--dim); margin-top:12px; max-width:60ch; font-size:14px}
+.legd{display:flex; gap:16px; margin-top:14px; flex-wrap:wrap; font-family:var(--mono); font-size:11px; letter-spacing:.04em; color:var(--dim)}
+.legd span{display:inline-flex; align-items:center; gap:6px}
+.legd i{width:10px; height:10px; border-radius:3px; display:inline-block}
+
+.themebtn{position:absolute; top:18px; right:16px; z-index:4; appearance:none; border:1px solid var(--line-soft); background:var(--surface); color:var(--frost); border-radius:999px; padding:7px 13px; font-family:var(--mono); font-size:11px; letter-spacing:.06em; cursor:pointer}
+.themebtn:hover{border-color:var(--glacier)}
+
+/* overall progress */
+.overall{max-width:860px; margin:18px auto 0; padding:0 18px}
+.bar{height:8px; background:var(--surface); border-radius:999px; overflow:hidden; border:1px solid var(--line-soft)}
+.bar > i{display:block; height:100%; background:linear-gradient(90deg,var(--ember),var(--honey)); width:0; transition:width .35s ease}
+.overall .lab{display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--dim); margin:8px 2px 0}
+
+/* toolbar */
+.tools{max-width:860px; margin:16px auto 0; padding:0 18px; display:flex; gap:8px; flex-wrap:wrap}
+.tbtn{appearance:none; border:1px solid var(--line-soft); background:var(--surface); color:var(--dim); font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:9px 13px; border-radius:999px; cursor:pointer}
+.tbtn:hover{border-color:var(--glacier); color:var(--frost)}
+
+/* sections */
+.wrap{max-width:860px; margin:0 auto; padding:10px 18px 80px}
+.sec{margin-top:26px; background:var(--bg2); border:1px solid var(--line-soft); border-radius:var(--r); overflow:hidden}
+.sec > h2{font-family:var(--serif); font-weight:600; font-size:21px; padding:16px 18px 4px; display:flex; align-items:center; gap:10px}
+.sec .scount{font-family:var(--mono); font-size:11px; color:var(--faint); font-weight:400; letter-spacing:.04em; margin-left:auto}
+.sec .sbar{height:4px; background:var(--surface); margin:8px 18px 6px; border-radius:999px; overflow:hidden}
+.sec .sbar > i{display:block; height:100%; background:var(--glacier); width:0; transition:width .3s ease}
+.grp{padding:6px 0 12px}
+.grp h3{font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); padding:12px 18px 6px; display:flex; align-items:center; gap:8px}
+.grp h3.cold{color:var(--cold)} .grp h3.warm{color:var(--warm)}
+ul{list-style:none}
+li{display:flex; align-items:flex-start; gap:12px; padding:9px 18px; border-top:1px solid var(--line-soft); cursor:pointer; transition:background .12s}
+li:hover{background:var(--surface)}
+li .box{flex:0 0 auto; width:21px; height:21px; border:2px solid var(--line); border-radius:6px; margin-top:1px; display:grid; place-items:center; transition:all .15s}
+li .box svg{width:13px; height:13px; stroke:var(--bg); stroke-width:3.5; fill:none; opacity:0; transform:scale(.4); transition:all .15s}
+li.done .box{background:var(--aurora); border-color:var(--aurora)}
+li.done .box svg{opacity:1; transform:scale(1)}
+li .txt{flex:1; min-width:0}
+li .name{transition:color .15s}
+li.done .name{color:var(--faint); text-decoration:line-through}
+li .qty{font-family:var(--mono); font-size:11px; color:var(--ember); margin-left:8px; white-space:nowrap}
+li.done .qty{color:var(--faint)}
+li .note{display:block; font-size:12px; color:var(--faint); margin-top:2px}
+li .del{flex:0 0 auto; appearance:none; background:none; border:none; color:var(--faint); font-size:18px; line-height:1; cursor:pointer; padding:0 2px; opacity:0; transition:opacity .12s}
+li:hover .del{opacity:.7}
+li .del:hover{color:var(--ember); opacity:1}
+.additem{display:flex; gap:8px; padding:11px 18px; border-top:1px dashed var(--line)}
+.additem input{flex:1; background:var(--surface); border:1px solid var(--line-soft); color:var(--frost); border-radius:8px; padding:9px 11px; font-family:var(--sans); font-size:14px}
+.additem input:focus{outline:none; border-color:var(--glacier)}
+.additem button{appearance:none; border:1px solid var(--ember); background:transparent; color:var(--ember); font-family:var(--mono); font-size:12px; padding:0 14px; border-radius:8px; cursor:pointer}
+.additem button:hover{background:var(--ember); color:var(--bg)}
+
+footer{max-width:860px; margin:0 auto; padding:0 18px 60px; color:var(--faint); font-family:var(--mono); font-size:11px; letter-spacing:.04em; text-align:center}
+footer a{color:var(--ember); text-decoration:none}
+
+@media print{
+  body{background:#fff; color:#000}
+  .themebtn,.tools,.additem,.del,.mast .aur{display:none !important}
+  .sec,.bar,.sec .sbar{border-color:#bbb}
+  li{break-inside:avoid}
+  li .box{border-color:#666}
+  li.done .box{background:#666}
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="aur"></div>
+  <button class="themebtn" id="themeBtn" type="button">☀ light</button>
+  <div class="eyebrow">Caravan field journal · 2.5–3 months</div>
+  <h1>Packing <span class="go">List</span></h1>
+  <p class="sub">Sydney → Tasmania (winter) → SA → Mildura → Mundi Mundi Bash → Lightning Ridge → home. Two climates in one trip, so we pack for frost <em>and</em> dust. Tap to tick. Add your own with the box at the foot of each list; tap the ✕ to remove anything that doesn't apply.</p>
+  <div class="legd">
+    <span><i style="background:var(--cold)"></i>❄️ Tassie cold</span>
+    <span><i style="background:var(--warm)"></i>☀️ Outback warm</span>
+    <span><i style="background:var(--aurora)"></i>Ticked = packed</span>
+  </div>
+</header>
+
+<div class="overall">
+  <div class="bar"><i id="allBar"></i></div>
+  <div class="lab"><span id="allLab">0 of 0 packed</span><span id="allPct">0%</span></div>
+</div>
+
+<div class="tools">
+  <button class="tbtn" id="printBtn">⎙ Print / save PDF</button>
+  <button class="tbtn" id="resetBtn">↺ Reset all ticks</button>
+</div>
+
+<main class="wrap" id="wrap"></main>
+
+<footer>
+  FUKITLETSGO · packs saved on this device · <a id="reset2" href="#">reset</a>
+</footer>
+
+<script>
+var $ = function(s,r){return (r||document).querySelector(s)};
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('pack_theme',t)}catch(e){}var b=$('#themeBtn');if(b)b.textContent=(t==='light')?'☾ dark':'☀ light';}
+
+/* ---- the master list. group.clime: 'cold' | 'warm' | null ---- */
+var DATA = [
+ { id:'van', title:'Van essentials', icon:'🚐', groups:[
+   { h:'Bedding', items:[
+     ['Fitted & flat sheets','2 sets'],['Doona / quilt'],['Spare doona / quilt'],['Spare warm blanket','Tassie nights'],
+     ['Pillows + spare cases','2 + 2'],] },
+   { h:'Bathroom & towels', items:[
+     ['Bath towels','2 each'],['Quick-dry / travel towels','2'],['Beach towel','1 each'],
+     ['Toiletry bags'],['Soap / body wash'],['Shampoo & conditioner'],['Toothbrushes & paste'],
+     ['Deodorant'],['Sunscreen','SPF50+'],['Insect repellent'],['Lip balm'],['Hairbrush / ties'],
+     ['Razors'],['Toilet paper','stock up'] ] },
+   { h:'Kitchen & cleaning', items:[
+     ['Tea towels','4–5'],['Dishcloths / sponges'],['Dishwashing liquid'],['Multipurpose spray'],
+     ['Paper towel'],['Bin bags'],['Ziploc / storage bags'],['Cling wrap & foil'],
+     ['Matches / lighter'],['Dustpan & brush','dust!'],['Door mat','outback dust'] ] },
+   { h:'Laundry', items:[
+     ['Laundry powder / liquid'],['Pegs'],['Laundry bag / basket'],
+     ['Stain remover'],['Coins for laundromats','$ coins'] ] },
+   { h:'General', items:[
+     ['First-aid kit'],['Torches / head torches','2'],['Spare batteries'],['Scissors'],
+     ['Sewing / repair kit'],['Sunglasses cases'],['Reusable shopping bags'],['Water bottles'] ] }
+ ]},
+
+ { id:'rita', title:'My clothes & shoes', icon:'🧣', groups:[
+   { h:'Tassie cold — everyday', clime:'cold', items:[
+     ['Thermal tops','3'],['Thermal leggings','2'],['Long-sleeve tops','4'],['Jumpers / fleece','3'],
+     ['Jeans / warm pants','3'],['Warm socks','7'],['Undies','10'],['Bras','3–4'],['Warm pyjamas','2'] ] },
+   { h:'Winter woollies', clime:'cold', items:[
+     ['Beanie'],['Scarf'],['Gloves'],['Neck warmer / buff'],['Thick wool socks','2'],['Puffer vest'],['Waterproof Ugg boots','2'] ] },
+   { h:'Cold-weather outer', clime:'cold', items:[
+     ['Waterproof rain jacket'],['Warm winter coat'],['Closed waterproof shoes / boots'],['Gum boots'] ] },
+   { h:'Outback warm — everyday', clime:'warm', items:[
+     ['T-shirts / tops','6'],['Shorts','3'],['Light pants / skirts','2'],
+     ['Light long-sleeve','sun cover'],['Undies','7'],['Light sleepwear','2'],['Merrell hiking boots'] ] },
+   { h:'Sun & heat', clime:'warm', items:[
+     ['Wide-brim sun hat'],['Sunglasses'],['Swimmers','2'],['Thongs'],['Water shoes'] ] },
+   { h:'Going out', items:[
+     ['Smart-casual outfit','nice dinner'],['Dress shoes'] ] }
+ ]},
+
+ { id:'dave', title:"Dave's clothes & shoes", icon:'🧦', groups:[
+   { h:'Tassie cold — everyday', clime:'cold', items:[
+     ['Thermal tops','3'],['Thermal pants','2'],['Long-sleeve tops','4'],['Jumpers / fleece','3'],
+     ['Jeans / warm pants','3'],['Warm socks','7'],['Undies','10'],['Warm pyjamas','2'] ] },
+   { h:'Winter woollies', clime:'cold', items:[
+     ['Beanie'],['Scarf'],['Gloves'],['Neck warmer / buff'],['Thick wool socks','2'],['Puffer vest'] ] },
+   { h:'Cold-weather outer', clime:'cold', items:[
+     ['Waterproof rain jacket'],['Warm winter coat'],['Closed waterproof shoes / boots'],['Gum boots'] ] },
+   { h:'Outback warm — everyday', clime:'warm', items:[
+     ['T-shirts','6'],['Shorts','3'],['Light pants','2'],
+     ['Light long-sleeve','sun cover'],['Undies','7'],['Light sleepwear','2'] ] },
+   { h:'Sun & heat', clime:'warm', items:[
+     ['Wide-brim sun hat'],['Sunglasses'],['Swimmers','2'],['Thongs'],['Water shoes'] ] },
+   { h:'Going out', items:[
+     ['Smart-casual outfit','nice dinner'],['Dress shoes'] ] }
+ ]},
+
+ { id:'hike', title:'Hiking gear', icon:'🥾', groups:[
+   { h:'On the trail', items:[
+     ['Hiking boots','each'],['Hiking socks','3 pr each'],['Daypacks','×2'],
+     ['Water bottles / bladder'],['Rain shells'],['Trekking poles'],['Head torch'],
+     ['Blister kit'],['Trail snacks'],['Small first aid'],['Map / offline GPS'] ] }
+ ]},
+
+ { id:'detect', title:'Gold detecting & fishing', icon:'⛏️', groups:[
+   { h:'Gold detecting', items:[
+     ['Metal detectors','×2'],['Digging tool / pick'],['Pinpointer'],['Finds pouch / vial'],
+     ['Gloves'],['Knee pads'],['MRT prospecting licence','sort before you go'] ] },
+   { h:'Fishing', items:[
+     ['Rods & reels'],['Tackle box','lures from the app'],['Landing net'],
+     ['Fishing licence','Inland Fisheries'],['Pliers / line scissors'],['Bucket'] ] }
+ ]},
+
+ { id:'camp', title:'Camp comfort & extras', icon:'🪑', groups:[
+   { h:'Around camp', items:[
+     ['Camp chairs','×2'],['Folding table'],['Picnic rug'],['Outdoor mat'],
+     ['Esky / cooler'],['Thermos'],['Camp mugs'],['Insect coils / candles'],
+     ['Firewood gloves'],['Hot water bottle','Tassie nights'] ] }
+ ]},
+
+ { id:'food', title:'Food essentials (shelf-stable)', icon:'🫙', groups:[
+   { h:'Quarantine note', items:[
+     ['⚠ No fresh fruit/veg/honey into Tas','eat or bin before the ferry'] ] },
+   { h:'Oils, fats & condiments', items:[
+     ['Olive oil'],['Coconut oil'],['Tamari / coconut aminos'],['Apple cider vinegar'],
+     ['Mustard'],['Sea salt & pepper'] ] },
+   { h:'Health With Bec staples', items:[
+     ['Almond flour'],['Coconut flour'],['Nut butters','peanut/almond'],['Coconut cream / milk (long-life)'],
+     ['Chia & flax seeds'],['Nuts & seeds','snacking'],['Cacao / cocoa'],['Sweetener','monk fruit/stevia'],
+     ['Psyllium husk'],['Protein powder'] ] },
+   { h:'Pantry basics', items:[
+     ['Tea & coffee'],['Long-life milk / alt milk'],['Tinned fish','tuna/salmon'],['Tinned tomatoes'],
+     ['Tinned legumes'],['Stock cubes / paste'],['Herbs & spices'],['Honey / maple','for the road, not Tas'] ] }
+ ]},
+
+ { id:'tech', title:'Personal & tech', icon:'🔌', groups:[
+   { h:'Devices', items:[
+     ['Phones','×2'],['Kindle'],['Laptop'],['Headphones','×2 or splitter'],['Camera'],['Power bank'] ] },
+   { h:'Chargers & cables — the forgettable bit', items:[
+     ['Phone chargers','×2'],['Laptop charger'],['Kindle cable'],['Camera charger'],
+     ['Multi-port USB charger / power board'],['Car charger','driving days'],['Spare cables'] ] },
+   { h:'Medications', items:[
+     ['Regular meds','FULL trip supply'],['Copy of scripts / eScripts'],['Pain relief'],
+     ['Antihistamines'],['Motion sickness','for the Spirit!'],['Bandaids & blister kit'],
+     ['Any supplements'] ] },
+   { h:'Comfort & offline', items:[
+     ['Downloaded shows / podcasts'],['Offline maps','no-signal stretches'],['Books / puzzles'],
+     ['Reading glasses'],['Eye masks / earplugs'] ] }
+ ]},
+
+ { id:'docs', title:'Documents', icon:'📁', groups:[
+   { h:'Carry & copies', items:[
+     ['Drivers licences'],['Medicare cards'],['Private health / insurance cards'],
+     ['Tasmania Parks Pass (Holiday Pass)','buy online before you go'],
+     ['Spirit of Tasmania booking'],['Campsite / park bookings'],['Bank / credit cards'],
+     ['Cash float'],['Printed emergency contacts','if phones die'] ] }
+ ]}
+];
+
+/* ---- state ---- */
+var KEY='pack_state_v1';
+var state = {checks:{}, added:{}, removed:{}};
+try{ var raw=localStorage.getItem(KEY); if(raw) state=JSON.parse(raw); }catch(e){}
+state.checks=state.checks||{}; state.added=state.added||{}; state.removed=state.removed||{};
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+/* build a stable id for a default item */
+function iid(secId, gi, name){ return secId+'|'+gi+'|'+slug(name); }
+
+function render(){
+  var wrap=$('#wrap'); wrap.innerHTML='';
+  var totAll=0, doneAll=0;
+  DATA.forEach(function(sec){
+    var secEl=document.createElement('section'); secEl.className='sec';
+    var head=document.createElement('h2');
+    head.innerHTML='<span>'+sec.icon+'</span> '+sec.title+'<span class="scount" id="cnt-'+sec.id+'"></span>';
+    secEl.appendChild(head);
+    var sbar=document.createElement('div'); sbar.className='sbar'; sbar.innerHTML='<i id="sbar-'+sec.id+'"></i>';
+    secEl.appendChild(sbar);
+    var secTot=0, secDone=0;
+
+    sec.groups.forEach(function(g, gi){
+      var grp=document.createElement('div'); grp.className='grp';
+      if(g.h){ var h3=document.createElement('h3'); if(g.clime) h3.className=g.clime;
+        h3.textContent=(g.clime==='cold'?'❄️ ':g.clime==='warm'?'☀️ ':'')+g.h; grp.appendChild(h3); }
+      var ul=document.createElement('ul');
+
+      // default items (skip removed)
+      g.items.forEach(function(it){
+        var name=it[0], qty=it[1]||'', note=it[2]||'';
+        var id=iid(sec.id, gi, name);
+        if(state.removed[id]) return;
+        ul.appendChild(makeLi(id, name, qty, note, false));
+        secTot++; if(state.checks[id]){secDone++;}
+      });
+      // user-added items for this group
+      var addedList = state.added[sec.id+'|'+gi] || [];
+      addedList.forEach(function(a){
+        ul.appendChild(makeLi(a.id, a.name, '', '', true));
+        secTot++; if(state.checks[a.id]){secDone++;}
+      });
+
+      // add-item row
+      var add=document.createElement('div'); add.className='additem';
+      var inp=document.createElement('input'); inp.type='text'; inp.placeholder='Add an item…';
+      var btn=document.createElement('button'); btn.textContent='Add';
+      function doAdd(){
+        var v=inp.value.trim(); if(!v) return;
+        var aid='u-'+sec.id+'-'+gi+'-'+Date.now();
+        var k=sec.id+'|'+gi; state.added[k]=state.added[k]||[]; state.added[k].push({id:aid,name:v});
+        save(); render();
+      }
+      btn.onclick=doAdd; inp.addEventListener('keydown',function(e){if(e.key==='Enter')doAdd();});
+      add.appendChild(inp); add.appendChild(btn);
+
+      grp.appendChild(ul); grp.appendChild(add);
+      secEl.appendChild(grp);
+    });
+
+    wrap.appendChild(secEl);
+    secTot=secTot; secDone=secDone;
+    var cnt=$('#cnt-'+sec.id); if(cnt) cnt.textContent=secDone+'/'+secTot;
+    var sb=$('#sbar-'+sec.id); if(sb) sb.style.width=(secTot?Math.round(secDone/secTot*100):0)+'%';
+    totAll+=secTot; doneAll+=secDone;
+  });
+
+  $('#allBar').style.width=(totAll?Math.round(doneAll/totAll*100):0)+'%';
+  $('#allLab').textContent=doneAll+' of '+totAll+' packed';
+  $('#allPct').textContent=(totAll?Math.round(doneAll/totAll*100):0)+'%';
+}
+
+function makeLi(id, name, qty, note, isUser){
+  var li=document.createElement('li');
+  if(state.checks[id]) li.className='done';
+  var box=document.createElement('div'); box.className='box';
+  box.innerHTML='<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+  var txt=document.createElement('div'); txt.className='txt';
+  var nm=document.createElement('span'); nm.className='name'; nm.textContent=name;
+  txt.appendChild(nm);
+  if(qty){ var q=document.createElement('span'); q.className='qty'; q.textContent=qty; nm.appendChild(q); }
+  if(note){ var n=document.createElement('span'); n.className='note'; n.textContent=note; txt.appendChild(n); }
+  var del=document.createElement('button'); del.className='del'; del.innerHTML='✕'; del.title='Remove';
+  del.onclick=function(e){ e.stopPropagation(); removeItem(id, isUser); };
+  li.appendChild(box); li.appendChild(txt); li.appendChild(del);
+  li.onclick=function(){ state.checks[id]=!state.checks[id]; if(!state.checks[id]) delete state.checks[id]; save();
+    li.classList.toggle('done'); render(); };
+  return li;
+}
+
+function removeItem(id, isUser){
+  delete state.checks[id];
+  if(isUser){
+    // find & splice from added
+    Object.keys(state.added).forEach(function(k){
+      state.added[k]=state.added[k].filter(function(a){return a.id!==id;});
+    });
+  } else {
+    state.removed[id]=1;
+  }
+  save(); render();
+}
+
+$('#themeBtn').onclick=function(){ applyTheme(document.documentElement.getAttribute('data-theme')==='light'?'dark':'light'); };
+applyTheme(document.documentElement.getAttribute('data-theme')||'dark');
+$('#printBtn').onclick=function(){ window.print(); };
+function resetAll(){ if(confirm('Clear all ticks? (Your added items stay.)')){ state.checks={}; save(); render(); } }
+$('#resetBtn').onclick=resetAll;
+$('#reset2').onclick=function(e){ e.preventDefault(); resetAll(); };
+
+render();
+</script>
+</body>
+</html>
