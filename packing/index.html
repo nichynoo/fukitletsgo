@@ -158,10 +158,25 @@ html[data-theme="dark"] .card,html[data-theme="dark"] .panel,html[data-theme="da
 html[data-theme="dark"] .route,html[data-theme="dark"] .sub{color:rgba(234,240,243,.82)!important;}
 
 
+/* Align the packing-page masthead with the checklist content */
+.mast > .eyebrow,
+.mast > h1,
+.mast > .sub,
+.mast > .legd{
+  max-width:860px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.mast > h1{margin-top:8px;}
+.mast > .sub{margin-top:12px;}
+.mast > .legd{margin-top:14px;}
+@media(max-width:560px){.mast{padding-left:18px;padding-right:18px}.themebtn{top:14px;right:14px}}
+
+
 
 /* === FUKITLETSGO shared logo + hamburger menu === */
 .flg-nav{position:sticky;top:0;z-index:5000;background:linear-gradient(160deg,var(--sign-green) 0%,var(--sign-green-deep) 100%);border-bottom:3px solid var(--gold);box-shadow:0 6px 18px rgba(0,0,0,.16)}
-.flg-nav-inner{max-width:1080px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.flg-nav-inner{max-width:860px;margin:0 auto;padding:8px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .flg-brand{display:inline-flex;align-items:center;gap:9px;color:#fff;text-decoration:none;min-width:0}
 .flg-logo{width:38px;height:38px;border-radius:11px;object-fit:cover;border:2px solid rgba(255,255,255,.85);background:rgba(255,255,255,.12);box-shadow:0 2px 10px rgba(0,0,0,.20)}
 .flg-word{font-family:var(--mono);font-size:16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1;white-space:nowrap;color:#fff}
@@ -205,7 +220,7 @@ html[data-theme="dark"] .route,html[data-theme="dark"] .sub{color:rgba(234,240,2
         <a role="menuitem" data-page="home" href="https://nichynoo.github.io/fukitletsgo/">Home <b class="ext" aria-hidden="true">↗</b></a>
         <a role="menuitem" data-page="route" href="https://nichynoo.github.io/fukitletsgo/Australia/SOT/">Road to the ferry <b class="ext" aria-hidden="true">↗</b></a>
         <a role="menuitem" data-page="tas" href="https://nichynoo.github.io/fukitletsgo/Australia/Tasmania/">Tasmania winter planner <b class="ext" aria-hidden="true">↗</b></a>
-        <a role="menuitem" data-page="packing" href="https://nichynoo.github.io/fukitletsgo/packing/index.html">Packing list <b class="ext" aria-hidden="true">↗</b></a>
+        <a role="menuitem" data-page="packing" href="https://nichynoo.github.io/fukitletsgo/packing/">Packing list <b class="ext" aria-hidden="true">↗</b></a>
       </div>
     </div>
   </div>
