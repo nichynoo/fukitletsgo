@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --sea:#16686F; --sea-deep:#0E4A52; --sea-light:#2BA0A8;
+  --sea:#0F7FA6; --sea-deep:#0A4258; --sea-light:#3AA8C9;
   --sand:#F3EBDD; --paper:#FBF7EF;
   --ink:#15333A; --dim:#54707A;
   --flame:#BC2C35; --ember:#A9472B; --peach:#E08562;
@@ -84,8 +84,11 @@ footer a{color:var(--peach); text-decoration:none}
 footer a:hover{text-decoration:underline}
 .insta{display:inline-block; margin-bottom:10px; font-size:14px; font-weight:700; text-transform:uppercase}
 </style>
+<style id="fkhdr-css">.fkhdr{position:relative;z-index:50;display:flex;align-items:center;gap:11px;padding:9px 15px;background:#0A4258; color:#fff; border-bottom:1px solid rgba(255,255,255,.12);font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.fkhdr .fk-logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit}.fkhdr .fk-logo img{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.55);display:block}.fkhdr .fk-wm{font-weight:700;font-size:14px;letter-spacing:.13em;text-transform:uppercase;color:inherit}.fkhdr .fk-burger{margin-left:auto;appearance:none;background:none;border:0;cursor:pointer;padding:8px;display:grid;gap:4px}.fkhdr .fk-burger span{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:.2s}.fkhdr.open .fk-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}.fkhdr.open .fk-burger span:nth-child(2){opacity:0}.fkhdr.open .fk-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}.fkhdr .fk-nav{position:absolute;top:100%;right:10px;min-width:210px;background:#0E4A52;border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.35);padding:6px;display:none;flex-direction:column}.fkhdr.open .fk-nav{display:flex}.fkhdr .fk-nav a{text-decoration:none;color:#fff;font-size:14px;font-weight:500;padding:11px 13px;border-radius:8px;display:flex;align-items:center;gap:9px}.fkhdr .fk-nav a:hover{background:rgba(127,127,127,.14)}.fkhdr .fk-nav a.cur{color:#E08562;font-weight:700}.fkhdr .fk-nav a .ic{width:18px;text-align:center;opacity:.8}.fkhdr .fk-nav .sep{height:1px;background:rgba(255,255,255,.14);margin:5px 8px}@media print{.fkhdr{display:none}}</style>
 </head>
 <body>
+<header class="fkhdr" id="fkhdr"><a class="fk-logo" href="./"><img src="logo.png" alt=""><span class="fk-wm">Fukitletsgo</span></a><button class="fk-burger" id="fkBurger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button><nav class="fk-nav" id="fkNav"><a class="cur" href="./"><span class="ic">⌂</span>Home</a><div class="sep"></div><a class="" href="Australia/Tasmania/"><span class="ic">🗺</span>Tassie Planner</a><a href="Australia/SOT/"><span class="ic">🚢</span>SOT Planner</a><a href="packing/"><span class="ic">🧳</span>Packing List</a></nav></header>
+
 
 <header class="hero">
   <img class="logo" src="logo.png" alt="FUKITLETSGO compass logo over a Tasmanian beach">
@@ -155,5 +158,6 @@ footer a:hover{text-decoration:underline}
   else { el.textContent='Home. Planning the next one.'; }
 })();
 </script>
+<script>(function(){var h=document.getElementById('fkhdr'),b=document.getElementById('fkBurger');if(!h||!b)return;function set(o){h.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false');}b.addEventListener('click',function(e){e.stopPropagation();set(!h.classList.contains('open'));});document.addEventListener('click',function(e){if(!h.contains(e.target))set(false);});document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});})();</script>
 </body>
 </html>
