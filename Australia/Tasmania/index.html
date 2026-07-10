@@ -340,8 +340,9 @@ html[data-theme="dark"] .route,html[data-theme="dark"] .sub{color:rgba(234,240,2
 @media(prefers-reduced-motion:reduce){.flg-menu-icon i,.flg-menu-icon:before,.flg-menu-icon:after{transition:none!important}}
 .tabs{top:56px!important}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<!-- Leaflet now lazy-loads the first time the Map tab is opened (see loadLeaflet) -->
+
 <script>(function(){var t='light';try{t=localStorage.getItem('tas_theme2')||'dark'}catch(e){}document.documentElement.setAttribute('data-theme',t);})();</script>
 <style id="fkhdr-css">.fkhdr{position:relative;z-index:50;display:flex;align-items:center;gap:11px;padding:9px 15px;background:var(--bg2,#131D24); color:var(--frost,#EAF1F4); border-bottom:1px solid var(--line,#2A3A45);font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.fkhdr .fk-logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit}.fkhdr .fk-logo img{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.55);display:block}.fkhdr .fk-wm{font-weight:700;font-size:14px;letter-spacing:.13em;text-transform:uppercase;color:inherit}.fkhdr .fk-burger{margin-left:auto;appearance:none;background:none;border:0;cursor:pointer;padding:8px;display:grid;gap:4px}.fkhdr .fk-burger span{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:.2s}.fkhdr.open .fk-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}.fkhdr.open .fk-burger span:nth-child(2){opacity:0}.fkhdr.open .fk-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}.fkhdr .fk-nav{position:absolute;top:100%;right:10px;min-width:210px;background:var(--surface,#1A2730);border:1px solid var(--line-soft,#22303A);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.35);padding:6px;display:none;flex-direction:column}.fkhdr.open .fk-nav{display:flex}.fkhdr .fk-nav a{text-decoration:none;color:var(--frost,#EAF1F4);font-size:14px;font-weight:500;padding:11px 13px;border-radius:8px;display:flex;align-items:center;gap:9px}.fkhdr .fk-nav a:hover{background:rgba(127,127,127,.14)}.fkhdr .fk-nav a.cur{color:var(--ember,#EA8C4E);font-weight:700}.fkhdr .fk-nav a .ic{width:18px;text-align:center;opacity:.8}.fkhdr .fk-nav .sep{height:1px;background:var(--line-soft,#22303A);margin:5px 8px}@media print{.fkhdr{display:none}}</style>
 </head>
@@ -1198,7 +1199,15 @@ function renderDiscover() {
     else if (filterType === 'mine')
         suffix = ' from our list';
     $('#discCount').textContent = list.length + ' place' + (list.length !== 1 ? 's' : '') + suffix;
-    $('#grid').innerHTML = list.map(placeCard).join('') || '<p class="muted">No matches. Try clearing a filter, or add the place yourself.</p>';
+    var grid = $('#grid'), CHUNK = 48;
+    clearTimeout(window.__gridChunkT);
+    if (list.length > CHUNK) {
+        grid.innerHTML = list.slice(0, CHUNK).map(placeCard).join('');
+        var rest = list.slice(CHUNK);
+        window.__gridChunkT = setTimeout(function () { grid.insertAdjacentHTML('beforeend', rest.map(placeCard).join('')); }, 60);
+    } else {
+        grid.innerHTML = list.map(placeCard).join('') || '<p class="muted">No matches. Try clearing a filter, or add the place yourself.</p>';
+    }
 }
 function onGridClick(e) {
     var btn = e.target.closest('[data-act]');
@@ -1472,6 +1481,21 @@ function refreshDetail() { var d = $('#mapDetail'); if (d) d.innerHTML = mapDeta
 function regionBoundsFit(ri) {
     fitCurrentMapToPlaces();
 }
+var LEAFLET_LOADING = false;
+function loadLeaflet(cb) {
+    if (typeof L !== 'undefined') { cb(true); return; }
+    if (LEAFLET_LOADING) return;
+    LEAFLET_LOADING = true;
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+    document.head.appendChild(css);
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+    s.onload = function () { LEAFLET_LOADING = false; cb(true); };
+    s.onerror = function () { LEAFLET_LOADING = false; cb(false); };
+    document.head.appendChild(s);
+}
 function renderMap() {
     if (!$('#leafmap')) {
         var chips = MAP_CHIPS.map(function (c) { return '<button class="chip" data-type="' + c[0] + '" aria-pressed="' + (mapFilter === c[0] ? 'true' : 'false') + '">' + c[1] + '</button>'; }).join('');
@@ -1488,8 +1512,16 @@ function renderMap() {
               '<aside class="map-side"><div class="mapresults-title" id="mapResultsCount"></div><div class="mapresults" id="mapResults"></div></aside>' +
             '</div>';
         if (typeof L === 'undefined') {
-            $('#leafmap').innerHTML = '<p style="padding:18px;color:var(--dim)">The live map needs an internet connection the first time it loads — reconnect and reopen this tab.</p>';
-            refreshDetail(); renderMapResults(); return;
+            $('#leafmap').innerHTML = '<p style="padding:18px;color:var(--dim)">Loading the live map\u2026</p>';
+            refreshDetail(); renderMapResults();
+            loadLeaflet(function (ok) {
+                var el = $('#leafmap');
+                if (!ok) { if (el) el.innerHTML = '<p style="padding:18px;color:var(--dim)">The live map needs an internet connection the first time it loads — reconnect and reopen this tab.</p>'; return; }
+                if (!el) return;
+                $('#view-map').innerHTML = '';
+                renderMap();
+            });
+            return;
         }
         LMAP = L.map('leafmap', { zoomControl: true, attributionControl: true });
         var sat = L.layerGroup([
