@@ -412,6 +412,13 @@ html[data-theme="dark"] .route,html[data-theme="dark"] .sub{color:rgba(234,240,2
       <div class="spacer"></div>
       <select class="reg" id="regSel"></select>
       <input class="search" id="search" type="search" placeholder="Search places…">
+      <select class="reg" id="nearSel" aria-label="Search radius" title="Find everything within this distance of the place you type">
+        <option value="0">Radius: off</option>
+        <option value="25">± 25 km</option>
+        <option value="50">± 50 km</option>
+        <option value="75">± 75 km</option>
+        <option value="100">± 100 km</option>
+      </select>
       <button class="btn ember" id="addToggle">+ Add a place</button>
     </div>
 
@@ -1137,6 +1144,26 @@ function buildReadout() {
     $('#readout').innerHTML = g(lead.lab, lead.val, true) + g('Island days', '35') + g('Planned', '<span class="val">' + planned + '</span>') + g('Ticked off', '<span style="color:var(--aurora)">' + visited + '</span>');
 }
 var filterType = 'all', filterReg = 'all', q = '';
+var nearKm = 0, NEAR = null;
+function distKm(a, b) {
+    var R = 6371, dLa = (b[0] - a[0]) * Math.PI / 180, dLo = (b[1] - a[1]) * Math.PI / 180;
+    var la1 = a[0] * Math.PI / 180, la2 = b[0] * Math.PI / 180;
+    var h = Math.sin(dLa / 2) * Math.sin(dLa / 2) + Math.cos(la1) * Math.cos(la2) * Math.sin(dLo / 2) * Math.sin(dLo / 2);
+    return R * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+}
+function fmtKm(d) { return d < 9.95 ? d.toFixed(1) + ' km' : Math.round(d) + ' km'; }
+function findCentre(query) {
+    if (!query) return null;
+    var best = null;
+    allPlaces().forEach(function (p) {
+        if (!LL[p.id]) return;
+        var n = p.n.toLowerCase();
+        if (n.indexOf(query) === -1) return;
+        var score = (n.indexOf(query) === 0 ? 0 : 1000) + n.length;
+        if (!best || score < best.score) best = { id: p.id, n: p.n, ll: LL[p.id], score: score };
+    });
+    return best;
+}
 function setAssign(id, patch) {
     var cur = state.assign[id] || {};
     state.assign[id] = __assign(__assign({}, cur), patch);
@@ -1157,6 +1184,8 @@ function placeCard(p) {
     var inPlan = !!(a.in || a.date || a.visited);
     var sel = a.date || (a.in ? 'shortlist' : 'none');
     var lines = [];
+    if (NEAR && LL[p.id] && p.id !== NEAR.id)
+        lines.push('<div class="note-line when"><span class="k">Away</span><span>' + fmtKm(distKm(NEAR.ll, LL[p.id])) + ' from ' + esc(NEAR.n) + '</span></div>');
     if (p.when)
         lines.push('<div class="note-line when"><span class="k">When</span><span>' + esc(p.when) + '</span></div>');
     if (p.van)
@@ -1171,6 +1200,7 @@ function placeCard(p) {
     return "<article class=\"card ".concat(inPlan ? 'in-plan' : '', " ").concat(a.visited ? 'visited' : '', "\" data-id=\"").concat(p.id, "\">\n    <div class=\"ctop\"><span class=\"tag ").concat(p.t, "\">").concat(TYPE_LABEL[p.t] || p.t, p.s ? " \u00b7 " + p.s : "", "</span>").concat(feeBadge(p), fpBadge(p), detourBadge(p), "<span class=\"reg\">").concat(esc(REGIONS[p.r] || ''), "</span>").concat(mark, "</div>\n    <h3>").concat(esc(p.n), "</h3>\n    ").concat(p.b ? '<p>' + esc(p.b) + '</p>' : '', "\n    ").concat(lines.join(''), "\n    <div class=\"cactions\">\n      <select class=\"day\" data-act=\"day\">").concat(dayOptions(sel), "</select>\n      <button class=\"iconbtn vis ").concat(a.visited ? 'on' : '', "\" data-act=\"vis\" title=\"Mark visited\" aria-label=\"Mark visited\">\u2713</button>\n      <button class=\"iconbtn fav ").concat(a.fav ? 'on' : '', "\" data-act=\"fav\" title=\"Save favourite\" aria-label=\"Save favourite\">\u2605</button>\n      ").concat(siteLink(p), gmapLink(p), "\n      ").concat(p.user ? '<button class="iconbtn" data-act="del" title="Delete" aria-label="Delete place">✕</button>' : '', "\n    </div>\n  </article>");
 }
 function renderDiscover() {
+    NEAR = (nearKm > 0 && q) ? findCentre(q) : null;
     var list = allPlaces().filter(function (p) {
         if (filterType === 'mine') {
             if (!p.mine && !p.user)
@@ -1186,19 +1216,32 @@ function renderDiscover() {
             return false;
         if (filterReg !== 'all' && String(p.r) !== filterReg)
             return false;
-        if (q) {
+        if (NEAR) {
+            if (!LL[p.id]) return false;
+            if (distKm(NEAR.ll, LL[p.id]) > nearKm) return false;
+        }
+        else if (q) {
             var hay = (p.n + ' ' + (p.b || '') + ' ' + (REGIONS[p.r] || '') + (isWater(p) ? ' lake river water waterway' : '')).toLowerCase();
             if (!hay.includes(q))
                 return false;
         }
         return true;
     });
+    if (NEAR)
+        list.sort(function (a, b) { return distKm(NEAR.ll, LL[a.id]) - distKm(NEAR.ll, LL[b.id]); });
     var suffix = '';
     if (filterType === 'hidden')
         suffix = ' off the beaten track';
     else if (filterType === 'mine')
         suffix = ' from our list';
-    $('#discCount').textContent = list.length + ' place' + (list.length !== 1 ? 's' : '') + suffix;
+    var countMsg = list.length + ' place' + (list.length !== 1 ? 's' : '') + suffix;
+    if (NEAR)
+        countMsg = list.length + ' place' + (list.length !== 1 ? 's' : '') + suffix + ' within ' + nearKm + ' km of ' + NEAR.n;
+    else if (nearKm > 0 && q)
+        countMsg = 'No place called \u201c' + q + '\u201d to centre on \u2014 showing name matches instead';
+    else if (nearKm > 0)
+        countMsg = 'Type a place name to search around it (e.g. Bridport)';
+    $('#discCount').textContent = countMsg;
     var grid = $('#grid'), CHUNK = 48;
     clearTimeout(window.__gridChunkT);
     if (list.length > CHUNK) {
@@ -1445,6 +1488,7 @@ function mapResultCard(p) {
     return '<article class="mcard" data-id="' + p.id + '"><div class="ctop">' + meta + '</div><h3>' + esc(p.n) + '</h3>' + body + notes +
         '<div class="m-actions"><button class="m-focus" data-map-focus="' + p.id + '">Show on map</button>' + siteLink(p) + gmapLink(p) + '</div></article>';
 }
+var MAP_INVIEW = true;
 function renderMapResults() {
     var count = document.getElementById('mapResultsCount');
     var box = document.getElementById('mapResults');
@@ -1452,6 +1496,14 @@ function renderMapResults() {
     var list = placesForMap();
     var reg = currentMapRegionValue();
     var regName = reg === 'all' ? 'all regions' : (REGIONS[+reg] || 'selected region');
+    if (MAP_INVIEW && typeof LMAP !== 'undefined' && LMAP) {
+        var b = LMAP.getBounds(), c = LMAP.getCenter(), ctr = [c.lat, c.lng];
+        list = list.filter(function (p) { return b.contains(LL[p.id]); });
+        list.sort(function (x, y) { return distKm(ctr, LL[x.id]) - distKm(ctr, LL[y.id]); });
+        count.textContent = list.length + ' ' + mapFilterLabel() + ' on screen \u2014 pan or zoom to update';
+        box.innerHTML = list.length ? list.map(mapResultCard).join('') : '<p class="muted">Nothing on screen for this filter \u2014 zoom out or pan the map.</p>';
+        return;
+    }
     count.textContent = list.length + ' ' + mapFilterLabel() + ' in ' + regName;
     box.innerHTML = list.length ? list.map(mapResultCard).join('') : '<p class="muted">No matching places for this filter and region.</p>';
 }
@@ -1501,7 +1553,7 @@ function renderMap() {
         var chips = MAP_CHIPS.map(function (c) { return '<button class="chip" data-type="' + c[0] + '" aria-pressed="' + (mapFilter === c[0] ? 'true' : 'false') + '">' + c[1] + '</button>'; }).join('');
         var regOpts = '<option value="all">Whole Tasmania</option>' + REGIONS.map(function (r, i) { return '<option value="' + i + '">' + esc(r) + '</option>'; }).join('');
         $('#view-map').innerHTML =
-            '<div class="mapctl"><div class="chips" id="mapChips">' + chips + '</div><div class="spacer"></div><select class="reg" id="mapRegion" aria-label="Zoom to region">' + regOpts + '</select></div>' +
+            '<div class="mapctl"><div class="chips" id="mapChips">' + chips + '</div><div class="spacer"></div><label style="display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--dim);white-space:nowrap;cursor:pointer"><input type="checkbox" id="mapInView" checked> List what\u2019s on screen</label><select class="reg" id="mapRegion" aria-label="Zoom to region">' + regOpts + '</select></div>' +
             '<div class="map-layout">' +
               '<div class="map-main">' +
                 '<div class="mapwrap"><div id="leafmap"></div></div>' +
@@ -1524,6 +1576,9 @@ function renderMap() {
             return;
         }
         LMAP = L.map('leafmap', { zoomControl: true, attributionControl: true });
+        LMAP.on('moveend', renderMapResults);
+        var ivBox = document.getElementById('mapInView');
+        if (ivBox) { ivBox.checked = MAP_INVIEW; ivBox.onchange = function () { MAP_INVIEW = ivBox.checked; renderMapResults(); }; }
         var sat = L.layerGroup([
             L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Imagery © Esri' }),
             L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 })
@@ -1649,6 +1704,7 @@ function applyTheme(t) {
     });
     $('#regSel').addEventListener('change', function (e) { filterReg = e.target.value; renderDiscover(); });
     $('#search').addEventListener('input', function (e) { q = e.target.value.trim().toLowerCase(); renderDiscover(); });
+    $('#nearSel').addEventListener('change', function (e) { nearKm = +e.target.value; renderDiscover(); });
     $('#grid').addEventListener('click', onGridClick);
     $('#grid').addEventListener('touchend', onGridClick);
     $('#grid').addEventListener('change', onGridChange);
