@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -41,6 +42,8 @@ h1 .go{color:var(--peach)}
 .btn-primary:hover{transform:translateY(-2px)}
 .btn-sot{background:var(--peach); color:#5B2413; box-shadow:0 8px 22px rgba(224,133,98,.4)}
 .btn-pack{background:var(--sea-light); color:#06262B; box-shadow:0 8px 22px rgba(43,160,168,.4)}
+.btn-rec{background:var(--sand); color:#7A2E1A; border:2px solid var(--flame); box-shadow:0 8px 22px rgba(188,44,53,.25)}
+.btn-rec:hover{transform:translateY(-2px)}
 .btn-pack:hover{transform:translateY(-2px)}
 .btn-sot:hover{transform:translateY(-2px)}
 .btn-ghost{background:rgba(255,255,255,.14); color:#fff; border:2px solid rgba(255,255,255,.7)}
@@ -87,7 +90,7 @@ footer a:hover{text-decoration:underline}
 <style id="fkhdr-css">.fkhdr{position:relative;z-index:50;display:flex;align-items:center;gap:11px;padding:9px 15px;background:#0A4258; color:#fff; border-bottom:1px solid rgba(255,255,255,.12);font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.fkhdr .fk-logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit}.fkhdr .fk-logo img{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.55);display:block}.fkhdr .fk-wm{font-weight:700;font-size:14px;letter-spacing:.13em;text-transform:uppercase;color:inherit}.fkhdr .fk-burger{margin-left:auto;appearance:none;background:none;border:0;cursor:pointer;padding:8px;display:grid;gap:4px}.fkhdr .fk-burger span{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:.2s}.fkhdr.open .fk-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}.fkhdr.open .fk-burger span:nth-child(2){opacity:0}.fkhdr.open .fk-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}.fkhdr .fk-nav{position:absolute;top:100%;right:10px;min-width:210px;background:#0E4A52;border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.35);padding:6px;display:none;flex-direction:column}.fkhdr.open .fk-nav{display:flex}.fkhdr .fk-nav a{text-decoration:none;color:#fff;font-size:14px;font-weight:500;padding:11px 13px;border-radius:8px;display:flex;align-items:center;gap:9px}.fkhdr .fk-nav a:hover{background:rgba(127,127,127,.14)}.fkhdr .fk-nav a.cur{color:#E08562;font-weight:700}.fkhdr .fk-nav a .ic{width:18px;text-align:center;opacity:.8}.fkhdr .fk-nav .sep{height:1px;background:rgba(255,255,255,.14);margin:5px 8px}@media print{.fkhdr{display:none}}</style>
 </head>
 <body>
-<header class="fkhdr" id="fkhdr"><a class="fk-logo" href="./"><img src="logo.png" alt=""><span class="fk-wm">Fukitletsgo</span></a><button class="fk-burger" id="fkBurger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button><nav class="fk-nav" id="fkNav"><a class="cur" href="./"><span class="ic">⌂</span>Home</a><div class="sep"></div><a class="" href="Australia/Tasmania/"><span class="ic">🗺</span>Tassie Planner</a><a href="Australia/SOT/"><span class="ic">🚢</span>SOT Planner</a><a href="packing/"><span class="ic">🧳</span>Packing List</a></nav></header>
+<header class="fkhdr" id="fkhdr"><a class="fk-logo" href="./"><img src="logo.png" alt=""><span class="fk-wm">Fukitletsgo</span></a><button class="fk-burger" id="fkBurger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button><nav class="fk-nav" id="fkNav"><a class="cur" href="./"><span class="ic">⌂</span>Home</a><div class="sep"></div><a class="" href="Australia/Tasmania/"><span class="ic">🗺</span>Tassie Planner</a><a href="Australia/SOT/"><span class="ic">🚢</span>SOT Planner</a><a href="packing/"><span class="ic">🧳</span>Packing List</a><a href="recipes/"><span class="ic">🍳</span>Recipes</a></nav></header>
 
 
 <header class="hero">
@@ -98,6 +101,7 @@ footer a:hover{text-decoration:underline}
     <a class="btn btn-primary" href="Australia/Tasmania/">Open the Tassie planner</a>
     <a class="btn btn-sot" href="Australia/SOT/">Open the SOT Planner</a>
     <a class="btn btn-pack" href="packing/">Packing List</a>
+    <a class="btn btn-rec" href="recipes/">Recipes</a>
     <a class="btn btn-ghost" href="https://www.instagram.com/fukitletsgo/" target="_blank" rel="noopener">Follow on Instagram</a>
   </div>
   <svg class="waves" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
@@ -119,6 +123,13 @@ footer a:hover{text-decoration:underline}
       <h3>Tasmania &mdash; Winter 2026</h3>
       <p>Five weeks around the island in the Lotus Trooper. 245 options mapped &mdash; free camps, trout waters, hidden gems, pubs, and an unreasonable number of aqua aerobics pools.</p>
       <div class="meta">6 JUL &rarr; 9 AUG &middot; INTERACTIVE PLANNER</div>
+      <span class="go-arrow">&rarr;</span>
+    </a>
+    <a class="card live" href="recipes/">
+      <span class="pill">New</span>
+      <h3>Recipes from the Road</h3>
+      <p>Everything we actually cook out of the van &mdash; grain-free, sugar-free, and mostly done with a Ninja Crispi and a microwave. Freezer meals, breakfasts, breads and a caramel slice that has no business being this good.</p>
+      <div class="meta">37 RECIPES &middot; SEARCHABLE</div>
       <span class="go-arrow">&rarr;</span>
     </a>
     <div class="card soon">
