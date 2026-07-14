@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recipes from the Road — FUKITLETSGO</title>
+<meta name="description" content="Grain-free, sugar-free recipes cooked in a caravan with a Ninja Crispi, a microwave and a bit of attitude.">
+<meta property="og:title" content="Recipes from the Road — FUKITLETSGO">
+<meta property="og:description" content="Grain-free, sugar-free recipes cooked in a caravan with a Ninja Crispi, a microwave and a bit of attitude.">
+<meta property="og:image" content="https://nichynoo.github.io/fukitletsgo/logo.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Nunito:wght@400;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style id="fkhdr-css">.fkhdr{position:relative;z-index:50;display:flex;align-items:center;gap:11px;padding:9px 15px;background:#0A4258; color:#fff; border-bottom:1px solid rgba(255,255,255,.12);font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.fkhdr .fk-logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit}.fkhdr .fk-logo img{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.55);display:block}.fkhdr .fk-wm{font-weight:700;font-size:14px;letter-spacing:.13em;text-transform:uppercase;color:inherit}.fkhdr .fk-burger{margin-left:auto;appearance:none;background:none;border:0;cursor:pointer;padding:8px;display:grid;gap:4px}.fkhdr .fk-burger span{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:.2s}.fkhdr.open .fk-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}.fkhdr.open .fk-burger span:nth-child(2){opacity:0}.fkhdr.open .fk-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}.fkhdr .fk-nav{position:absolute;top:100%;right:10px;min-width:210px;background:#0E4A52;border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.35);padding:6px;display:none;flex-direction:column}.fkhdr.open .fk-nav{display:flex}.fkhdr .fk-nav a{text-decoration:none;color:#fff;font-size:14px;font-weight:500;padding:11px 13px;border-radius:8px;display:flex;align-items:center;gap:9px}.fkhdr .fk-nav a:hover{background:rgba(127,127,127,.14)}.fkhdr .fk-nav a.cur{color:#E08562;font-weight:700}.fkhdr .fk-nav a .ic{width:18px;text-align:center;opacity:.8}.fkhdr .fk-nav .sep{height:1px;background:rgba(255,255,255,.14);margin:5px 8px}@media print{.fkhdr{display:none}}</style>
+<link rel="stylesheet" href="recipes.css">
+</head>
+<body>
+
+<header class="fkhdr" id="fkhdr"><a class="fk-logo" href="../"><img src="../logo.png" alt=""><span class="fk-wm">Fukitletsgo</span></a><button class="fk-burger" id="fkBurger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button><nav class="fk-nav" id="fkNav"><a href="../"><span class="ic">⌂</span>Home</a><div class="sep"></div><a class="" href="../Australia/Tasmania/"><span class="ic">🗺</span>Tassie Planner</a><a href="../Australia/SOT/"><span class="ic">🚢</span>SOT Planner</a><a href="../packing/"><span class="ic">🧳</span>Packing List</a><a class="cur" href="./"><span class="ic">🍳</span>Recipes</a></nav></header>
+
+<header class="hero">
+  <div class="hero-inner">
+    <img class="logo" src="../logo.png" alt="fukitletsgo logo">
+    <div class="brand">
+      <h1><a href="../index.html">FUKITLETSGO RECIPES</a></h1>
+      <div class="tag">recipes from the road</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="filters" id="filters"></div>
+  <input class="search" id="search" type="search" placeholder="Search recipes… (try 'chia' or 'slow cooker')">
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>Recipes from the road</span>
+    <span class="url">nichynoo.github.io/fukitletsgo</span>
+    <span>Tasmania · Winter · On purpose</span>
+  </div>
+</footer>
+
+<script src="recipes-data.js"></script>
+<script>
+(function(){
+  const grid = document.getElementById('grid');
+  const filtersEl = document.getElementById('filters');
+  const searchEl = document.getElementById('search');
+  const countEl = document.getElementById('count');
+  let activeCat = 'All';
+
+  // Build filter buttons from whatever categories exist in the data
+  const cats = ['All', ...new Set(RECIPES.map(r => r.category))];
+  cats.forEach(cat => {
+    const b = document.createElement('button');
+    b.className = 'filter' + (cat === 'All' ? ' active' : '');
+    b.textContent = cat;
+    b.onclick = () => {
+      activeCat = cat;
+      filtersEl.querySelectorAll('.filter').forEach(x => x.classList.toggle('active', x === b));
+      render();
+    };
+    filtersEl.appendChild(b);
+  });
+
+  function matches(r, q){
+    if (!q) return true;
+    const hay = [r.title, r.description, r.category,
+      ...r.diet, ...r.meta,
+      ...r.ingredients.map(i => i.item)].join(' ').toLowerCase();
+    return q.toLowerCase().split(/\s+/).every(w => hay.includes(w));
+  }
+
+  function render(){
+    const q = searchEl.value.trim();
+    const list = RECIPES.filter(r =>
+      (activeCat === 'All' || r.category === activeCat) && matches(r, q));
+    grid.innerHTML = '';
+    list.forEach(r => {
+      const a = document.createElement('a');
+      a.className = 'card';
+      a.href = 'recipe.html?id=' + encodeURIComponent(r.id);
+      a.innerHTML =
+        '<span class="ccat">' + r.category.toLowerCase() + '!</span>' +
+        '<h3>' + r.title + '</h3>' +
+        '<p>' + r.description + '</p>' +
+        '<div class="cmeta">' + r.meta.map(m => '<span class="cpill">' + m + '</span>').join('') + '</div>';
+      grid.appendChild(a);
+    });
+    countEl.textContent = list.length + ' recipe' + (list.length === 1 ? '' : 's');
+  }
+
+  searchEl.addEventListener('input', render);
+  render();
+})();
+</script>
+
+<script>(function(){var h=document.getElementById('fkhdr'),b=document.getElementById('fkBurger');if(!h||!b)return;function set(o){h.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false');}b.addEventListener('click',function(e){e.stopPropagation();set(!h.classList.contains('open'));});document.addEventListener('click',function(e){if(!h.contains(e.target))set(false);});document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});})();</script>
+</body>
+</html>
