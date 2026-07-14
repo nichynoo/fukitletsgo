@@ -1,0 +1,143 @@
+/* FUKITLETSGO recipes — matched to the site palette (Barlow / teal / gold) */
+:root{
+  --bitumen:#18293a; --mist:#eaf0f3; --card:#ffffff;
+  --sign-green:#0f7fa6; --sign-green-deep:#0a2e42;
+  --gold:#d3a45c; --gold-deep:#a97a37;
+  --river:#34688f; --line:#ccd8de; --muted:#5f7280;
+  --bg:var(--mist); --surface:var(--card); --surface-hi:#f8f1e0;
+  --r:12px;
+  --serif:'Barlow Condensed',system-ui,sans-serif;
+  --sans:'Barlow',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box; margin:0}
+body{background:var(--bg); color:var(--bitumen); font-family:var(--sans);
+  font-size:15px; line-height:1.5}
+a{color:var(--sign-green)}
+
+.wrap{max-width:1080px; margin:0 auto; padding:0 14px 60px}
+
+/* ---------- page masthead ---------- */
+.hero{max-width:1080px; margin:0 auto; padding:26px 14px 4px}
+.hero-inner{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.logo{display:none}
+.brand h1{font-family:var(--serif); font-size:clamp(26px,5vw,38px); font-weight:700;
+  letter-spacing:.02em; text-transform:uppercase; color:var(--sign-green-deep); line-height:1.05}
+.brand h1 a{color:inherit; text-decoration:none}
+.brand .tag{font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--gold-deep); margin-top:4px}
+.cat{margin-left:auto; font-family:var(--sans); font-weight:700; font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; background:var(--gold); color:#3a2a10; padding:7px 15px;
+  border-radius:999px; white-space:nowrap}
+
+/* ---------- index: filters + search ---------- */
+.filters{display:flex; gap:8px; flex-wrap:wrap; margin:22px 0 0}
+.filter{font-family:var(--sans); font-weight:700; font-size:12px; letter-spacing:.1em;
+  text-transform:uppercase; padding:9px 16px; border:2px solid var(--line); border-radius:999px;
+  background:var(--surface); color:var(--sign-green-deep); cursor:pointer; transition:all .12s ease}
+.filter:hover{border-color:var(--sign-green)}
+.filter.active{background:var(--sign-green); border-color:var(--sign-green); color:#fff}
+.search{width:100%; margin-top:12px; font-family:var(--sans); font-size:15px; padding:12px 16px;
+  border:2px solid var(--line); border-radius:var(--r); background:var(--surface);
+  color:var(--bitumen); outline:none}
+.search:focus{border-color:var(--sign-green)}
+.count{font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); margin:14px 2px 0}
+
+/* ---------- index: cards ---------- */
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; margin-top:12px}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  border-top:4px solid var(--gold); padding:18px; text-decoration:none; color:var(--bitumen);
+  display:flex; flex-direction:column; gap:8px;
+  box-shadow:0 4px 14px rgba(10,46,66,.07); transition:transform .12s ease, box-shadow .12s ease}
+.card:hover{transform:translateY(-3px); box-shadow:0 10px 24px rgba(10,46,66,.14)}
+.card .ccat{font-family:var(--sans); font-weight:700; font-size:10px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--gold-deep)}
+.card h3{font-family:var(--serif); font-size:23px; font-weight:700; text-transform:uppercase;
+  letter-spacing:.01em; color:var(--sign-green-deep); line-height:1.08}
+.card p{font-size:13.5px; color:var(--muted); line-height:1.5; flex:1}
+.card .cmeta{display:flex; gap:6px; flex-wrap:wrap; align-items:center}
+.card .cpill{font-family:var(--sans); font-size:10px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; padding:4px 10px; border-radius:999px;
+  background:var(--mist); color:var(--river); border:1px solid var(--line); line-height:1.5}
+
+/* ---------- recipe page ---------- */
+.titleband{padding-top:6px}
+h2.recipe-title{font-family:var(--serif); font-size:clamp(32px,6vw,46px); font-weight:700;
+  text-transform:uppercase; letter-spacing:.01em; color:var(--sign-green-deep); line-height:1.03}
+.desc{font-size:16px; color:var(--muted); margin-top:8px; max-width:680px; line-height:1.55}
+.pills{margin-top:16px; display:flex; gap:7px; flex-wrap:wrap}
+.pill{font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; padding:6px 13px; border-radius:999px}
+.pill.diet{background:var(--sign-green); color:#fff}
+.pill.meta{background:var(--surface-hi); color:var(--gold-deep); border:1px solid var(--gold)}
+
+.cols{display:flex; gap:26px; margin-top:26px; align-items:flex-start}
+.ingredients{flex:0 0 36%; background:var(--surface); border:1px solid var(--line);
+  border-top:4px solid var(--gold); border-radius:var(--r); padding:18px 20px;
+  box-shadow:0 4px 14px rgba(10,46,66,.06)}
+.ingredients h3, .method h3{font-family:var(--serif); font-size:20px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.06em; color:var(--sign-green-deep); margin-bottom:12px}
+.ingredients ul{list-style:none; padding:0}
+.ingredients li{font-size:14px; line-height:1.5; padding:7px 0; border-bottom:1px solid var(--line)}
+.ingredients li:last-child{border-bottom:none}
+.ingredients .amt{font-weight:700; color:var(--sign-green)}
+
+.method{flex:1}
+.method ol{list-style:none; counter-reset:step; padding:0}
+.method li{counter-increment:step; display:flex; gap:13px; margin-bottom:16px}
+.method .num{flex:0 0 30px; height:30px; border-radius:50%; background:var(--sign-green); color:#fff;
+  font-family:var(--sans); font-weight:700; font-size:13px;
+  display:flex; align-items:center; justify-content:center}
+.method .num::before{content:counter(step)}
+.method .steptext{font-size:14.5px; line-height:1.6; padding-top:3px}
+.method .steptitle{font-family:var(--sans); font-weight:700; color:var(--sign-green-deep); display:block;
+  font-size:12.5px; margin-bottom:2px; text-transform:uppercase; letter-spacing:.1em}
+
+.notes{margin-top:6px; background:var(--surface-hi); border:1px solid var(--gold);
+  border-left:4px solid var(--gold); border-radius:var(--r); padding:15px 18px}
+.notes h4{font-family:var(--sans); font-weight:700; font-size:11px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--gold-deep); margin-bottom:6px}
+.notes p{font-size:14px; line-height:1.6; color:var(--bitumen)}
+
+.actions{margin-top:26px; display:flex; gap:10px; flex-wrap:wrap}
+.btn{display:inline-block; font-family:var(--sans); font-weight:700; font-size:12px; letter-spacing:.12em;
+  text-transform:uppercase; text-decoration:none; padding:12px 22px; border-radius:999px;
+  cursor:pointer; border:2px solid transparent; transition:transform .12s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-print{background:var(--gold); color:#3a2a10}
+.btn-back{background:transparent; color:var(--sign-green-deep); border-color:var(--line)}
+.btn-back:hover{border-color:var(--sign-green)}
+
+/* ---------- footer ---------- */
+.footer{border-top:1px solid var(--line); background:var(--surface); color:var(--muted);
+  padding:16px 14px; margin-top:46px}
+.footer-inner{max-width:1080px; margin:0 auto; display:flex; justify-content:space-between;
+  gap:10px; flex-wrap:wrap; align-items:center}
+.footer span{font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase}
+.footer .url{color:var(--gold-deep)}
+
+@media (max-width:640px){
+  .cols{flex-direction:column}
+  .ingredients{flex:none; width:100%}
+  .cat{margin-left:0}
+}
+
+/* ---------- print ---------- */
+@media print{
+  @page{size:A4; margin:0}
+  body{background:#fff}
+  .flg-nav, .actions, .filters, .search, .count{display:none !important}
+  .wrap{max-width:none; padding:0 26px 18px}
+  .hero{padding:16px 26px 0}
+  h2.recipe-title{font-size:30px}
+  .desc{font-size:11.5px}
+  .pill{font-size:9px; padding:4px 10px}
+  .cols{gap:18px; margin-top:14px}
+  .ingredients li{font-size:10.5px; padding:4px 0}
+  .method .steptext{font-size:10.5px}
+  .method li{margin-bottom:8px}
+  .method .num{flex-basis:24px; height:24px; font-size:11px}
+  .notes p{font-size:10px}
+  .footer{margin-top:16px}
+}
