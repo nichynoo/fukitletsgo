@@ -4,13 +4,89 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FUKITLETSGO — Packing List</title>
-<meta name="description" content="Packing checklist for the FUKITLETSGO trip: Tasmania winter through to the outback. Tick, add and delete as you pack.">
-<script>(function(){var t='dark';try{t=localStorage.getItem('pack_theme2')||'dark'}catch(e){}document.documentElement.setAttribute('data-theme',t);})();</script>
+<title>FUKITLETSGO — two of us, one caravan, whatever's down the road</title>
+<meta name="description" content="FUKITLETSGO: trip planners, maps and mischief from a couple and their caravan. Currently: Tasmania, in winter, on purpose.">
+<meta property="og:title" content="FUKITLETSGO">
+<meta property="og:description" content="Two of us. One caravan. Whatever's down the road. Currently: Tasmania, in winter, on purpose.">
+<meta property="og:image" content="https://nichynoo.github.io/fukitletsgo/logo.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+:root{
+  --sea:#0F7FA6; --sea-deep:#0A4258; --sea-light:#3AA8C9;
+  --sand:#F3EBDD; --paper:#FBF7EF;
+  --ink:#15333A; --dim:#54707A;
+  --flame:#BC2C35; --ember:#A9472B; --peach:#E08562;
+  --sans:'Inter',system-ui,sans-serif; --mono:'Space Mono',monospace; --display:'Anton',Impact,sans-serif;
+}
+*{box-sizing:border-box; margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans); color:var(--ink); background:var(--paper)}
+
+/* ---------- hero ---------- */
+.hero{position:relative; background:linear-gradient(180deg,var(--sea-deep) 0%, var(--sea) 55%, var(--sea-light) 100%); color:#fff; text-align:center; padding:64px 20px 0; overflow:hidden}
+.hero::before{content:""; position:absolute; inset:0;
+  background:radial-gradient(70% 50% at 50% 0%, rgba(255,255,255,.10), transparent 60%); pointer-events:none}
+.logo{width:min(46vw,210px); border-radius:50%; box-shadow:0 14px 40px rgba(0,0,0,.35); border:5px solid rgba(255,255,255,.92)}
+h1{font-family:var(--display); font-size:clamp(56px,12vw,124px); line-height:.92; letter-spacing:.01em; text-transform:uppercase; margin-top:26px; text-shadow:0 4px 0 rgba(0,0,0,.18)}
+h1 .go{color:var(--peach)}
+.tag{font-family:var(--mono); font-size:clamp(13px,2.6vw,17px); letter-spacing:.14em; text-transform:uppercase; color:#D8EBEA; margin:18px auto 8px; max-width:620px}
+.cta{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:30px 0 0; position:relative; z-index:2}
+.btn{display:inline-block; font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; padding:15px 26px; border-radius:999px; transition:transform .12s ease, box-shadow .12s ease}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--flame); color:#fff; box-shadow:0 8px 22px rgba(188,44,53,.4)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-sot{background:var(--peach); color:#5B2413; box-shadow:0 8px 22px rgba(224,133,98,.4)}
+.btn-pack{background:var(--sea-light); color:#06262B; box-shadow:0 8px 22px rgba(43,160,168,.4)}
+.btn-rec{background:var(--sand); color:#7A2E1A; border:2px solid var(--flame); box-shadow:0 8px 22px rgba(188,44,53,.25)}
+.btn-rec:hover{transform:translateY(-2px)}
+.btn-pack:hover{transform:translateY(-2px)}
+.btn-sot:hover{transform:translateY(-2px)}
+.btn-ghost{background:rgba(255,255,255,.14); color:#fff; border:2px solid rgba(255,255,255,.7)}
+.btn-ghost:hover{background:rgba(255,255,255,.24)}
+.waves{display:block; width:100%; height:84px; margin-top:46px}
+
+/* ---------- countdown ---------- */
+.count{background:var(--sand); padding:26px 20px; text-align:center}
+.count .label{font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ember)}
+.count .big{font-family:var(--display); font-size:clamp(34px,7vw,56px); color:var(--ink); text-transform:uppercase; margin-top:6px}
+
+/* ---------- trips ---------- */
+.section{max-width:980px; margin:0 auto; padding:64px 20px}
+.kicker{font-family:var(--mono); font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--ember)}
+h2{font-family:var(--display); font-size:clamp(34px,6vw,52px); text-transform:uppercase; margin:8px 0 28px}
+.cards{display:grid; grid-template-columns:1fr; gap:18px}
+@media(min-width:700px){.cards{grid-template-columns:1fr 1fr}}
+.card{position:relative; border-radius:18px; padding:26px; text-decoration:none; color:inherit; display:block; border:2px solid transparent; transition:transform .14s ease, box-shadow .14s ease}
+.card.live{background:linear-gradient(135deg,var(--sea-deep),var(--sea)); color:#fff; box-shadow:0 14px 36px rgba(14,74,82,.35)}
+.card.live:hover{transform:translateY(-4px)}
+.card.soon{background:#fff; border-color:#E4DACA; color:var(--dim)}
+.pill{display:inline-block; font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; padding:5px 11px; border-radius:999px; margin-bottom:14px}
+.live .pill{background:var(--flame); color:#fff}
+.soon .pill{background:#EFE7D8; color:var(--ember)}
+.card h3{font-family:var(--display); font-size:30px; text-transform:uppercase; letter-spacing:.01em}
+.card p{margin-top:10px; font-size:15px; line-height:1.55}
+.live p{color:#CFE6E5}
+.card .meta{font-family:var(--mono); font-size:12px; margin-top:16px; letter-spacing:.06em}
+.live .meta{color:var(--peach)}
+.card .go-arrow{position:absolute; right:22px; bottom:18px; font-size:24px}
+
+/* ---------- about ---------- */
+.about{background:var(--sea-deep); color:#E7F2F1; text-align:center}
+.about .inner{max-width:680px; margin:0 auto; padding:64px 20px}
+.about p{font-size:17px; line-height:1.7; margin-top:14px}
+.about .kicker{color:var(--peach)}
+
+/* ---------- footer ---------- */
+footer{background:var(--ink); color:#9DB6BC; text-align:center; padding:34px 20px; font-family:var(--mono); font-size:12px; letter-spacing:.08em}
+footer a{color:var(--peach); text-decoration:none}
+footer a:hover{text-decoration:underline}
+.insta{display:inline-block; margin-bottom:10px; font-size:14px; font-weight:700; text-transform:uppercase}
+</style>
+<style id="flg-nav-css">
 :root{
 
   --bitumen:#18293a;        /* deep strait ink */
@@ -205,8 +281,7 @@ html[data-theme="dark"] .route,html[data-theme="dark"] .sub{color:rgba(234,240,2
 </style>
 </head>
 <body>
-
-<nav class="flg-nav" data-page="packing" aria-label="FUKITLETSGO site navigation">
+<nav class="flg-nav" data-page="home" aria-label="FUKITLETSGO site navigation">
   <div class="flg-nav-inner">
     <a class="flg-brand" href="https://nichynoo.github.io/fukitletsgo/" aria-label="FUKITLETSGO home">
       <img class="flg-logo" src="https://nichynoo.github.io/fukitletsgo/logo.png" alt="FUKITLETSGO logo">
@@ -220,280 +295,89 @@ html[data-theme="dark"] .route,html[data-theme="dark"] .sub{color:rgba(234,240,2
         <a role="menuitem" data-page="home" href="https://nichynoo.github.io/fukitletsgo/">Home <b class="ext" aria-hidden="true">↗</b></a>
         <a role="menuitem" data-page="route" href="https://nichynoo.github.io/fukitletsgo/Australia/SOT/">Road to the ferry <b class="ext" aria-hidden="true">↗</b></a>
         <a role="menuitem" data-page="tas" href="https://nichynoo.github.io/fukitletsgo/Australia/Tasmania/">Tasmania winter planner <b class="ext" aria-hidden="true">↗</b></a>
-        <a role="menuitem" data-page="packing" href="https://nichynoo.github.io/fukitletsgo/packing/">Packing list <b class="ext" aria-hidden="true">↗</b></a>
+        <a role="menuitem" data-page="home" href="https://nichynoo.github.io/fukitletsgo/packing/">Packing list <b class="ext" aria-hidden="true">↗</b></a>
         <a role="menuitem" data-page="recipes" href="https://nichynoo.github.io/fukitletsgo/recipes/">Recipes <b class="ext" aria-hidden="true">↗</b></a>
       </div>
     </div>
   </div>
 </nav>
 
-<header class="mast">
-  <div class="aur"></div>
-  <button class="themebtn" id="themeBtn" type="button">☀ light</button>
-  <div class="eyebrow">Caravan field journal · 2.5–3 months</div>
-  <h1>Packing <span class="go">List</span></h1>
-  <p class="sub">Sydney → Tasmania (winter) → SA → Mildura → Mundi Mundi Bash → Lightning Ridge → home. Two climates in one trip, so we pack for frost <em>and</em> dust. Tap to tick. Add your own with the box at the foot of each list; tap the ✕ to remove anything that doesn't apply.</p>
-  <div class="legd">
-    <span><i style="background:var(--cold)"></i>❄️ Tassie cold</span>
-    <span><i style="background:var(--warm)"></i>☀️ Outback warm</span>
-    <span><i style="background:var(--aurora)"></i>Ticked = packed</span>
+<header class="hero">
+  <img class="logo" src="logo.png" alt="FUKITLETSGO compass logo over a Tasmanian beach">
+  <h1>Fukit<br><span class="go">Let&rsquo;s&nbsp;Go!</span></h1>
+  <p class="tag">Two of us &middot; one caravan &middot; whatever&rsquo;s down the road</p>
+  <div class="cta">
+    <a class="btn btn-primary" href="Australia/Tasmania/">Open the Tassie planner</a>
+    <a class="btn btn-sot" href="Australia/SOT/">Open the SOT Planner</a>
+    <a class="btn btn-pack" href="packing/">Packing List</a>
+    <a class="btn btn-rec" href="recipes/">Recipes</a>
+    <a class="btn btn-ghost" href="https://www.instagram.com/fukitletsgo/" target="_blank" rel="noopener">Follow on Instagram</a>
   </div>
+  <svg class="waves" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,40 C240,90 480,0 720,40 C960,80 1200,10 1440,50 L1440,90 L0,90 Z" fill="#F3EBDD"/>
+  </svg>
 </header>
 
-<div class="overall">
-  <div class="bar"><i id="allBar"></i></div>
-  <div class="lab"><span id="allLab">0 of 0 packed</span><span id="allPct">0%</span></div>
+<div class="count">
+  <div class="label">Current status</div>
+  <div class="big" id="countdown">Tasmania, in winter, on purpose</div>
 </div>
 
-<div class="tools">
-  <button class="tbtn" id="printBtn">⎙ Print / save PDF</button>
-  <button class="tbtn" id="resetBtn">↺ Reset all ticks</button>
-</div>
+<main class="section" id="trips">
+  <div class="kicker">The trips</div>
+  <h2>Where we&rsquo;re pointed</h2>
+  <div class="cards">
+    <a class="card live" href="Australia/Tasmania/">
+      <span class="pill">Live now</span>
+      <h3>Tasmania &mdash; Winter 2026</h3>
+      <p>Five weeks around the island in the Lotus Trooper. 245 options mapped &mdash; free camps, trout waters, hidden gems, pubs, and an unreasonable number of aqua aerobics pools.</p>
+      <div class="meta">6 JUL &rarr; 9 AUG &middot; INTERACTIVE PLANNER</div>
+      <span class="go-arrow">&rarr;</span>
+    </a>
+    <a class="card live" href="recipes/">
+      <span class="pill">New</span>
+      <h3>Recipes from the Road</h3>
+      <p>Everything we actually cook out of the van &mdash; grain-free, sugar-free, and mostly done with a Ninja Crispi and a microwave. Freezer meals, breakfasts, breads and a caramel slice that has no business being this good.</p>
+      <div class="meta">37 RECIPES &middot; SEARCHABLE</div>
+      <span class="go-arrow">&rarr;</span>
+    </a>
+    <div class="card soon">
+      <span class="pill">Up next</span>
+      <h3>To be decided</h3>
+      <p>The caravan doesn&rsquo;t know it yet. Vote on the next one over on Instagram &mdash; loudest comment wins.</p>
+      <div class="meta">TBA &middot; SUGGESTIONS OPEN</div>
+    </div>
+  </div>
+</main>
 
-<main class="wrap" id="wrap"></main>
+<section class="about">
+  <div class="inner">
+    <div class="kicker">The whole idea</div>
+    <h2>Plans are optional.<br>Knowing the options isn&rsquo;t.</h2>
+    <p>We map everything worth knowing about before we go &mdash; every free camp, every pie worth a detour, every lagoon with a trout in it &mdash; then we wing it. The planner is the map; the road decides the rest.</p>
+  </div>
+</section>
 
 <footer>
-  FUKITLETSGO · packs saved on this device · <a id="reset2" href="#">reset</a>
+  <a class="insta" href="https://www.instagram.com/fukitletsgo/" target="_blank" rel="noopener">@fukitletsgo</a><br>
+  Built by us, for us &mdash; shared because you asked.<br>
+  <span style="opacity:.6">&copy; 2026 FUKITLETSGO</span>
 </footer>
 
 <script>
-var $ = function(s,r){return (r||document).querySelector(s)};
-function applyTheme(t){document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('pack_theme2',t)}catch(e){}var b=$('#themeBtn');if(b)b.textContent=(t==='light')?'☾ dark':'☀ light';}
-
-/* ---- the master list. group.clime: 'cold' | 'warm' | null ---- */
-var DATA = [
- { id:'van', title:'Van essentials', icon:'🚐', groups:[
-   { h:'Bedding', items:[
-     ['Fitted & flat sheets','2 sets'],['Doona / quilt'],['Spare doona / quilt'],['Spare warm blanket','Tassie nights'],
-     ['Pillows + spare cases','2 + 2'],] },
-   { h:'Bathroom & towels', items:[
-     ['Bath towels','2 each'],['Quick-dry / travel towels','2'],['Beach towel','1 each'],
-     ['Toiletry bags'],['Soap / body wash'],['Shampoo & conditioner'],['Toothbrushes & paste'],
-     ['Deodorant'],['Sunscreen','SPF50+'],['Insect repellent'],['Lip balm'],['Hairbrush / ties'],
-     ['Razors'],['Toilet paper','stock up'] ] },
-   { h:'Kitchen & cleaning', items:[
-     ['Tea towels','4–5'],['Dishcloths / sponges'],['Dishwashing liquid'],['Multipurpose spray'],
-     ['Paper towel'],['Bin bags'],['Ziploc / storage bags'],['Cling wrap & foil'],
-     ['Matches / lighter'],['Dustpan & brush','dust!'],['Door mat','outback dust'] ] },
-   { h:'Laundry', items:[
-     ['Laundry powder / liquid'],['Pegs'],['Laundry bag / basket'],
-     ['Stain remover'],['Coins for laundromats','$ coins'] ] },
-   { h:'General', items:[
-     ['First-aid kit'],['Torches / head torches','2'],['Spare batteries'],['Scissors'],
-     ['Sewing / repair kit'],['Sunglasses cases'],['Reusable shopping bags'],['Water bottles'] ] }
- ]},
-
- { id:'rita', title:'My clothes & shoes', icon:'🧣', groups:[
-   { h:'Tassie cold — everyday', clime:'cold', items:[
-     ['Thermal tops','3'],['Thermal leggings','2'],['Long-sleeve tops','4'],['Jumpers / fleece','3'],
-     ['Jeans / warm pants','3'],['Warm socks','7'],['Undies','10'],['Bras','3–4'],['Warm pyjamas','2'] ] },
-   { h:'Winter woollies', clime:'cold', items:[
-     ['Beanie'],['Scarf'],['Gloves'],['Neck warmer / buff'],['Thick wool socks','2'],['Puffer vest'],['Waterproof Ugg boots','2'] ] },
-   { h:'Cold-weather outer', clime:'cold', items:[
-     ['Waterproof rain jacket'],['Warm winter coat'],['Closed waterproof shoes / boots'],['Gum boots'] ] },
-   { h:'Outback warm — everyday', clime:'warm', items:[
-     ['T-shirts / tops','6'],['Shorts','3'],['Light pants / skirts','2'],
-     ['Light long-sleeve','sun cover'],['Undies','7'],['Light sleepwear','2'],['Merrell hiking boots'] ] },
-   { h:'Sun & heat', clime:'warm', items:[
-     ['Wide-brim sun hat'],['Sunglasses'],['Swimmers','2'],['Thongs'],['Water shoes'] ] },
-   { h:'Going out', items:[
-     ['Smart-casual outfit','nice dinner'],['Dress shoes'] ] }
- ]},
-
- { id:'dave', title:"Dave's clothes & shoes", icon:'🧦', groups:[
-   { h:'Tassie cold — everyday', clime:'cold', items:[
-     ['Thermal tops','3'],['Thermal pants','2'],['Long-sleeve tops','4'],['Jumpers / fleece','3'],
-     ['Jeans / warm pants','3'],['Warm socks','7'],['Undies','10'],['Warm pyjamas','2'] ] },
-   { h:'Winter woollies', clime:'cold', items:[
-     ['Beanie'],['Scarf'],['Gloves'],['Neck warmer / buff'],['Thick wool socks','2'],['Puffer vest'] ] },
-   { h:'Cold-weather outer', clime:'cold', items:[
-     ['Waterproof rain jacket'],['Warm winter coat'],['Closed waterproof shoes / boots'],['Gum boots'] ] },
-   { h:'Outback warm — everyday', clime:'warm', items:[
-     ['T-shirts','6'],['Shorts','3'],['Light pants','2'],
-     ['Light long-sleeve','sun cover'],['Undies','7'],['Light sleepwear','2'] ] },
-   { h:'Sun & heat', clime:'warm', items:[
-     ['Wide-brim sun hat'],['Sunglasses'],['Swimmers','2'],['Thongs'],['Water shoes'] ] },
-   { h:'Going out', items:[
-     ['Smart-casual outfit','nice dinner'],['Dress shoes'] ] }
- ]},
-
- { id:'hike', title:'Hiking gear', icon:'🥾', groups:[
-   { h:'On the trail', items:[
-     ['Hiking boots','each'],['Hiking socks','3 pr each'],['Daypacks','×2'],
-     ['Water bottles / bladder'],['Rain shells'],['Trekking poles'],['Head torch'],
-     ['Blister kit'],['Trail snacks'],['Small first aid'],['Map / offline GPS'] ] }
- ]},
-
- { id:'detect', title:'Gold detecting & fishing', icon:'⛏️', groups:[
-   { h:'Gold detecting', items:[
-     ['Metal detectors','×2'],['Digging tool / pick'],['Pinpointer'],['Finds pouch / vial'],
-     ['Gloves'],['Knee pads'],['MRT prospecting licence','sort before you go'] ] },
-   { h:'Fishing', items:[
-     ['Rods & reels'],['Tackle box','lures from the app'],['Landing net'],
-     ['Fishing licence','Inland Fisheries'],['Pliers / line scissors'],['Bucket'] ] }
- ]},
-
- { id:'camp', title:'Camp comfort & extras', icon:'🪑', groups:[
-   { h:'Around camp', items:[
-     ['Camp chairs','×2'],['Folding table'],['Picnic rug'],['Outdoor mat'],
-     ['Esky / cooler'],['Thermos'],['Camp mugs'],['Insect coils / candles'],
-     ['Firewood gloves'],['Hot water bottle','Tassie nights'] ] }
- ]},
-
- { id:'food', title:'Food essentials (shelf-stable)', icon:'🫙', groups:[
-   { h:'Quarantine note', items:[
-     ['⚠ No fresh fruit/veg/honey into Tas','eat or bin before the ferry'] ] },
-   { h:'Oils, fats & condiments', items:[
-     ['Olive oil'],['Coconut oil'],['Tamari / coconut aminos'],['Apple cider vinegar'],
-     ['Mustard'],['Sea salt & pepper'] ] },
-   { h:'Health With Bec staples', items:[
-     ['Almond flour'],['Coconut flour'],['Nut butters','peanut/almond'],['Coconut cream / milk (long-life)'],
-     ['Chia & flax seeds'],['Nuts & seeds','snacking'],['Cacao / cocoa'],['Sweetener','monk fruit/stevia'],
-     ['Psyllium husk'],['Protein powder'] ] },
-   { h:'Pantry basics', items:[
-     ['Tea & coffee'],['Long-life milk / alt milk'],['Tinned fish','tuna/salmon'],['Tinned tomatoes'],
-     ['Tinned legumes'],['Stock cubes / paste'],['Herbs & spices'],['Honey / maple','for the road, not Tas'] ] }
- ]},
-
- { id:'tech', title:'Personal & tech', icon:'🔌', groups:[
-   { h:'Devices', items:[
-     ['Phones','×2'],['Kindle'],['Laptop'],['Headphones','×2 or splitter'],['Camera'],['Power bank'] ] },
-   { h:'Chargers & cables — the forgettable bit', items:[
-     ['Phone chargers','×2'],['Laptop charger'],['Kindle cable'],['Camera charger'],
-     ['Multi-port USB charger / power board'],['Car charger','driving days'],['Spare cables'] ] },
-   { h:'Medications', items:[
-     ['Regular meds','FULL trip supply'],['Copy of scripts / eScripts'],['Pain relief'],
-     ['Antihistamines'],['Motion sickness','for the Spirit!'],['Bandaids & blister kit'],
-     ['Any supplements'] ] },
-   { h:'Comfort & offline', items:[
-     ['Downloaded shows / podcasts'],['Offline maps','no-signal stretches'],['Books / puzzles'],
-     ['Reading glasses'],['Eye masks / earplugs'] ] }
- ]},
-
- { id:'docs', title:'Documents', icon:'📁', groups:[
-   { h:'Carry & copies', items:[
-     ['Drivers licences'],['Medicare cards'],['Private health / insurance cards'],
-     ['Tasmania Parks Pass (Holiday Pass)','buy online before you go'],
-     ['Spirit of Tasmania booking'],['Campsite / park bookings'],['Bank / credit cards'],
-     ['Cash float'],['Printed emergency contacts','if phones die'] ] }
- ]}
-];
-
-/* ---- state ---- */
-var KEY='pack_state_v1';
-var state = {checks:{}, added:{}, removed:{}};
-try{ var raw=localStorage.getItem(KEY); if(raw) state=JSON.parse(raw); }catch(e){}
-state.checks=state.checks||{}; state.added=state.added||{}; state.removed=state.removed||{};
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
-
-function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
-
-/* build a stable id for a default item */
-function iid(secId, gi, name){ return secId+'|'+gi+'|'+slug(name); }
-
-function render(){
-  var wrap=$('#wrap'); wrap.innerHTML='';
-  var totAll=0, doneAll=0;
-  DATA.forEach(function(sec){
-    var secEl=document.createElement('section'); secEl.className='sec';
-    var head=document.createElement('h2');
-    head.innerHTML='<span>'+sec.icon+'</span> '+sec.title+'<span class="scount" id="cnt-'+sec.id+'"></span>';
-    secEl.appendChild(head);
-    var sbar=document.createElement('div'); sbar.className='sbar'; sbar.innerHTML='<i id="sbar-'+sec.id+'"></i>';
-    secEl.appendChild(sbar);
-    var secTot=0, secDone=0;
-
-    sec.groups.forEach(function(g, gi){
-      var grp=document.createElement('div'); grp.className='grp';
-      if(g.h){ var h3=document.createElement('h3'); if(g.clime) h3.className=g.clime;
-        h3.textContent=(g.clime==='cold'?'❄️ ':g.clime==='warm'?'☀️ ':'')+g.h; grp.appendChild(h3); }
-      var ul=document.createElement('ul');
-
-      // default items (skip removed)
-      g.items.forEach(function(it){
-        var name=it[0], qty=it[1]||'', note=it[2]||'';
-        var id=iid(sec.id, gi, name);
-        if(state.removed[id]) return;
-        ul.appendChild(makeLi(id, name, qty, note, false));
-        secTot++; if(state.checks[id]){secDone++;}
-      });
-      // user-added items for this group
-      var addedList = state.added[sec.id+'|'+gi] || [];
-      addedList.forEach(function(a){
-        ul.appendChild(makeLi(a.id, a.name, '', '', true));
-        secTot++; if(state.checks[a.id]){secDone++;}
-      });
-
-      // add-item row
-      var add=document.createElement('div'); add.className='additem';
-      var inp=document.createElement('input'); inp.type='text'; inp.placeholder='Add an item…';
-      var btn=document.createElement('button'); btn.textContent='Add';
-      function doAdd(){
-        var v=inp.value.trim(); if(!v) return;
-        var aid='u-'+sec.id+'-'+gi+'-'+Date.now();
-        var k=sec.id+'|'+gi; state.added[k]=state.added[k]||[]; state.added[k].push({id:aid,name:v});
-        save(); render();
-      }
-      btn.onclick=doAdd; inp.addEventListener('keydown',function(e){if(e.key==='Enter')doAdd();});
-      add.appendChild(inp); add.appendChild(btn);
-
-      grp.appendChild(ul); grp.appendChild(add);
-      secEl.appendChild(grp);
-    });
-
-    wrap.appendChild(secEl);
-    secTot=secTot; secDone=secDone;
-    var cnt=$('#cnt-'+sec.id); if(cnt) cnt.textContent=secDone+'/'+secTot;
-    var sb=$('#sbar-'+sec.id); if(sb) sb.style.width=(secTot?Math.round(secDone/secTot*100):0)+'%';
-    totAll+=secTot; doneAll+=secDone;
-  });
-
-  $('#allBar').style.width=(totAll?Math.round(doneAll/totAll*100):0)+'%';
-  $('#allLab').textContent=doneAll+' of '+totAll+' packed';
-  $('#allPct').textContent=(totAll?Math.round(doneAll/totAll*100):0)+'%';
-}
-
-function makeLi(id, name, qty, note, isUser){
-  var li=document.createElement('li');
-  if(state.checks[id]) li.className='done';
-  var box=document.createElement('div'); box.className='box';
-  box.innerHTML='<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-  var txt=document.createElement('div'); txt.className='txt';
-  var nm=document.createElement('span'); nm.className='name'; nm.textContent=name;
-  txt.appendChild(nm);
-  if(qty){ var q=document.createElement('span'); q.className='qty'; q.textContent=qty; nm.appendChild(q); }
-  if(note){ var n=document.createElement('span'); n.className='note'; n.textContent=note; txt.appendChild(n); }
-  var del=document.createElement('button'); del.className='del'; del.innerHTML='✕'; del.title='Remove';
-  del.onclick=function(e){ e.stopPropagation(); removeItem(id, isUser); };
-  li.appendChild(box); li.appendChild(txt); li.appendChild(del);
-  li.onclick=function(){ state.checks[id]=!state.checks[id]; if(!state.checks[id]) delete state.checks[id]; save();
-    li.classList.toggle('done'); render(); };
-  return li;
-}
-
-function removeItem(id, isUser){
-  delete state.checks[id];
-  if(isUser){
-    // find & splice from added
-    Object.keys(state.added).forEach(function(k){
-      state.added[k]=state.added[k].filter(function(a){return a.id!==id;});
-    });
-  } else {
-    state.removed[id]=1;
-  }
-  save(); render();
-}
-
-$('#themeBtn').onclick=function(){ applyTheme(document.documentElement.getAttribute('data-theme')==='light'?'dark':'light'); };
-applyTheme(document.documentElement.getAttribute('data-theme')||'dark');
-$('#printBtn').onclick=function(){ window.print(); };
-function resetAll(){ if(confirm('Clear all ticks? (Your added items stay.)')){ state.checks={}; save(); render(); } }
-$('#resetBtn').onclick=resetAll;
-$('#reset2').onclick=function(e){ e.preventDefault(); resetAll(); };
-
-render();
+(function(){
+  var dep=new Date('2026-07-01T00:00:00+10:00');
+  var back=new Date('2026-08-10T00:00:00+10:00');
+  var onIsland=new Date('2026-07-06T00:00:00+10:00');
+  var now=new Date();
+  var el=document.getElementById('countdown');
+  var d=Math.ceil((dep-now)/86400000);
+  if(now<dep){ el.textContent=d+(d===1?' day':' days')+' until we roll'; }
+  else if(now<onIsland){ el.textContent='On the road \u2192 Geelong'; }
+  else if(now<back){ var n=Math.floor((now-onIsland)/86400000)+1; el.textContent='Day '+n+' of 35 on the island'; }
+  else { el.textContent='Home. Planning the next one.'; }
+})();
 </script>
-
 <script>
 (function(){
   var nav=document.querySelector('.flg-nav'); if(!nav) return;
@@ -513,6 +397,5 @@ render();
   document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
 })();
 </script>
-
 </body>
 </html>

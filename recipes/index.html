@@ -1,16 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="en-AU">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FUKITLETSGO — Packing List</title>
-<meta name="description" content="Packing checklist for the FUKITLETSGO trip: Tasmania winter through to the outback. Tick, add and delete as you pack.">
-<script>(function(){var t='dark';try{t=localStorage.getItem('pack_theme2')||'dark'}catch(e){}document.documentElement.setAttribute('data-theme',t);})();</script>
+<title>Recipes from the Road — FUKITLETSGO</title>
+<meta name="description" content="Grain-free, sugar-free recipes cooked in a caravan with a Ninja Crispi, a microwave and a bit of attitude.">
+<meta property="og:title" content="Recipes from the Road — FUKITLETSGO">
+<meta property="og:description" content="Grain-free, sugar-free recipes cooked in a caravan with a Ninja Crispi, a microwave and a bit of attitude.">
+<meta property="og:image" content="https://nichynoo.github.io/fukitletsgo/logo.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="../logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Nunito:wght@400;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="recipes.css">
+<style id="flg-nav-css">
 :root{
 
   --bitumen:#18293a;        /* deep strait ink */
@@ -205,8 +209,7 @@ html[data-theme="dark"] .route,html[data-theme="dark"] .sub{color:rgba(234,240,2
 </style>
 </head>
 <body>
-
-<nav class="flg-nav" data-page="packing" aria-label="FUKITLETSGO site navigation">
+<nav class="flg-nav" data-page="recipes" aria-label="FUKITLETSGO site navigation">
   <div class="flg-nav-inner">
     <a class="flg-brand" href="https://nichynoo.github.io/fukitletsgo/" aria-label="FUKITLETSGO home">
       <img class="flg-logo" src="https://nichynoo.github.io/fukitletsgo/logo.png" alt="FUKITLETSGO logo">
@@ -220,278 +223,92 @@ html[data-theme="dark"] .route,html[data-theme="dark"] .sub{color:rgba(234,240,2
         <a role="menuitem" data-page="home" href="https://nichynoo.github.io/fukitletsgo/">Home <b class="ext" aria-hidden="true">↗</b></a>
         <a role="menuitem" data-page="route" href="https://nichynoo.github.io/fukitletsgo/Australia/SOT/">Road to the ferry <b class="ext" aria-hidden="true">↗</b></a>
         <a role="menuitem" data-page="tas" href="https://nichynoo.github.io/fukitletsgo/Australia/Tasmania/">Tasmania winter planner <b class="ext" aria-hidden="true">↗</b></a>
-        <a role="menuitem" data-page="packing" href="https://nichynoo.github.io/fukitletsgo/packing/">Packing list <b class="ext" aria-hidden="true">↗</b></a>
+        <a role="menuitem" data-page="recipes" href="https://nichynoo.github.io/fukitletsgo/packing/">Packing list <b class="ext" aria-hidden="true">↗</b></a>
         <a role="menuitem" data-page="recipes" href="https://nichynoo.github.io/fukitletsgo/recipes/">Recipes <b class="ext" aria-hidden="true">↗</b></a>
       </div>
     </div>
   </div>
 </nav>
 
-<header class="mast">
-  <div class="aur"></div>
-  <button class="themebtn" id="themeBtn" type="button">☀ light</button>
-  <div class="eyebrow">Caravan field journal · 2.5–3 months</div>
-  <h1>Packing <span class="go">List</span></h1>
-  <p class="sub">Sydney → Tasmania (winter) → SA → Mildura → Mundi Mundi Bash → Lightning Ridge → home. Two climates in one trip, so we pack for frost <em>and</em> dust. Tap to tick. Add your own with the box at the foot of each list; tap the ✕ to remove anything that doesn't apply.</p>
-  <div class="legd">
-    <span><i style="background:var(--cold)"></i>❄️ Tassie cold</span>
-    <span><i style="background:var(--warm)"></i>☀️ Outback warm</span>
-    <span><i style="background:var(--aurora)"></i>Ticked = packed</span>
+
+<header class="hero">
+  <div class="hero-inner">
+    <img class="logo" src="../logo.png" alt="fukitletsgo logo">
+    <div class="brand">
+      <h1><a href="../index.html">FUKITLETSGO RECIPES</a></h1>
+      <div class="tag">recipes from the road</div>
+    </div>
   </div>
 </header>
 
-<div class="overall">
-  <div class="bar"><i id="allBar"></i></div>
-  <div class="lab"><span id="allLab">0 of 0 packed</span><span id="allPct">0%</span></div>
-</div>
+<main class="wrap">
+  <div class="filters" id="filters"></div>
+  <input class="search" id="search" type="search" placeholder="Search recipes… (try 'chia' or 'slow cooker')">
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+</main>
 
-<div class="tools">
-  <button class="tbtn" id="printBtn">⎙ Print / save PDF</button>
-  <button class="tbtn" id="resetBtn">↺ Reset all ticks</button>
-</div>
-
-<main class="wrap" id="wrap"></main>
-
-<footer>
-  FUKITLETSGO · packs saved on this device · <a id="reset2" href="#">reset</a>
+<footer class="footer">
+  <div class="footer-inner">
+    <span>Recipes from the road</span>
+    <span class="url">nichynoo.github.io/fukitletsgo</span>
+    <span>Tasmania · Winter · On purpose</span>
+  </div>
 </footer>
 
+<script src="recipes-data.js"></script>
 <script>
-var $ = function(s,r){return (r||document).querySelector(s)};
-function applyTheme(t){document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('pack_theme2',t)}catch(e){}var b=$('#themeBtn');if(b)b.textContent=(t==='light')?'☾ dark':'☀ light';}
+(function(){
+  const grid = document.getElementById('grid');
+  const filtersEl = document.getElementById('filters');
+  const searchEl = document.getElementById('search');
+  const countEl = document.getElementById('count');
+  let activeCat = 'All';
 
-/* ---- the master list. group.clime: 'cold' | 'warm' | null ---- */
-var DATA = [
- { id:'van', title:'Van essentials', icon:'🚐', groups:[
-   { h:'Bedding', items:[
-     ['Fitted & flat sheets','2 sets'],['Doona / quilt'],['Spare doona / quilt'],['Spare warm blanket','Tassie nights'],
-     ['Pillows + spare cases','2 + 2'],] },
-   { h:'Bathroom & towels', items:[
-     ['Bath towels','2 each'],['Quick-dry / travel towels','2'],['Beach towel','1 each'],
-     ['Toiletry bags'],['Soap / body wash'],['Shampoo & conditioner'],['Toothbrushes & paste'],
-     ['Deodorant'],['Sunscreen','SPF50+'],['Insect repellent'],['Lip balm'],['Hairbrush / ties'],
-     ['Razors'],['Toilet paper','stock up'] ] },
-   { h:'Kitchen & cleaning', items:[
-     ['Tea towels','4–5'],['Dishcloths / sponges'],['Dishwashing liquid'],['Multipurpose spray'],
-     ['Paper towel'],['Bin bags'],['Ziploc / storage bags'],['Cling wrap & foil'],
-     ['Matches / lighter'],['Dustpan & brush','dust!'],['Door mat','outback dust'] ] },
-   { h:'Laundry', items:[
-     ['Laundry powder / liquid'],['Pegs'],['Laundry bag / basket'],
-     ['Stain remover'],['Coins for laundromats','$ coins'] ] },
-   { h:'General', items:[
-     ['First-aid kit'],['Torches / head torches','2'],['Spare batteries'],['Scissors'],
-     ['Sewing / repair kit'],['Sunglasses cases'],['Reusable shopping bags'],['Water bottles'] ] }
- ]},
-
- { id:'rita', title:'My clothes & shoes', icon:'🧣', groups:[
-   { h:'Tassie cold — everyday', clime:'cold', items:[
-     ['Thermal tops','3'],['Thermal leggings','2'],['Long-sleeve tops','4'],['Jumpers / fleece','3'],
-     ['Jeans / warm pants','3'],['Warm socks','7'],['Undies','10'],['Bras','3–4'],['Warm pyjamas','2'] ] },
-   { h:'Winter woollies', clime:'cold', items:[
-     ['Beanie'],['Scarf'],['Gloves'],['Neck warmer / buff'],['Thick wool socks','2'],['Puffer vest'],['Waterproof Ugg boots','2'] ] },
-   { h:'Cold-weather outer', clime:'cold', items:[
-     ['Waterproof rain jacket'],['Warm winter coat'],['Closed waterproof shoes / boots'],['Gum boots'] ] },
-   { h:'Outback warm — everyday', clime:'warm', items:[
-     ['T-shirts / tops','6'],['Shorts','3'],['Light pants / skirts','2'],
-     ['Light long-sleeve','sun cover'],['Undies','7'],['Light sleepwear','2'],['Merrell hiking boots'] ] },
-   { h:'Sun & heat', clime:'warm', items:[
-     ['Wide-brim sun hat'],['Sunglasses'],['Swimmers','2'],['Thongs'],['Water shoes'] ] },
-   { h:'Going out', items:[
-     ['Smart-casual outfit','nice dinner'],['Dress shoes'] ] }
- ]},
-
- { id:'dave', title:"Dave's clothes & shoes", icon:'🧦', groups:[
-   { h:'Tassie cold — everyday', clime:'cold', items:[
-     ['Thermal tops','3'],['Thermal pants','2'],['Long-sleeve tops','4'],['Jumpers / fleece','3'],
-     ['Jeans / warm pants','3'],['Warm socks','7'],['Undies','10'],['Warm pyjamas','2'] ] },
-   { h:'Winter woollies', clime:'cold', items:[
-     ['Beanie'],['Scarf'],['Gloves'],['Neck warmer / buff'],['Thick wool socks','2'],['Puffer vest'] ] },
-   { h:'Cold-weather outer', clime:'cold', items:[
-     ['Waterproof rain jacket'],['Warm winter coat'],['Closed waterproof shoes / boots'],['Gum boots'] ] },
-   { h:'Outback warm — everyday', clime:'warm', items:[
-     ['T-shirts','6'],['Shorts','3'],['Light pants','2'],
-     ['Light long-sleeve','sun cover'],['Undies','7'],['Light sleepwear','2'] ] },
-   { h:'Sun & heat', clime:'warm', items:[
-     ['Wide-brim sun hat'],['Sunglasses'],['Swimmers','2'],['Thongs'],['Water shoes'] ] },
-   { h:'Going out', items:[
-     ['Smart-casual outfit','nice dinner'],['Dress shoes'] ] }
- ]},
-
- { id:'hike', title:'Hiking gear', icon:'🥾', groups:[
-   { h:'On the trail', items:[
-     ['Hiking boots','each'],['Hiking socks','3 pr each'],['Daypacks','×2'],
-     ['Water bottles / bladder'],['Rain shells'],['Trekking poles'],['Head torch'],
-     ['Blister kit'],['Trail snacks'],['Small first aid'],['Map / offline GPS'] ] }
- ]},
-
- { id:'detect', title:'Gold detecting & fishing', icon:'⛏️', groups:[
-   { h:'Gold detecting', items:[
-     ['Metal detectors','×2'],['Digging tool / pick'],['Pinpointer'],['Finds pouch / vial'],
-     ['Gloves'],['Knee pads'],['MRT prospecting licence','sort before you go'] ] },
-   { h:'Fishing', items:[
-     ['Rods & reels'],['Tackle box','lures from the app'],['Landing net'],
-     ['Fishing licence','Inland Fisheries'],['Pliers / line scissors'],['Bucket'] ] }
- ]},
-
- { id:'camp', title:'Camp comfort & extras', icon:'🪑', groups:[
-   { h:'Around camp', items:[
-     ['Camp chairs','×2'],['Folding table'],['Picnic rug'],['Outdoor mat'],
-     ['Esky / cooler'],['Thermos'],['Camp mugs'],['Insect coils / candles'],
-     ['Firewood gloves'],['Hot water bottle','Tassie nights'] ] }
- ]},
-
- { id:'food', title:'Food essentials (shelf-stable)', icon:'🫙', groups:[
-   { h:'Quarantine note', items:[
-     ['⚠ No fresh fruit/veg/honey into Tas','eat or bin before the ferry'] ] },
-   { h:'Oils, fats & condiments', items:[
-     ['Olive oil'],['Coconut oil'],['Tamari / coconut aminos'],['Apple cider vinegar'],
-     ['Mustard'],['Sea salt & pepper'] ] },
-   { h:'Health With Bec staples', items:[
-     ['Almond flour'],['Coconut flour'],['Nut butters','peanut/almond'],['Coconut cream / milk (long-life)'],
-     ['Chia & flax seeds'],['Nuts & seeds','snacking'],['Cacao / cocoa'],['Sweetener','monk fruit/stevia'],
-     ['Psyllium husk'],['Protein powder'] ] },
-   { h:'Pantry basics', items:[
-     ['Tea & coffee'],['Long-life milk / alt milk'],['Tinned fish','tuna/salmon'],['Tinned tomatoes'],
-     ['Tinned legumes'],['Stock cubes / paste'],['Herbs & spices'],['Honey / maple','for the road, not Tas'] ] }
- ]},
-
- { id:'tech', title:'Personal & tech', icon:'🔌', groups:[
-   { h:'Devices', items:[
-     ['Phones','×2'],['Kindle'],['Laptop'],['Headphones','×2 or splitter'],['Camera'],['Power bank'] ] },
-   { h:'Chargers & cables — the forgettable bit', items:[
-     ['Phone chargers','×2'],['Laptop charger'],['Kindle cable'],['Camera charger'],
-     ['Multi-port USB charger / power board'],['Car charger','driving days'],['Spare cables'] ] },
-   { h:'Medications', items:[
-     ['Regular meds','FULL trip supply'],['Copy of scripts / eScripts'],['Pain relief'],
-     ['Antihistamines'],['Motion sickness','for the Spirit!'],['Bandaids & blister kit'],
-     ['Any supplements'] ] },
-   { h:'Comfort & offline', items:[
-     ['Downloaded shows / podcasts'],['Offline maps','no-signal stretches'],['Books / puzzles'],
-     ['Reading glasses'],['Eye masks / earplugs'] ] }
- ]},
-
- { id:'docs', title:'Documents', icon:'📁', groups:[
-   { h:'Carry & copies', items:[
-     ['Drivers licences'],['Medicare cards'],['Private health / insurance cards'],
-     ['Tasmania Parks Pass (Holiday Pass)','buy online before you go'],
-     ['Spirit of Tasmania booking'],['Campsite / park bookings'],['Bank / credit cards'],
-     ['Cash float'],['Printed emergency contacts','if phones die'] ] }
- ]}
-];
-
-/* ---- state ---- */
-var KEY='pack_state_v1';
-var state = {checks:{}, added:{}, removed:{}};
-try{ var raw=localStorage.getItem(KEY); if(raw) state=JSON.parse(raw); }catch(e){}
-state.checks=state.checks||{}; state.added=state.added||{}; state.removed=state.removed||{};
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
-
-function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
-
-/* build a stable id for a default item */
-function iid(secId, gi, name){ return secId+'|'+gi+'|'+slug(name); }
-
-function render(){
-  var wrap=$('#wrap'); wrap.innerHTML='';
-  var totAll=0, doneAll=0;
-  DATA.forEach(function(sec){
-    var secEl=document.createElement('section'); secEl.className='sec';
-    var head=document.createElement('h2');
-    head.innerHTML='<span>'+sec.icon+'</span> '+sec.title+'<span class="scount" id="cnt-'+sec.id+'"></span>';
-    secEl.appendChild(head);
-    var sbar=document.createElement('div'); sbar.className='sbar'; sbar.innerHTML='<i id="sbar-'+sec.id+'"></i>';
-    secEl.appendChild(sbar);
-    var secTot=0, secDone=0;
-
-    sec.groups.forEach(function(g, gi){
-      var grp=document.createElement('div'); grp.className='grp';
-      if(g.h){ var h3=document.createElement('h3'); if(g.clime) h3.className=g.clime;
-        h3.textContent=(g.clime==='cold'?'❄️ ':g.clime==='warm'?'☀️ ':'')+g.h; grp.appendChild(h3); }
-      var ul=document.createElement('ul');
-
-      // default items (skip removed)
-      g.items.forEach(function(it){
-        var name=it[0], qty=it[1]||'', note=it[2]||'';
-        var id=iid(sec.id, gi, name);
-        if(state.removed[id]) return;
-        ul.appendChild(makeLi(id, name, qty, note, false));
-        secTot++; if(state.checks[id]){secDone++;}
-      });
-      // user-added items for this group
-      var addedList = state.added[sec.id+'|'+gi] || [];
-      addedList.forEach(function(a){
-        ul.appendChild(makeLi(a.id, a.name, '', '', true));
-        secTot++; if(state.checks[a.id]){secDone++;}
-      });
-
-      // add-item row
-      var add=document.createElement('div'); add.className='additem';
-      var inp=document.createElement('input'); inp.type='text'; inp.placeholder='Add an item…';
-      var btn=document.createElement('button'); btn.textContent='Add';
-      function doAdd(){
-        var v=inp.value.trim(); if(!v) return;
-        var aid='u-'+sec.id+'-'+gi+'-'+Date.now();
-        var k=sec.id+'|'+gi; state.added[k]=state.added[k]||[]; state.added[k].push({id:aid,name:v});
-        save(); render();
-      }
-      btn.onclick=doAdd; inp.addEventListener('keydown',function(e){if(e.key==='Enter')doAdd();});
-      add.appendChild(inp); add.appendChild(btn);
-
-      grp.appendChild(ul); grp.appendChild(add);
-      secEl.appendChild(grp);
-    });
-
-    wrap.appendChild(secEl);
-    secTot=secTot; secDone=secDone;
-    var cnt=$('#cnt-'+sec.id); if(cnt) cnt.textContent=secDone+'/'+secTot;
-    var sb=$('#sbar-'+sec.id); if(sb) sb.style.width=(secTot?Math.round(secDone/secTot*100):0)+'%';
-    totAll+=secTot; doneAll+=secDone;
+  // Build filter buttons from whatever categories exist in the data
+  const cats = ['All', ...new Set(RECIPES.map(r => r.category))];
+  cats.forEach(cat => {
+    const b = document.createElement('button');
+    b.className = 'filter' + (cat === 'All' ? ' active' : '');
+    b.textContent = cat;
+    b.onclick = () => {
+      activeCat = cat;
+      filtersEl.querySelectorAll('.filter').forEach(x => x.classList.toggle('active', x === b));
+      render();
+    };
+    filtersEl.appendChild(b);
   });
 
-  $('#allBar').style.width=(totAll?Math.round(doneAll/totAll*100):0)+'%';
-  $('#allLab').textContent=doneAll+' of '+totAll+' packed';
-  $('#allPct').textContent=(totAll?Math.round(doneAll/totAll*100):0)+'%';
-}
-
-function makeLi(id, name, qty, note, isUser){
-  var li=document.createElement('li');
-  if(state.checks[id]) li.className='done';
-  var box=document.createElement('div'); box.className='box';
-  box.innerHTML='<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-  var txt=document.createElement('div'); txt.className='txt';
-  var nm=document.createElement('span'); nm.className='name'; nm.textContent=name;
-  txt.appendChild(nm);
-  if(qty){ var q=document.createElement('span'); q.className='qty'; q.textContent=qty; nm.appendChild(q); }
-  if(note){ var n=document.createElement('span'); n.className='note'; n.textContent=note; txt.appendChild(n); }
-  var del=document.createElement('button'); del.className='del'; del.innerHTML='✕'; del.title='Remove';
-  del.onclick=function(e){ e.stopPropagation(); removeItem(id, isUser); };
-  li.appendChild(box); li.appendChild(txt); li.appendChild(del);
-  li.onclick=function(){ state.checks[id]=!state.checks[id]; if(!state.checks[id]) delete state.checks[id]; save();
-    li.classList.toggle('done'); render(); };
-  return li;
-}
-
-function removeItem(id, isUser){
-  delete state.checks[id];
-  if(isUser){
-    // find & splice from added
-    Object.keys(state.added).forEach(function(k){
-      state.added[k]=state.added[k].filter(function(a){return a.id!==id;});
-    });
-  } else {
-    state.removed[id]=1;
+  function matches(r, q){
+    if (!q) return true;
+    const hay = [r.title, r.description, r.category,
+      ...r.diet, ...r.meta,
+      ...r.ingredients.map(i => i.item)].join(' ').toLowerCase();
+    return q.toLowerCase().split(/\s+/).every(w => hay.includes(w));
   }
-  save(); render();
-}
 
-$('#themeBtn').onclick=function(){ applyTheme(document.documentElement.getAttribute('data-theme')==='light'?'dark':'light'); };
-applyTheme(document.documentElement.getAttribute('data-theme')||'dark');
-$('#printBtn').onclick=function(){ window.print(); };
-function resetAll(){ if(confirm('Clear all ticks? (Your added items stay.)')){ state.checks={}; save(); render(); } }
-$('#resetBtn').onclick=resetAll;
-$('#reset2').onclick=function(e){ e.preventDefault(); resetAll(); };
+  function render(){
+    const q = searchEl.value.trim();
+    const list = RECIPES.filter(r =>
+      (activeCat === 'All' || r.category === activeCat) && matches(r, q));
+    grid.innerHTML = '';
+    list.forEach(r => {
+      const a = document.createElement('a');
+      a.className = 'card';
+      a.href = 'recipe.html?id=' + encodeURIComponent(r.id);
+      a.innerHTML =
+        '<span class="ccat">' + r.category.toLowerCase() + '!</span>' +
+        '<h3>' + r.title + '</h3>' +
+        '<p>' + r.description + '</p>' +
+        '<div class="cmeta">' + r.meta.map(m => '<span class="cpill">' + m + '</span>').join('') + '</div>';
+      grid.appendChild(a);
+    });
+    countEl.textContent = list.length + ' recipe' + (list.length === 1 ? '' : 's');
+  }
 
-render();
+  searchEl.addEventListener('input', render);
+  render();
+})();
 </script>
 
 <script>
@@ -513,6 +330,5 @@ render();
   document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
 })();
 </script>
-
 </body>
 </html>
